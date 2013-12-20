@@ -14,7 +14,11 @@ from django.template.context import Context
 from django.template.loader import get_template
 
 
-
+def checkList(request):
+    
+    t = get_template('checklist.html')
+    c = Context({})
+    return HttpResponse(t.render(c))
 
 def hello(request):
     

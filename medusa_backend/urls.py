@@ -13,11 +13,17 @@ urlpatterns = patterns('',
 
     url(r'^hello/$',hello),
     #url(r'^hello/', 'medusa.views.hello', name='hello'),
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^time/$', currentTime),
     
     url(r'^time/plus/(\d{1,2})/$', hoursAhead),
     url(r'^name/([^/]+)/$', myName),
     url(r'^template/([^/]+)/$', template),
+    
+    
+    
+    url(r'^checklist/$',checkList),
+    
     url(r'^$', homepage),
+    
 )
