@@ -5,16 +5,16 @@ Created on Dec 19, 2013
 '''
 
 import datetime
+import os
 
 from django.http import HttpResponse
 from django.http.response import Http404
 from django.template.base import Template
 from django.template.context import Context
+from django.template.loader import get_template
 
-TEMPLATE_DIRS = {
-                 '/home/django/medusa/templates',
-                 'e:/coding_workspace/medusa/templates'
-}
+
+
 
 def hello(request):
     
@@ -42,16 +42,17 @@ def hoursAhead(request, offset):
     return HttpResponse(html)
 
 
-def template(request, name,):
-    t = Template("""
-        {{ name }}
-        
-        {% if name %}
-            BAR IS TRUE
-        {% endif %}
-        
-    """)
-
+def template(request, name):
+#     t = Template("""
+#         {{ name }}
+#         
+#         {% if name %}
+#             BAR IS TRUE
+#         {% endif %}
+#         
+#     """)
+    True
+    t = get_template('temp.html')
     c = Context({"name":name})
     return HttpResponse(t.render(c))
 

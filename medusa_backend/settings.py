@@ -56,9 +56,18 @@ WSGI_APPLICATION = 'medusa_backend.wsgi.application'
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+              
+     'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'medusa',
+            'USER': 'root',
+            'PASSWORD': 'supermanfly',
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
     }
 }
 
@@ -80,3 +89,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TEMPLATE_DIRS = {
+                 #'/home/django/medusa/templates',
+                 'E:/coding_workspace/medusa_backend/templates',
+                 os.path.join(os.path.dirname(__file__),'../templates'),
+}
