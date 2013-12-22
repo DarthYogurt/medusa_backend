@@ -12,10 +12,10 @@ from django.http.response import Http404
 from django.template.base import Template
 from django.template.context import Context
 from django.template.loader import get_template
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 def checkList(request):
-    
     t = get_template('checklist.html')
     c = Context({})
     return HttpResponse(t.render(c))
@@ -59,6 +59,11 @@ def template(request, name):
     t = get_template('temp.html')
     c = Context({"name":name})
     return HttpResponse(t.render(c))
+
+
+def test(request):
+    t = get_template('test.html')    
+    return HttpResponse(t.render(Context({})))
 
 
 def myName(request, name):

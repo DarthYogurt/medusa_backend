@@ -20,9 +20,9 @@ urlpatterns = patterns('',
     url(r'^name/([^/]+)/$', myName),
     url(r'^template/([^/]+)/$', template),
     
-    
-    
+    #url(r'^login/$')
     url(r'^checklist/$',checkList),
+    url(r'^test/$',test),
     
     url(r'^$', homepage),
     
