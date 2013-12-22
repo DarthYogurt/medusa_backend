@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from sop_log.models import *
+
+admin.site.register(Checklist)
+admin.site.register(Group)

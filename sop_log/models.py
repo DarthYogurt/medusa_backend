@@ -7,10 +7,13 @@ class Checklist(models.Model):
     group_id = models.ForeignKey('Group')
     #category_id = models.ForeignKey('Category')
     #template_id = models.ForeignKey('Template')
+    def __unicode__(self):
+        return self.name
     
 
 class Group(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField()
     
-  
+    def __unicode__(self):
+        return self.name
