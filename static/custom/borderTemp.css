@@ -1,0 +1,6 @@
+@charset "utf-8";
+/* CSS Document */
+
+.col-lg-4, .col-lg-8 {
+	border:5px solid red;
+}

@@ -1,0 +1,14 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/**** NAV BAR  ****/
+body {
+  min-height: 2000px;
+}
+
+.navbar-static-top {
+  margin-bottom: 19px;
+}
+/**** END NAVBAR ****/
+
