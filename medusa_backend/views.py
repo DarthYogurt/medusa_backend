@@ -19,64 +19,38 @@ from soplog.models import *
 
 
 def checkList(request):
-    t = get_template('checklist.html')
-    c = Context({})
-    return HttpResponse(t.render(c))
-
-def hello(request):
+    #get groups
+    variables = {}
+    variables['group'] = []
     
-    header = "<head><body>"
-    text = "OH YEA"
-    footer = "</body></head>"
-    return HttpResponse(header+text+text+footer)
-
-
-def homepage(request):
-    return HttpResponse("HOME")
-
-def currentTime(request):
-    now = datetime.datetime.now()
-    html = "<html><body>It is now %s.</body></html>" % now
-    return HttpResponse(html)
-
-def hoursAhead(request, offset):
-    try:
-        offset = int(offset)
-    except ValueError:
-        raise Http404()
-    dt = datetime.datetime.now() + datetime.timedelta(hours=offset)
-    html = "<html><body>In %s hour(s), it will be %s.</body></html>" % (offset, dt)
-    return HttpResponse(html)
-
-
-def template(request, name):
-#     t = Template("""
-#         {{ name }}
-#         
-#         {% if name %}
-#             BAR IS TRUE
-#         {% endif %}
-#         
-#     """)
-    True
-    t = get_template('temp.html')
-    c = Context({"name":name})
+    g = Group.objects.all()
+    for item in g:
+        temp = {}
+        temp['id'] = item.id
+        temp['name'] = item.name
+        variables['group'].append(temp)
+    
+    variables['checklist']=[]
+    c = Checklist.objects.all()
+    for item in c:
+        temp = {}
+        temp['id'] = item.id
+        temp['name'] = item.name
+        temp['groupId'] = item.groupId.id
+        variables['checklist'].append(temp)
+        
+    
+    
+    
+   
+    t = get_template('checklist.html')
+    c = Context(variables)
     return HttpResponse(t.render(c))
-
-
-def test(request):
-    t = get_template('test.html')    
-    return HttpResponse(t.render(Context({})))
-
-
-def myName(request, name):
-    return HttpResponse("Hello, " + name)
 
 
 def checklistSearchByGroup(request, groupId):
     #lookup by groupId
     checklists = Checklist.objects.filter(groupId=groupId)
-    
     j = {}
     j['groupId'] = groupId
     j['checklist'] = []
@@ -85,9 +59,59 @@ def checklistSearchByGroup(request, groupId):
         temp = {}
         temp['name'] = item.name
         temp['id'] = item.id
-        j['checklist'].append(temp)
-    
-    
-    
+        j['checklist'].append(temp)    
     return HttpResponse(json.dumps(j))
+
+
+
+# def hello(request):
+#     
+#     header = "<head><body>"
+#     text = "OH YEA"
+#     footer = "</body></head>"
+#     return HttpResponse(header+text+text+footer)
+
+
+# def currentTime(request):
+#     now = datetime.datetime.now()
+#     html = "<html><body>It is now %s.</body></html>" % now
+#     return HttpResponse(html)
+# 
+# def hoursAhead(request, offset):
+#     try:
+#         offset = int(offset)
+#     except ValueError:
+#         raise Http404()
+#     dt = datetime.datetime.now() + datetime.timedelta(hours=offset)
+#     html = "<html><body>In %s hour(s), it will be %s.</body></html>" % (offset, dt)
+#     return HttpResponse(html)
+
+
+# def template(request, name):
+# #     t = Template("""
+# #         {{ name }}
+# #         
+# #         {% if name %}
+# #             BAR IS TRUE
+# #         {% endif %}
+# #         
+# #     """)
+#     True
+#     t = get_template('temp.html')
+#     c = Context({"name":name})
+#     return HttpResponse(t.render(c))
+
+
+# def homepage(request):
+#     return HttpResponse("HOME")
+# 
+# 
+# def test(request):
+#     t = get_template('test.html')    
+#     return HttpResponse(t.render(Context({})))
+# 
+# 
+# def myName(request, name):
+#     return HttpResponse("Hello, " + name)
+
     

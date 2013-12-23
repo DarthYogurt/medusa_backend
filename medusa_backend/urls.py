@@ -7,24 +7,30 @@ from medusa_backend.views import *
 admin.autodiscover()
 
 urlpatterns = patterns('',
+                        url(r'^admin/', include(admin.site.urls)),
+                        url(r'^checklist/$',checkList),
+                        url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroup),                       
+)
+
+
+
+
+
+#url(r'^$', homepage),
+
     # Examples:
     # url(r'^$', 'medusa.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^hello/$',hello),
+#     url(r'^hello/$',hello),
     #url(r'^hello/', 'medusa.views.hello', name='hello'),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^time/$', currentTime),
+#     url(r'^time/$', currentTime),
     
-    url(r'^time/plus/(\d{1,2})/$', hoursAhead),
-    url(r'^name/([^/]+)/$', myName),
-    url(r'^template/([^/]+)/$', template),
+#     url(r'^time/plus/(\d{1,2})/$', hoursAhead),
+#     url(r'^name/([^/]+)/$', myName),
+#     url(r'^template/([^/]+)/$', template),
     
     #url(r'^login/$')
-    url(r'^checklist/$',checkList),
-    url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroup),
-    url(r'^test/$',test),
+#     url(r'^test/$',test),
     
-    url(r'^$', homepage),
-    
-)
+ 
