@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     
     #url(r'^login/$')
     url(r'^checklist/$',checkList),
+    url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroup),
     url(r'^test/$',test),
     
     url(r'^$', homepage),

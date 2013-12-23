@@ -5,14 +5,17 @@ Created on Dec 19, 2013
 '''
 
 import datetime
+import json
 import os
 
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.http import HttpResponse
 from django.http.response import Http404
 from django.template.base import Template
 from django.template.context import Context
 from django.template.loader import get_template
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+from soplog.models import *
 
 
 def checkList(request):
@@ -68,3 +71,23 @@ def test(request):
 
 def myName(request, name):
     return HttpResponse("Hello, " + name)
+
+
+def checklistSearchByGroup(request, groupId):
+    #lookup by groupId
+    checklists = Checklist.objects.filter(groupId=groupId)
+    
+    j = {}
+    j['groupId'] = groupId
+    j['checklist'] = []
+    
+    for item in checklists:
+        temp = {}
+        temp['name'] = item.name
+        temp['id'] = item.id
+        j['checklist'].append(temp)
+    
+    
+    
+    return HttpResponse(json.dumps(j))
+    
