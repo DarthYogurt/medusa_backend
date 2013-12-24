@@ -68,7 +68,8 @@ def checklistSteps(request, checklistId):
     j = {}
     j['checklistId'] = checklistId
     j['steps'] = []
-    #j['checklistName'] = steps
+    if len(steps) > 0:
+        j['checklistName'] = steps[0].checklistId.name
     for step in steps:
         temp = {}
         temp['name'] = step.name
