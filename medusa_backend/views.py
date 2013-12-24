@@ -70,6 +70,8 @@ def checklistSteps(request, checklistId):
     j['steps'] = []
     if len(steps) > 0:
         j['checklistName'] = steps[0].checklistId.name
+    else:
+        j['error'] = "No Results"
     for step in steps:
         temp = {}
         temp['name'] = step.name
