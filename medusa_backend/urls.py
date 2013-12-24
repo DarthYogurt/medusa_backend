@@ -9,7 +9,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
                         url(r'^admin/', include(admin.site.urls)),
                         url(r'^checklist/$',checkList),
-                        url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroup),                       
+                        url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroup),   
+                        url(r'^checklist/checklistid/(\d*)/$', checklistSteps)                    
 )
 
 

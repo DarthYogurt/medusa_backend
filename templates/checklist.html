@@ -2,13 +2,13 @@
 {% block content %}
   
  
-{{ checklist.1.name }}
+{{ checklist }}
 
 <div class="container">
 	<div class="row">
     	<div class="col-md-4">
         	{% for cl in checklist %}
-            	<div> {{ cl.name }} and {{ cl.id }} </div>
+            	<div> #{{ cl.id }}: {{ cl.name }}  </div>
             {% endfor %}
             
         </div>

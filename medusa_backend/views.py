@@ -6,6 +6,7 @@ Created on Dec 19, 2013
 
 import datetime
 import json
+import operator
 import os
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -62,7 +63,20 @@ def checklistSearchByGroup(request, groupId):
         j['checklist'].append(temp)    
     return HttpResponse(json.dumps(j))
 
-
+def checklistSteps(request, checklistId):
+    steps = ChecklistStep.objects.filter(checklistId = checklistId).order_by('stepNumber')
+    j = {}
+    j['checklistId'] = checklistId
+    j['steps'] = []
+    #j['checklistName'] = steps
+    for step in steps:
+        temp = {}
+        temp['name'] = step.name
+        temp['id'] = step.id
+        temp['stepNumber'] = step.stepNumber
+        temp['stepType'] = step.stepTypeId.name
+        j['steps'].append(temp)
+    return HttpResponse(json.dumps(j))
 
 # def hello(request):
 #     
