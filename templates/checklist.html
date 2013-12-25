@@ -1,8 +1,13 @@
 {% extends "header.html" %}
 {% block content %}
   
+
+<script>
+	console.log( {{checklistStep}} );
+	console.log("Hi");
+</script>
  
-{{ checklist }}
+{{ checklistStep }}
 
 <div class="container">
 	<div class="row">
@@ -13,8 +18,20 @@
             
         </div>
         <div class="col-md-8">
-        	
-        	
+        	{% for s in checklistStep %}	
+        	<div class="row">
+        		<div class="col-sm-2">
+                	{{ s.checklistId }}
+                </div>
+                <div class="col-sm-6">
+                	{{ s.name }}
+                </div>
+                <div class="col-sm-4">
+                	{{ s.stepType }}
+                </div>
+                
+        	</div>
+            {% endfor %}
         </div>
     </div>
 

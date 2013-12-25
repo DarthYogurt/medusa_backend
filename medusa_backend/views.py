@@ -40,10 +40,16 @@ def checkList(request):
         temp['groupId'] = item.groupId.id
         variables['checklist'].append(temp)
         
+    variables['checklistStep']=[]
+    s = ChecklistStep.objects.all()
+    for item in s:
+        temp = {}
+        temp['checklistId'] = item.checklistId.id
+        temp['id'] = item.id
+        temp['name'] = item.name
+        temp['stepType'] = item.stepTypeId.name
+        variables['checklistStep'].append(temp)
     
-    
-    
-   
     t = get_template('checklist.html')
     c = Context(variables)
     return HttpResponse(t.render(c))
