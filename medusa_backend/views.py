@@ -67,7 +67,7 @@ def checklistSearchByGroup(request, groupId):
         temp['name'] = item.name
         temp['id'] = item.id
         j['checklist'].append(temp)    
-    return HttpResponse(json.dumps(j))
+    return HttpResponse(json.dumps(j), content_type="application/json")
 
 def checklistSteps(request, checklistId):
     steps = ChecklistStep.objects.filter(checklistId = checklistId).order_by('stepNumber')
@@ -85,7 +85,7 @@ def checklistSteps(request, checklistId):
         temp['stepNumber'] = step.stepNumber
         temp['stepType'] = step.stepTypeId.name
         j['steps'].append(temp)
-    return HttpResponse(json.dumps(j))
+    return HttpResponse(json.dumps(j), content_type="application/json")
 
 # def hello(request):
 #     

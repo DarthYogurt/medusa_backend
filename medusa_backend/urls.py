@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 from medusa_backend.views import *
-
+#from django.conf.urls.defaults import *
 
 admin.autodiscover()
 

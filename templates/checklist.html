@@ -1,13 +1,15 @@
 {% extends "header.html" %}
 {% block content %}
   
-
+{{ checklistStep | safe }}
 <script>
-	console.log( {{checklistStep}} );
+	
+	var obj = {{ checklistStep | safe }};
+	console.log(obj);
 	console.log("Hi");
+	
 </script>
  
-{{ checklistStep }}
 
 <div class="container">
 	<div class="row">
