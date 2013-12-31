@@ -1,14 +1,14 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
-from medusa_backend.views import *
+from soplog.views import *
 #from django.conf.urls.defaults import *
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
                         url(r'^admin/', include(admin.site.urls)),
-                        url(r'^checklist/$',checkList),
+                        url(r'^checklist/$', checkList),
                         url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroup),   
                         url(r'^checklist/checklistid/(\d*)/$', checklistSteps)                    
 )
