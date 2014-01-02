@@ -11,6 +11,8 @@ from django.template.loader import get_template, get_template
 from soplog.models import *
 
 
+#def uploadTest(forms):
+
 # Create your views here.
 def checkList(request):
     #get groups
@@ -40,8 +42,16 @@ def checkList(request):
         temp['checklistId'] = item.checklistId.id
         temp['id'] = item.id
         temp['name'] = item.name
-        temp['stepType'] = item.stepTypeId.name
+        temp['stepTypeId'] = item.stepTypeId.id
         variables['checklistStep'].append(temp)
+        
+    variables['stepType']=[]
+    st = StepType.objects.all()
+    for item in st:
+        temp={}
+        temp['id']=item.id
+        temp['name']=item.name
+        variables['stepType'].append(temp)
     
     t = get_template('checklist.html')
     c = Context(variables)
