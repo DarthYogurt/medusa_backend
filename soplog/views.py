@@ -25,7 +25,7 @@ def testPost(request):
     
     print request.body
     print 
-    print FILES
+    print request.FILES
     return HttpResponse(s)
     
 
