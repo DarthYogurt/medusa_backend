@@ -23,7 +23,9 @@ def testPost(request):
     for item in request.POST:
         s += item + request.POST[item] + " | "    
     
-    print s
+    print request.body
+    print 
+    print FILES
     return HttpResponse(s)
     
 
