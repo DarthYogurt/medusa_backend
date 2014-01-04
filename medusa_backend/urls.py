@@ -11,7 +11,8 @@ urlpatterns = patterns('',
                         url(r'^checklist/$', checkList),
                         url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroup),   
                         url(r'^checklist/checklistid/(\d*)/$', checklistSteps), 
-                        url(r'^testPost/$', testPost),                   
+                        url(r'^testPost/$', testPost),     
+                        url(r'^testGet/$', testGet),              
 )
 
 

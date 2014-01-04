@@ -11,13 +11,28 @@ from django.template.loader import get_template, get_template
 
 from soplog.models import *
 
+
+
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def testPost(request):
     #a = request.GET['alpha']
-    a = request.POST
-    True
-    return HttpResponse(a)
+    #a = request.POST
+    
+    s = ""
+    for item in request.POST:
+        s += item + request.POST[item] + " | "    
+    return HttpResponse(s)
+    
+
+def testGet(request):
+    
+    s = ""
+    for item in request.GET:
+        s += item + request.GET[item] + " | "
+        True
+    return HttpResponse(s)
+
     
 # Create your views here.
 def checkList(request):
