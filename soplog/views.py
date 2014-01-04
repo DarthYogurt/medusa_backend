@@ -22,6 +22,7 @@ def testPost(request):
     s = ""
     for item in request.POST:
         s += item + request.POST[item] + " | "    
+    True
     return HttpResponse(s)
     
 
