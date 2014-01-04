@@ -8,11 +8,17 @@ from django.template.base import Template
 from django.template.context import Context
 from django.template.loader import get_template, get_template
 
+
 from soplog.models import *
 
-
-#def uploadTest(forms):
-
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+def testPost(request):
+    #a = request.GET['alpha']
+    a = request.POST
+    True
+    return HttpResponse(a)
+    
 # Create your views here.
 def checkList(request):
     #get groups
