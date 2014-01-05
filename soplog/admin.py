@@ -8,4 +8,12 @@ admin.site.register(Checklist)
 admin.site.register(ChecklistStep)
 admin.site.register(StepType)
 admin.site.register(User)
-admin.site.register(ChecklistLog)
+admin.site.register(LogChecklist)
+admin.site.register(LogBool)
+admin.site.register(LogDouble)
+admin.site.register(LogText)
+admin.site.register(LogImage)
+admin.site.register(LogAudio)
+admin.site.register(LogVideo)
+
+

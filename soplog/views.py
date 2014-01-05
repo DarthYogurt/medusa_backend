@@ -63,17 +63,17 @@ def checkList(request):
         temp = {}
         temp['id'] = item.id
         temp['name'] = item.name
-        temp['groupId'] = item.groupId.id
+        temp['groupId'] = item.group.id
         variables['checklist'].append(temp)
         
     variables['checklistStep']=[]
     s = ChecklistStep.objects.all()
     for item in s:
         temp = {}
-        temp['checklistId'] = item.checklistId.id
+        temp['checklistId'] = item.checklist.id
         temp['id'] = item.id
         temp['name'] = item.name
-        temp['stepTypeId'] = item.stepTypeId.id
+        temp['stepTypeId'] = item.stepType.id
         variables['checklistStep'].append(temp)
         
     variables['stepType']=[]

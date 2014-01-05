@@ -8,6 +8,9 @@ class User(models.Model):
     phone = models.IntegerField()
     email = models.CharField(max_length=30)
     
+    def __unicode__(self):
+        return self.name
+    
 # Create your models here.
 class Group(models.Model):
     name = models.CharField(max_length=30)
@@ -23,7 +26,7 @@ class Checklist(models.Model):
 #     categoryId = models.ForeignKey('Category')
     
     def __unicode__(self):
-        return self.name + " - " + str(self.groupId)
+        return self.name + " - " + str(self.group)
     
 class ChecklistStep(models.Model):
     name = models.CharField(max_length=50)
@@ -40,17 +43,43 @@ class StepType(models.Model):
     
     def __unicode__(self):
         return self.name
-
-class ChecklistLog(models.Model):
-    checklist = models.ForeignKey('Checklist')
+ 
+class LogChecklist(models.Model):
+    checklist = models.ForeignKey('Checklist')   # The referencing Checklist
     user = models.ForeignKey('User')
     startTime = models.DateTimeField()
     modifyTime = models.DateTimeField()
     endtime = models.DateTimeField()
-    
+     
     def __unicode__(self):
-        return self.checklistId.name
-
-class StepBoolLog(models.Model):
-    checklistStep = models.ForeignKey('ChecklistStep')
-    
+        return self.checklist.name
+ 
+class LogBool(models.Model):
+    checklistLog = models.ForeignKey('LogChecklist')
+    value = models.BooleanField()
+    modifyTime = models.DateTimeField()
+     
+class LogDouble(models.Model):    #Not really double, Django doesn't have double values
+    checklistLog = models.ForeignKey('LogChecklist')
+    value = models.FloatField()
+    modifyTime = models.DateTimeField()
+     
+class LogText(models.Model):
+    checklistLog = models.ForeignKey('LogChecklist')
+    value = models.TextField()
+    modifyTime = models.DateTimeField()
+ 
+class LogImage(models.Model):
+    checklistLog = models.ForeignKey('LogChecklist')
+    value = models.CharField(max_length=40)
+    modifyTime = models.DateTimeField()
+     
+class LogAudio(models.Model):
+    checklistLog = models.ForeignKey('LogChecklist')
+    value = models.CharField(max_length=40)
+    modifyTime = models.DateTimeField()
+     
+class LogVideo(models.Model):
+    checklistLog = models.ForeignKey('LogChecklist')
+    value = models.CharField(max_length=40)
+    modifyTime = models.DateTimeField()
