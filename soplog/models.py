@@ -1,5 +1,13 @@
 from django.db import models
 
+
+class User(models.Model):
+    ''' currently not connected to Group 
+    '''
+    name = models.CharField(max_length=30)
+    phone = models.IntegerField()
+    email = models.CharField(max_length=30)
+    
 # Create your models here.
 class Group(models.Model):
     name = models.CharField(max_length=30)
@@ -33,4 +41,13 @@ class StepType(models.Model):
     def __unicode__(self):
         return self.name
 
+
+class ChecklistLog(models.Model):
+    checklistId = models.ForeignKey('Checklist')
+    userId = models.ForeignKey('User')
+    startTime = models.DateTimeField()
+    modifyTime = models.DateTimeField()
+    endtime = models.DateTimeField()
     
+    def __unicode__(self):
+        return self.checklistId.name

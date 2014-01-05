@@ -26,6 +26,7 @@ def testPost(request):
     print "--------------------"
     print request.body
     print request.FILES
+    #print repr(request)
     print "--------------------"
     return HttpResponse(s)
     
@@ -38,7 +39,11 @@ def testGet(request):
         True
     return HttpResponse(s)
 
+
+def listComplete(request):
     
+    return HttpResponse()
+
 # Create your views here.
 def checkList(request):
     #get groups
