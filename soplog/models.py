@@ -19,7 +19,7 @@ class Group(models.Model):
 class Checklist(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
-    groupId = models.ForeignKey('Group')
+    group = models.ForeignKey('Group')
 #     categoryId = models.ForeignKey('Category')
     
     def __unicode__(self):
@@ -29,8 +29,8 @@ class ChecklistStep(models.Model):
     name = models.CharField(max_length=50)
     stepNumber = models.IntegerField()
     description = models.TextField()
-    checklistId = models.ForeignKey('Checklist')
-    stepTypeId = models.ForeignKey('StepType')
+    checklist = models.ForeignKey('Checklist')
+    stepType = models.ForeignKey('StepType')
     
     def __unicode__(self):
         return str(self.stepNumber) + " " + self.name
@@ -41,13 +41,16 @@ class StepType(models.Model):
     def __unicode__(self):
         return self.name
 
-
 class ChecklistLog(models.Model):
-    checklistId = models.ForeignKey('Checklist')
-    userId = models.ForeignKey('User')
+    checklist = models.ForeignKey('Checklist')
+    user = models.ForeignKey('User')
     startTime = models.DateTimeField()
     modifyTime = models.DateTimeField()
     endtime = models.DateTimeField()
     
     def __unicode__(self):
         return self.checklistId.name
+
+class StepBoolLog(models.Model):
+    checklistStep = models.ForeignKey('ChecklistStep')
+    
