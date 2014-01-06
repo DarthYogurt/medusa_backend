@@ -48,7 +48,7 @@ class LogChecklist(models.Model):
     checklist = models.ForeignKey('Checklist')   # The referencing Checklist
     user = models.ForeignKey('User')
     startTime = models.DateTimeField()
-    modifyTime = models.DateTimeField()
+    modifyTime = models.DateTimeField(auto_now_add=True)
     endtime = models.DateTimeField()
      
     def __unicode__(self):
@@ -57,29 +57,30 @@ class LogChecklist(models.Model):
 class LogBool(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
     value = models.BooleanField()
-    modifyTime = models.DateTimeField()
+    modifyTime = models.DateTimeField(auto_now_add=True)
      
 class LogDouble(models.Model):    #Not really double, Django doesn't have double values
     checklistLog = models.ForeignKey('LogChecklist')
     value = models.FloatField()
-    modifyTime = models.DateTimeField()
+    modifyTime = models.DateTimeField(auto_now_add=True)
      
 class LogText(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
     value = models.TextField()
-    modifyTime = models.DateTimeField()
- 
-class LogImage(models.Model):
+    modifyTime = models.DateTimeField(auto_now_add=True)
+
+#filesDir =  "/photos/"
+class LogFile(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
-    value = models.CharField(max_length=40)
-    modifyTime = models.DateTimeField()
+    value = models.FileField()
+    modifyTime = models.DateTimeField(auto_now_add=True)
      
-class LogAudio(models.Model):
-    checklistLog = models.ForeignKey('LogChecklist')
-    value = models.CharField(max_length=40)
-    modifyTime = models.DateTimeField()
-     
-class LogVideo(models.Model):
-    checklistLog = models.ForeignKey('LogChecklist')
-    value = models.CharField(max_length=40)
-    modifyTime = models.DateTimeField()
+# class LogAudio(models.Model):
+#     checklistLog = models.ForeignKey('LogChecklist')
+#     value = models.CharField(max_length=40)
+#     modifyTime = models.DateTimeField(auto_now_add=True)
+#      
+# class LogVideo(models.Model):
+#     checklistLog = models.ForeignKey('LogChecklist')
+#     value = models.CharField(max_length=40)
+#     modifyTime = models.DateTimeField(auto_now_add=True)
