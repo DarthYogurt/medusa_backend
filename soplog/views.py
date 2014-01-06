@@ -32,7 +32,6 @@ def testPost(request):
     
 
 def testGet(request):
-    
     s = ""
     for item in request.GET:
         s += item + request.GET[item] + " | "
@@ -40,8 +39,8 @@ def testGet(request):
     return HttpResponse(s)
 
 
-def listComplete(request):
-    
+def logChecklist(request):
+    print request.FILES
     return HttpResponse()
 
 # Create your views here.

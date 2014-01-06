@@ -13,7 +13,8 @@ urlpatterns = patterns('',
                         url(r'^checklist/checklistid/(\d*)/$', checklistSteps), 
                         url(r'^listComplete/$',listComplete),
                         url(r'^testPost/$', testPost),     
-                        url(r'^testGet/$', testGet),              
+                        url(r'^testGet/$', testGet),
+                        url(r'^logChecklist/$'),              
 )
 
 
