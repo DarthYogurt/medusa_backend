@@ -72,7 +72,7 @@ class LogText(models.Model):
 #filesDir =  "/photos/"
 class LogFile(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
-    value = models.FileField(upload_to="")
+    #value = models.FileField(upload_to="")
     modifyTime = models.DateTimeField(auto_now_add=True)
      
 # class LogAudio(models.Model):
