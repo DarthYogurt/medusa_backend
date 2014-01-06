@@ -28,15 +28,15 @@ def testPost(request):
     print request.FILES
     #print repr(request)
     print "--------------------"
-    return HttpResponse(s)
+    return HttpResponse("Post response complete "+ request.FILES)
     
-
-def testGet(request):
-    s = ""
-    for item in request.GET:
-        s += item + request.GET[item] + " | "
-        True
-    return HttpResponse(s)
+# 
+# def testGet(request):
+#     s = ""
+#     for item in request.GET:
+#         s += item + request.GET[item] + " | "
+#         True
+#     return HttpResponse(s)
 
 
 def logChecklist(request):
