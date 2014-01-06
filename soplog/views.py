@@ -28,7 +28,7 @@ def testPost(request):
     print request.FILES
     #print repr(request)
     print "--------------------"
-    return HttpResponse("Post exchange complete" + request.FILES)
+    return HttpResponse("Post exchange complete" + str(request.FILES))
     
 
 def testGet(request):
