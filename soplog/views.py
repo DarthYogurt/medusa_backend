@@ -19,28 +19,29 @@ def testPost(request):
     #a = request.GET['alpha']
     #a = request.POST
     
-#    s = ""
-#    for item in request.POST:
-#        s += item + request.POST[item] + " | "    
+    s = ""
+    for item in request.POST:
+        s += item + request.POST[item] + " | "    
     
     print "--------------------"
     print request.body
     print request.FILES
     #print repr(request)
     print "--------------------"
-    return HttpResponse("Post response complete "+ request.FILES)
+    return HttpResponse(s)
     
-# 
-# def testGet(request):
-#     s = ""
-#     for item in request.GET:
-#         s += item + request.GET[item] + " | "
-#         True
-#     return HttpResponse(s)
+
+def testGet(request):
+    
+    s = ""
+    for item in request.GET:
+        s += item + request.GET[item] + " | "
+        True
+    return HttpResponse(s)
 
 
-def logChecklist(request):
-    print request.FILES
+def listComplete(request):
+    
     return HttpResponse()
 
 # Create your views here.

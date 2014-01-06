@@ -48,7 +48,7 @@ class LogChecklist(models.Model):
     checklist = models.ForeignKey('Checklist')   # The referencing Checklist
     user = models.ForeignKey('User')
     startTime = models.DateTimeField()
-    modifyTime = models.DateTimeField(auto_now_add=True)
+    modifyTime = models.DateTimeField()
     endtime = models.DateTimeField()
      
     def __unicode__(self):
@@ -57,30 +57,29 @@ class LogChecklist(models.Model):
 class LogBool(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
     value = models.BooleanField()
-    modifyTime = models.DateTimeField(auto_now_add=True)
+    modifyTime = models.DateTimeField()
      
 class LogDouble(models.Model):    #Not really double, Django doesn't have double values
     checklistLog = models.ForeignKey('LogChecklist')
     value = models.FloatField()
-    modifyTime = models.DateTimeField(auto_now_add=True)
+    modifyTime = models.DateTimeField()
      
 class LogText(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
     value = models.TextField()
-    modifyTime = models.DateTimeField(auto_now_add=True)
-
-#filesDir =  "/photos/"
-class LogFile(models.Model):
+    modifyTime = models.DateTimeField()
+ 
+class LogImage(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
-    #value = models.FileField(upload_to="")
-    modifyTime = models.DateTimeField(auto_now_add=True)
+    value = models.CharField(max_length=40)
+    modifyTime = models.DateTimeField()
      
-# class LogAudio(models.Model):
-#     checklistLog = models.ForeignKey('LogChecklist')
-#     value = models.CharField(max_length=40)
-#     modifyTime = models.DateTimeField(auto_now_add=True)
-#      
-# class LogVideo(models.Model):
-#     checklistLog = models.ForeignKey('LogChecklist')
-#     value = models.CharField(max_length=40)
-#     modifyTime = models.DateTimeField(auto_now_add=True)
+class LogAudio(models.Model):
+    checklistLog = models.ForeignKey('LogChecklist')
+    value = models.CharField(max_length=40)
+    modifyTime = models.DateTimeField()
+     
+class LogVideo(models.Model):
+    checklistLog = models.ForeignKey('LogChecklist')
+    value = models.CharField(max_length=40)
+    modifyTime = models.DateTimeField()
