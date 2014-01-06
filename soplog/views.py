@@ -19,10 +19,10 @@ def testPost(request):
     #a = request.GET['alpha']
     #a = request.POST
     
-    s = ""
-    for item in request.POST:
-        s += item + request.POST[item] + " | "    
-    
+#     s = ""
+#     for item in request.POST:
+#         s += item + request.POST[item] + " | "    
+#     
     print "--------------------"
     print request.body
     print request.FILES
