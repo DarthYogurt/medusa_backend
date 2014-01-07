@@ -69,17 +69,17 @@ class LogText(models.Model):
     value = models.TextField()
     modifyTime = models.DateTimeField()
  
-class LogImage(models.Model):
+class LogFile(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
-    value = models.CharField(max_length=40)
+    #value = models.CharField(max_length=40)
     modifyTime = models.DateTimeField()
      
-class LogAudio(models.Model):
-    checklistLog = models.ForeignKey('LogChecklist')
-    value = models.CharField(max_length=40)
-    modifyTime = models.DateTimeField()
-     
-class LogVideo(models.Model):
-    checklistLog = models.ForeignKey('LogChecklist')
-    value = models.CharField(max_length=40)
-    modifyTime = models.DateTimeField()
+# class LogAudio(models.Model):
+#     checklistLog = models.ForeignKey('LogChecklist')
+#     value = models.CharField(max_length=40)
+#     modifyTime = models.DateTimeField()
+#      
+# class LogVideo(models.Model):
+#     checklistLog = models.ForeignKey('LogChecklist')
+#     value = models.CharField(max_length=40)
+#     modifyTime = models.DateTimeField()
