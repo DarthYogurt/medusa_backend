@@ -12,8 +12,8 @@ admin.site.register(LogChecklist)
 admin.site.register(LogBool)
 admin.site.register(LogDouble)
 admin.site.register(LogText)
-admin.site.register(LogImage)
-admin.site.register(LogAudio)
-admin.site.register(LogVideo)
+admin.site.register(LogFile)
+# admin.site.register(LogAudio)
+# admin.site.register(LogVideo)
 
 
