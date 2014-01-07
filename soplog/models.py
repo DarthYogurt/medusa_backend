@@ -26,7 +26,7 @@ class Checklist(models.Model):
 #     categoryId = models.ForeignKey('Category')
     
     def __unicode__(self):
-        return self.name + " - " + str(self.group)
+        return str(self.id) + "-" + self.name + " - " + str(self.group)
     
 class ChecklistStep(models.Model):
     name = models.CharField(max_length=50)
@@ -36,7 +36,7 @@ class ChecklistStep(models.Model):
     stepType = models.ForeignKey('StepType')
     
     def __unicode__(self):
-        return str(self.stepNumber) + " " + self.name
+        return str(self.order) + " " + self.name+"-id:"+str(self.id)
     
 class StepType(models.Model):
     name = models.CharField(max_length=10)

@@ -30,10 +30,15 @@ def testGet(request):
         True
     return HttpResponse(s)
 
-
-def listComplete(request):
+@csrf_exempt
+def upload(request):
     
-    return HttpResponse()
+    #here to fake Json input of file and ect.
+    
+    print request.FILES
+    
+    
+    return HttpResponse("Post Exchange Completed")
 
 # Create your views here.
 def checkList(request):
