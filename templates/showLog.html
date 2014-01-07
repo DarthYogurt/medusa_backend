@@ -1,0 +1,42 @@
+
+{% extends "header.html" %}
+{% block content %}
+  
+
+{{ checklistLog }}
+
+<div class="container">
+    <div class = "row">
+        <div class="col-md-8"> <h4> Log of Checklists </h4></div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-1"> Log # </div>
+        <div class="col-md-1"> User </div>
+        <div class="col-md-2"> Group </div>
+        <div class="col-md-2"> Checklist # </div>
+        <div class="col-md-3"> Template Checklist Name </div>
+        <div class="col-md-3"> Modify Time </div>
+        
+    </div>
+    <div class="row">
+        {% for item in checklistLog %}        
+        <div class="col-md-1"> # {{ item.id }} </div>
+        <div class="col-md-1"> {{ item.user }} </div>
+        <div class="col-md-2"> {{ item.checklist.group }} </div>
+        <div class="col-md-2"> {{ item.checklist.id }} </div>
+        <div class="col-md-3"> {{ item.checklist.name }} </div>
+        <div class="col-md-3"> {{ item.modifyTime }} </div>
+        {% endfor %}
+    </div> <!-- Row -->
+</div> <!--- container -->
+
+<div class="container">
+	<div class = "row">
+    
+    
+    
+    </div> <!-- row -->
+</div> <!-- End container -->
+
+{% endblock %}
