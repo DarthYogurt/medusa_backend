@@ -40,6 +40,28 @@ def upload(request):
     
     return HttpResponse("Post Exchange Completed")
 
+
+
+def showLog(request):
+    
+    variables = {}
+    
+    variables['checklistLog'] = []
+    log = LogChecklist.objects.all()
+    for item in log:
+        temp = {}
+        temp['id'] = item.id
+        temp['checklist'] = item.checklist
+        temp['user'] = item.user
+        temp['modifyTime'] = item.modifyTime
+        variables['checklistLog'].append(temp)
+    
+    
+    t = get_template('showLog.html')
+    c = Context(variables)
+    return HttpResponse(t.render(c))
+
+
 # Create your views here.
 def checkList(request):
     #get groups

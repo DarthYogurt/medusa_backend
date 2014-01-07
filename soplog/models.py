@@ -56,6 +56,7 @@ class LogChecklist(models.Model):
  
 class LogBool(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
+    step = models.ForeignKey('ChecklistStep')
     value = models.BooleanField()
     modifyTime = models.DateTimeField()
      
