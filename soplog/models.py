@@ -30,7 +30,7 @@ class Checklist(models.Model):
     
 class ChecklistStep(models.Model):
     name = models.CharField(max_length=50)
-    stepNumber = models.IntegerField()
+    order = models.IntegerField()
     description = models.TextField()
     checklist = models.ForeignKey('Checklist')
     stepType = models.ForeignKey('StepType')
