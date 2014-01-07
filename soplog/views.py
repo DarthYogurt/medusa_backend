@@ -16,23 +16,14 @@ from soplog.models import *
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def testPost(request):
-    #a = request.GET['alpha']
-    #a = request.POST
-    
-#     s = ""
-#     for item in request.POST:
-#         s += item + request.POST[item] + " | "    
-#     
     print "--------------------"
-    print request.body
+    #print request.body
     print request.FILES
-    #print repr(request)
     print "--------------------"
     return HttpResponse("Post exchange complete" + str(request.FILES))
     
 
 def testGet(request):
-    
     s = ""
     for item in request.GET:
         s += item + request.GET[item] + " | "
@@ -74,6 +65,7 @@ def checkList(request):
         temp['id'] = item.id
         temp['name'] = item.name
         temp['stepTypeId'] = item.stepType.id
+        temp['order'] = item.order
         variables['checklistStep'].append(temp)
         
     variables['stepType']=[]
@@ -104,7 +96,7 @@ def checklistSearchByGroup(request, groupId):
     return HttpResponse(json.dumps(j), content_type="application/json")
 
 def checklistSteps(request, checklistId):
-    steps = ChecklistStep.objects.filter(checklist = checklistId).order_by('stepNumber')
+    steps = ChecklistStep.objects.filter(checklist = checklistId).order_by('order')
     j = {}
     j['checklistId'] = checklistId
     j['steps'] = []
@@ -116,7 +108,7 @@ def checklistSteps(request, checklistId):
         temp = {}
         temp['name'] = step.name
         temp['id'] = step.id
-        temp['stepNumber'] = step.stepNumber
-        temp['stepType'] = step.stepType.name
+        temp['order'] = step.order
+        temp['type'] = step.stepType.name
         j['steps'].append(temp)
     return HttpResponse(json.dumps(j), content_type="application/json")
