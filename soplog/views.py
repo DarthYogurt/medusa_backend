@@ -56,6 +56,16 @@ def showLog(request):
         temp['modifyTime'] = item.modifyTime
         variables['checklistLog'].append(temp)
     
+    variables['stepLog'] = []
+    boolStep = LogBool.objects.all()
+    for item in boolStep:
+        temp = {}
+        temp['id'] = item.id
+        temp['checklistLogId'] = item.checklistLog
+        temp['stepId'] = item.step
+        temp['value'] = item.value
+        temp['modifyTime'] = item.modifyTime
+        variables['stepLog'].append(temp)
     
     t = get_template('showLog.html')
     c = Context(variables)
