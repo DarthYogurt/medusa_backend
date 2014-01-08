@@ -135,7 +135,7 @@ def checklistSearchByGroup(request, groupId):
 def checklistSteps(request, checklistId):
     steps = ChecklistStep.objects.filter(checklist = checklistId).order_by('order')
     j = {}
-    j['checklistId'] = str(checklistId)
+    j['checklistId'] = int(checklistId)
     j['steps'] = []
     if len(steps) > 0:
         j['checklistName'] = steps[0].checklist.name
