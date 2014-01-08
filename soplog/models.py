@@ -56,22 +56,25 @@ class LogChecklist(models.Model):
  
 class LogBool(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
-    #step = models.ForeignKey('ChecklistStep')
+    step = models.ForeignKey('ChecklistStep')
     value = models.BooleanField()
     modifyTime = models.DateTimeField()
      
 class LogDouble(models.Model):    #Not really double, Django doesn't have double values
     checklistLog = models.ForeignKey('LogChecklist')
+    step = models.ForeignKey('ChecklistStep')
     value = models.FloatField()
     modifyTime = models.DateTimeField()
      
 class LogText(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
+    step = models.ForeignKey('ChecklistStep')
     value = models.TextField()
     modifyTime = models.DateTimeField()
  
 class LogFile(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
+    step = models.ForeignKey('ChecklistStep')
     #value = models.CharField(max_length=40)
     modifyTime = models.DateTimeField()
      
