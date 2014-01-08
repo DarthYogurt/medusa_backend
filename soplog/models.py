@@ -26,7 +26,7 @@ class Checklist(models.Model):
 #     categoryId = models.ForeignKey('Category')
     
     def __unicode__(self):
-        return self.name + " - " + str(self.group)
+        return str(self.id) + "-" + self.name + " - " + str(self.group)
     
 class ChecklistStep(models.Model):
     name = models.CharField(max_length=50)
@@ -36,7 +36,7 @@ class ChecklistStep(models.Model):
     stepType = models.ForeignKey('StepType')
     
     def __unicode__(self):
-        return str(self.stepNumber) + " " + self.name
+        return str(self.order) + " " + self.name+"-id:"+str(self.id)
     
 class StepType(models.Model):
     name = models.CharField(max_length=10)
@@ -56,21 +56,25 @@ class LogChecklist(models.Model):
  
 class LogBool(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
+    step = models.ForeignKey('ChecklistStep')
     value = models.BooleanField()
     modifyTime = models.DateTimeField()
      
 class LogDouble(models.Model):    #Not really double, Django doesn't have double values
     checklistLog = models.ForeignKey('LogChecklist')
+    step = models.ForeignKey('ChecklistStep')
     value = models.FloatField()
     modifyTime = models.DateTimeField()
      
 class LogText(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
+    step = models.ForeignKey('ChecklistStep')
     value = models.TextField()
     modifyTime = models.DateTimeField()
  
 class LogFile(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
+    step = models.ForeignKey('ChecklistStep')
     #value = models.CharField(max_length=40)
     modifyTime = models.DateTimeField()
      

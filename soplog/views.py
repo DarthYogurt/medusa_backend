@@ -30,10 +30,47 @@ def testGet(request):
         True
     return HttpResponse(s)
 
-
-def listComplete(request):
+@csrf_exempt
+def upload(request):
     
-    return HttpResponse()
+    #here to fake Json input of file and ect.
+    
+    print request.FILES
+    
+    
+    return HttpResponse("Post Exchange Completed")
+
+
+
+def showLog(request):
+    
+    variables = {}
+    
+    variables['checklistLog'] = []
+    log = LogChecklist.objects.all()
+    for item in log:
+        temp = {}
+        temp['id'] = item.id
+        temp['checklist'] = item.checklist
+        temp['user'] = item.user
+        temp['modifyTime'] = item.modifyTime
+        variables['checklistLog'].append(temp)
+    
+    variables['stepLog'] = []
+    boolStep = LogBool.objects.all()
+    for item in boolStep:
+        temp = {}
+        temp['id'] = item.id
+        temp['checklistLogId'] = item.checklistLog
+        temp['stepId'] = item.step
+        temp['value'] = item.value
+        temp['modifyTime'] = item.modifyTime
+        variables['stepLog'].append(temp)
+    
+    t = get_template('showLog.html')
+    c = Context(variables)
+    return HttpResponse(t.render(c))
+
 
 # Create your views here.
 def checkList(request):
