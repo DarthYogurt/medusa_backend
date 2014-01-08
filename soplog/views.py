@@ -122,7 +122,7 @@ def checklistSearchByGroup(request, groupId):
     #lookup by groupId
     checklists = Checklist.objects.filter(group=groupId)
     j = {}
-    j['groupId'] = groupId
+    j['groupId'] = int(groupId)
     j['checklist'] = []
     
     for item in checklists:
@@ -135,7 +135,7 @@ def checklistSearchByGroup(request, groupId):
 def checklistSteps(request, checklistId):
     steps = ChecklistStep.objects.filter(checklist = checklistId).order_by('order')
     j = {}
-    j['checklistId'] = checklistId
+    j['checklistId'] = str(checklistId)
     j['steps'] = []
     if len(steps) > 0:
         j['checklistName'] = steps[0].checklist.name
