@@ -20,12 +20,9 @@ from soplog.models import *
 
 @csrf_exempt
 def testPost(request):    
-    print request.FILES
-    jsonData = None
     if request.FILES.has_key('data'):
-        file = request.Files['data']
-        data = file.read()
-        print "here"
+        theFile = request.FILES['data'].read()
+        a = json.loads(theFile)
         
     return HttpResponse()
         
@@ -49,27 +46,15 @@ def testGet(request):
 @csrf_exempt
 def upload(request):
     
-    #here to fake Json input of file and ect.
+    #can put if request.FILES.has_key['data']
+    dataString = request.FILES['data']
+    data = json.load(dataString)
     
-    request.FILES['data']
-#     json = {
-#         "userId": 1,
-#         "groupId": 1,
-#         "checklistId":1,
-#         "steps":[
-#             {"stepId": 1, "stepType": "bool", "value": "true"},
-#             {"stepId": 2, "stepType": "double", "value": 2},
-#             {"stepId": 3, "stepType": "text", "value": "Round red and green"},
-#             {"stepId": 4, "stepType": "bool", "value": "false"},
-#         ]
-#     }
     
-    json = json.load(open(request.FILES['data']))
-    
-    userId = json['userId']
-    groupId = json['groupId']
-    checklistId = json['checklistId']
-    steps = json['steps']
+    userId = data['userId']
+    groupId = data['groupId']
+    checklistId = data['checklistId']
+    steps = data['steps']
     
     newLog = LogChecklist(
                           checklist= Checklist.objects.get(id=checklistId),
