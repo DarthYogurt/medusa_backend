@@ -1,10 +1,13 @@
 import datetime
 from decimal import Context
-import json
-
+import inspect
 from itertools import chain
+import json
+from xml.dom.minidom import Document
 
+from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.core.files.base import ContentFile, File
 from django.http import HttpResponse
 from django.http.response import Http404, HttpResponse
 from django.template.base import Template
@@ -12,15 +15,26 @@ from django.template.context import Context
 from django.template.loader import get_template, get_template
 from django.views.decorators.csrf import csrf_exempt
 
-
 from soplog.models import *
 
 
 @csrf_exempt
-def testPost(request):
-    print "--------------------"
-    print request.body
+def testPost(request):    
     print request.FILES
+    jsonData = None
+    if request.FILES.has_key('data'):
+        file = request.Files['data']
+        data = file.read()
+        print "here"
+        
+    return HttpResponse()
+        
+#     to_return['store_message']= store_message
+#     print 'to_return=',to_return
+#     to_return['store_message']= store_message
+#     serialized = simplejson.dumps(to_return)
+    
+    
     print "--------------------"
     return HttpResponse("Post exchange complete" + str(request.FILES))
     
@@ -37,18 +51,20 @@ def upload(request):
     
     #here to fake Json input of file and ect.
     
-    print request.FILES
-    json = {
-        "userId": 1,
-        "groupId": 1,
-        "checklistId":1,
-        "steps":[
-            {"stepId": 1, "stepType": "bool", "value": "true"},
-            {"stepId": 2, "stepType": "double", "value": 2},
-            {"stepId": 3, "stepType": "text", "value": "Round red and green"},
-            {"stepId": 4, "stepType": "bool", "value": "false"},
-        ]
-    }
+    request.FILES['data']
+#     json = {
+#         "userId": 1,
+#         "groupId": 1,
+#         "checklistId":1,
+#         "steps":[
+#             {"stepId": 1, "stepType": "bool", "value": "true"},
+#             {"stepId": 2, "stepType": "double", "value": 2},
+#             {"stepId": 3, "stepType": "text", "value": "Round red and green"},
+#             {"stepId": 4, "stepType": "bool", "value": "false"},
+#         ]
+#     }
+    
+    json = json.load(open(request.FILES['data']))
     
     userId = json['userId']
     groupId = json['groupId']
