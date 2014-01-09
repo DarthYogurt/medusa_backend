@@ -3,7 +3,6 @@
 {% block content %}
   
 
-{{ stepLog }}
 
 <div class="container">
     <div class = "row">
@@ -39,10 +38,18 @@
 	<div class="row">
     	<div class="col-md-8"> <h4> Log of Steps </h4></div>
     </div>
+    <div class="row">
+    	<div class="col-md-2"> ChecklistLogId </div>
+        <div class="col-md-1"> Log Id </div>
+        <div class="col-md-4"> StepID </div>
+        <div class="col-md-3"> Value</div>
+        <div class="col-md-2"> Modify Time </div>
+    </div>
     {% for item in stepLog %}
 	<div class = "row">
-    	<div class="col-md-1"> #{{ item.id }} </div>
         <div class="col-md-2"> #{{ item.checklistLogId }} </div>
+    	<div class="col-md-1"> #{{ item.id }} </div>
+ 
         <div class="col-md-4"> #{{ item.stepId }} </div>
         <div class="col-md-3"> {{ item.value }} </div>
         <div class="col-md-2"> {{ item.modifyTime }} </div>

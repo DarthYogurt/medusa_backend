@@ -46,37 +46,40 @@ class StepType(models.Model):
  
 class LogChecklist(models.Model):
     checklist = models.ForeignKey('Checklist')   # The referencing Checklist
-    user = models.ForeignKey('User')
-    startTime = models.DateTimeField()
+    user = models.ForeignKey('User', null=True)
+    startTime = models.DateTimeField(null=True)
     modifyTime = models.DateTimeField()
-    endtime = models.DateTimeField()
+    endtime = models.DateTimeField(null=True)
      
     def __unicode__(self):
-        return self.checklist.name
+        return str(self.checklist.name) +" - "+ str(self.id) + "-"+ str(self.modifyTime)
  
 class LogBool(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
     step = models.ForeignKey('ChecklistStep')
     value = models.BooleanField()
-    modifyTime = models.DateTimeField()
+    modifyTime = models.DateTimeField(null=True)
+    
+    def __unicode__(self):
+        return str(self.checklistLog.checklist.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
      
 class LogDouble(models.Model):    #Not really double, Django doesn't have double values
     checklistLog = models.ForeignKey('LogChecklist')
     step = models.ForeignKey('ChecklistStep')
     value = models.FloatField()
-    modifyTime = models.DateTimeField()
+    modifyTime = models.DateTimeField(null=True)
      
 class LogText(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
     step = models.ForeignKey('ChecklistStep')
     value = models.TextField()
-    modifyTime = models.DateTimeField()
+    modifyTime = models.DateTimeField(null=True)
  
 class LogFile(models.Model):
     checklistLog = models.ForeignKey('LogChecklist')
     step = models.ForeignKey('ChecklistStep')
     #value = models.CharField(max_length=40)
-    modifyTime = models.DateTimeField()
+    modifyTime = models.DateTimeField(null=True)
      
 # class LogAudio(models.Model):
 #     checklistLog = models.ForeignKey('LogChecklist')

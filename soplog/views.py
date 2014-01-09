@@ -1,5 +1,8 @@
+import datetime
 from decimal import Context
 import json
+
+from itertools import chain
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.http import HttpResponse
@@ -7,17 +10,16 @@ from django.http.response import Http404, HttpResponse
 from django.template.base import Template
 from django.template.context import Context
 from django.template.loader import get_template, get_template
+from django.views.decorators.csrf import csrf_exempt
 
 
 from soplog.models import *
 
 
-
-from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def testPost(request):
     print "--------------------"
-    #print request.body
+    print request.body
     print request.FILES
     print "--------------------"
     return HttpResponse("Post exchange complete" + str(request.FILES))
@@ -36,18 +38,66 @@ def upload(request):
     #here to fake Json input of file and ect.
     
     print request.FILES
+    json = {
+        "userId": 1,
+        "groupId": 1,
+        "checklistId":1,
+        "steps":[
+            {"stepId": 1, "stepType": "bool", "value": "true"},
+            {"stepId": 2, "stepType": "double", "value": 2},
+            {"stepId": 3, "stepType": "text", "value": "Round red and green"},
+            {"stepId": 4, "stepType": "bool", "value": "false"},
+        ]
+    }
+    
+    userId = json['userId']
+    groupId = json['groupId']
+    checklistId = json['checklistId']
+    steps = json['steps']
+    
+    newLog = LogChecklist(
+                          checklist= Checklist.objects.get(id=checklistId),
+                          modifyTime=datetime.datetime.today()
+                          )
+    newLog.save()
+    
+    for row in steps:
+        if row['stepType'] == "bool":
+            newBool = LogBool( 
+                              checklistLog = LogChecklist.objects.get(id=newLog.id),
+                              step = ChecklistStep.objects.get(id=row['stepId']),
+                              value = row['value'],
+                              modifyTime=datetime.datetime.today()
+                              )
+            newBool.save()
+        elif row['stepType'] == "double":
+            newDouble = LogDouble(
+                                  checklistLog = LogChecklist.objects.get(id=newLog.id),
+                                  step = ChecklistStep.objects.get(id=row['stepId']),
+                                  value = row['value'],
+                                  modifyTime=datetime.datetime.today()
+                                  )
+            newDouble.save()
+        elif row['stepType'] == "text":
+            newText = LogText(
+                              checklistLog = LogChecklist.objects.get(id=newLog.id),
+                              step = ChecklistStep.objects.get(id=row['stepId']),
+                              value = row['value'],
+                              modifyTime=datetime.datetime.today()
+                              )
+            newText.save()
+    
+    #cl = LogChecklist(checklist=Checklist.objects)
     
     
-    return HttpResponse("Post Exchange Completed")
+    return HttpResponse(userId)
 
 
 
 def showLog(request):
-    
     variables = {}
-    
     variables['checklistLog'] = []
-    log = LogChecklist.objects.all()
+    log = LogChecklist.objects.order_by('modifyTime').reverse()[:10]
     for item in log:
         temp = {}
         temp['id'] = item.id
@@ -57,15 +107,23 @@ def showLog(request):
         variables['checklistLog'].append(temp)
     
     variables['stepLog'] = []
-    boolStep = LogBool.objects.all()
-    for item in boolStep:
+    boolStep = LogBool.objects.order_by('id').reverse()[:50]  
+    doubleStep = LogDouble.objects.order_by('id').reverse()[:50]
+    textStep = LogText.objects.order_by('id').reverse()[:50]
+    True
+    
+    for item in list(chain(boolStep, doubleStep, textStep)):
         temp = {}
         temp['id'] = item.id
-        temp['checklistLogId'] = item.checklistLog
+        temp['checklistLogId'] = item.checklistLog.id
         temp['stepId'] = item.step
         temp['value'] = item.value
         temp['modifyTime'] = item.modifyTime
         variables['stepLog'].append(temp)
+  
+    variables['stepLog'] = sorted(variables['stepLog'][:30], key=lambda k: k['checklistLogId'], reverse=True)
+    True
+    
     
     t = get_template('showLog.html')
     c = Context(variables)
