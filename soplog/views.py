@@ -43,6 +43,19 @@ def testGet(request):
         True
     return HttpResponse(s)
 
+def metaView(request):
+    values = request.META.items()
+    values.sort()
+    html = []
+    for k, v in values:
+        html.append('<tr><td>%s</td><td>%s</td></tr>' % (k, v))
+    return HttpResponse('<table>%s</table>' % '\n'.join(html))
+
+
+def createList(request):
+    
+    return HttpResponse("Test")
+
 @csrf_exempt
 def upload(request):
     
