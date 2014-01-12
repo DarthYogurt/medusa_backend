@@ -10,6 +10,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.core.files.base import ContentFile, File
 from django.http import HttpResponse
 from django.http.response import Http404, HttpResponse
+from django.shortcuts import render
 from django.template.base import Template
 from django.template.context import Context
 from django.template.loader import get_template, get_template
@@ -54,15 +55,16 @@ def metaView(request):
 
 def createList(request):
     
-    return HttpResponse("Test")
+    return render(request, 'search_form.html')
 
 @csrf_exempt
 def upload(request):
     
     #can put if request.FILES.has_key['data']
-    dataString = request.FILES['data']
+    dataString = request.FILES.get('data', "empty")
+    if dataString == "empty":
+        return HttpResponse("Post Data Empty")
     data = json.load(dataString)
-    
     
     userId = data['userId']
     groupId = data['groupId']
@@ -77,6 +79,11 @@ def upload(request):
     
     for row in steps:
         if row['stepType'] == "bool":
+#           if row['value'] == "true" ||  row['value'] == "True":
+#                     value = True
+#                 else:
+#                     value = False
+            print row
             newBool = LogBool( 
                               checklistLog = LogChecklist.objects.get(id=newLog.id),
                               step = ChecklistStep.objects.get(id=row['stepId']),
@@ -100,10 +107,6 @@ def upload(request):
                               modifyTime=datetime.datetime.today()
                               )
             newText.save()
-    
-    #cl = LogChecklist(checklist=Checklist.objects)
-    
-    
     return HttpResponse(userId)
 
 
