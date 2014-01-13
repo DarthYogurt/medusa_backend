@@ -49,7 +49,6 @@ def latestPost(request):
     f = open( os.getcwd() + "/tempJson", "rb")
     #f = open( "E:\\coding_workspace\\medusa_backend\\tempJson", "rb")
     stringReturn = f.read()
-    
     return HttpResponse(stringReturn)
     
 
@@ -93,18 +92,25 @@ def upload(request):
     newLog.save()
     
     for row in steps:
+        print "-------------"
+        print row
+        
         if row['stepType'] == "bool":
-#           if row['value'] == "true" ||  row['value'] == "True":
-#                     value = True
-#                 else:
-#                     value = False
-            print row
+            value = False
+            if row['value'] == "True":
+                value = True
+            
             newBool = LogBool( 
                               checklistLog = LogChecklist.objects.get(id=newLog.id),
                               step = ChecklistStep.objects.get(id=row['stepId']),
-                              value = row['value'],
+                              value = value,
                               modifyTime=datetime.datetime.today()
                               )
+            
+            print "NewBOOL"
+            print row['value']
+            print type(newBool.value)
+            
             newBool.save()
         elif row['stepType'] == "double":
             newDouble = LogDouble(
@@ -122,6 +128,9 @@ def upload(request):
                               modifyTime=datetime.datetime.today()
                               )
             newText.save()
+        
+        
+        print "-------------"
     return HttpResponse()
 
 
