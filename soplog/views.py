@@ -92,34 +92,32 @@ def upload(request):
     newLog.save()
     
     for row in steps:
-        print "-------------"
-        print row
+        
         
         if row['stepType'] == "bool":
             value = False
             if row['value'] == "True":
                 value = True
-            
             newBool = LogBool( 
                               checklistLog = LogChecklist.objects.get(id=newLog.id),
                               step = ChecklistStep.objects.get(id=row['stepId']),
                               value = value,
                               modifyTime=datetime.datetime.today()
                               )
-            
-            print "NewBOOL"
-            print row['value']
-            print type(newBool.value)
-            
             newBool.save()
         elif row['stepType'] == "double":
+#             print "-------------"
+#             print row
+#             print "-------------"
             newDouble = LogDouble(
                                   checklistLog = LogChecklist.objects.get(id=newLog.id),
                                   step = ChecklistStep.objects.get(id=row['stepId']),
                                   value = row['value'],
                                   modifyTime=datetime.datetime.today()
                                   )
+            
             newDouble.save()
+#             print newDouble.id
         elif row['stepType'] == "text":
             newText = LogText(
                               checklistLog = LogChecklist.objects.get(id=newLog.id),
@@ -130,7 +128,7 @@ def upload(request):
             newText.save()
         
         
-        print "-------------"
+        
     return HttpResponse()
 
 
@@ -151,9 +149,9 @@ def showLog(request):
     boolStep = LogBool.objects.order_by('id').reverse()[:50]  
     doubleStep = LogDouble.objects.order_by('id').reverse()[:50]
     textStep = LogText.objects.order_by('id').reverse()[:50]
-    True
     
     for item in list(chain(boolStep, doubleStep, textStep)):
+        
         temp = {}
         temp['id'] = item.id
         temp['checklistLogId'] = item.checklistLog.id
@@ -162,7 +160,7 @@ def showLog(request):
         temp['modifyTime'] = item.modifyTime
         variables['stepLog'].append(temp)
   
-    variables['stepLog'] = sorted(variables['stepLog'][:30], key=lambda k: k['checklistLogId'], reverse=True)
+    variables['stepLog'] = sorted(variables['stepLog'], key=lambda k: k['checklistLogId'], reverse=True)[:20]
     True
     
     
