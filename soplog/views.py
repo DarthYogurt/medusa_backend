@@ -85,7 +85,7 @@ def upload(request):
     for row in steps:
         if row['stepType'] == "bool":
             value = False
-            if row['value'] == "True":
+            if row['value'].lower() == "true":
                 value = True
             newBool = LogBool( 
                               checklistLog = LogChecklist.objects.get(id=newLog.id),
