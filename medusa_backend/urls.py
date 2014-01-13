@@ -12,6 +12,7 @@ urlpatterns = patterns('',
                         url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroup),   
                         url(r'^checklist/checklistid/(\d*)/$', checklistSteps),
                         url(r'^createList/$', createList),
+                        url(r'^listConfirm/$',listConfirm),
                         url(r'^upload/$', upload), 
                         url(r'^showLog/$', showLog),
                         

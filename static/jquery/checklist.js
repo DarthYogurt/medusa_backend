@@ -1,7 +1,10 @@
 
+//Taken from createList.html, contains all step types
+//stepType; 
+//users;
+
+
 var currId = 0;
-stepType; //Taken from createList.html, contains all step types
-users;
 
 function showUserOptions(){
 	var userToNotifySelect = document.getElementById("userToNotify")
@@ -17,7 +20,7 @@ function showUserOptions(){
 		
 	}
 }
-showUserOptions();
+
 
 function addCreateStep(idNum){
 	var stepNum = document.createElement("label");
@@ -27,7 +30,7 @@ function addCreateStep(idNum){
 	stepNumDiv.appendChild(stepNum);
 	
 	var stepName = document.createElement("input");
-	stepName.name = "name";
+	stepName.name = "stepName"+idNum;
 	stepName.className = "form-control";
 	stepName.placeholder = "name of step";
 	stepName.id = "newStepId"+idNum;
@@ -37,10 +40,12 @@ function addCreateStep(idNum){
 	
 	var selectType = document.createElement("select");
 	selectType.className = "form-control";
+	selectType.name="stepTypeId"+idNum;
 	for (var i=0;i<stepType.length;i++)
 	{ 
 		var option = document.createElement("option");
 		option.text = stepType[i];
+		option.value = stepType[i];
 		selectType.appendChild(option);
 	}
 	var selectTypeDiv = document.createElement("div");
@@ -50,6 +55,7 @@ function addCreateStep(idNum){
 	var description = document.createElement("input");
 	description.placeholder = "description";
 	description.className = "form-control";
+	description.id = "desc"+idNum
 	var descriptionDiv = document.createElement("div");
 	descriptionDiv.className = "col-sm-5";
 	descriptionDiv.appendChild(description);
@@ -62,32 +68,37 @@ function addCreateStep(idNum){
 	divRow.appendChild(selectTypeDiv);
 	divRow.appendChild(descriptionDiv);
 	
-	
 	var createStepsDiv = document.getElementById("create-steps");
 	createStepsDiv.appendChild(divRow);
+	
+	document.getElementById("totalSteps").value=currId;
 };
 
 function deleteStep(){
 	var createSteps = document.getElementById("create-steps");
 	createSteps.removeChild(document.getElementById("groupStepId"+currId));
+	
 }
 
 
 
 
-
+showUserOptions();
 addCreateStep(currId);
+document.getElementById("totalSteps").value=currId+1;
 
 $("#removeStep").click(function() {
 	deleteStep();
 	currId --;
+	document.getElementById("totalSteps").value=currId+1;
+	
 });
 
 $("#addStep").click(function() {
-	currId ++;						 
+	currId ++;
 	addCreateStep(currId);
-	
-	
+	document.getElementById("totalSteps").value=currId+1;
 });
+
 
 

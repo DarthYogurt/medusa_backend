@@ -53,13 +53,18 @@ def metaView(request):
 
 ''' Above this is Testing purposes  ------------------------------------------------'''
 
+@csrf_exempt
+def listConfirm(request):
+    post = request.POST
+    True
+    return HttpResponse(request.POST)
 
-
+@csrf_exempt
 def createList(request):
     var = {}
-    
     var['stepType'] = StepType.objects.all()
     var['users'] = User.objects.all()
+    var['existingChecklists'] = Checklist.objects.all()
     
     t = get_template('createList.html')
     c = Context(var)
