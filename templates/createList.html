@@ -1,0 +1,32 @@
+{% extends "header.html" %}
+{% block content %}
+
+
+
+
+<div class="container">
+    <form  action="/createList/" method="get" role="form" >
+    	<div class="form-group">
+        	<label> Checklist Name </label>
+            <input type="text" name="name" class="form-control" placeholder="Name of New Checklist">
+       	</div>
+        <label> Steps </label>
+        <div class="form-group">
+     		<button type="button" class="btn btn-info" id="addStep" >Add Step</button>
+            <button type="button" class="btn btn-info" id="removeStep" >Remove</button>
+        </div>
+        
+        <div id="create-steps">
+        	
+        </div>
+           
+       	<div class="form-group">
+     		<button type="button" class="btn btn-info" >Submit</button>
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock %}
+

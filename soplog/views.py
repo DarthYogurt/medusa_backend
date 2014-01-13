@@ -56,7 +56,7 @@ def metaView(request):
 
 
 def createList(request):
-    return render(request, 'create.html')
+    return render(request, 'createList.html')
 
 @csrf_exempt
 def upload(request):
