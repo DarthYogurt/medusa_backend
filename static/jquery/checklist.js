@@ -1,11 +1,25 @@
 
 var currId = 0;
 stepType; //Taken from createList.html, contains all step types
+users;
 
-
+function showUserOptions(){
+	var userToNotifySelect = document.getElementById("userToNotify")
+	
+	for (var i=0; i<users.length;i++){
+		var s = users[i];
+		var id = s.substring( s.indexOf("-")+1, s.length);
+		var name = s.substring(0,s.indexOf("-"))
+		var option = document.createElement("option");
+		option.name = "userToNotify" + id;
+		option.text = id + " " + name;
+		userToNotifySelect.appendChild(option);
+		
+	}
+}
+showUserOptions();
 
 function addCreateStep(idNum){
-	
 	var stepNum = document.createElement("label");
 	stepNum.innerHTML = idNum+1;
 	var stepNumDiv = document.createElement("div");

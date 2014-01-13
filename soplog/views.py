@@ -59,7 +59,7 @@ def createList(request):
     var = {}
     
     var['stepType'] = StepType.objects.all()
-    print var
+    var['users'] = User.objects.all()
     
     t = get_template('createList.html')
     c = Context(var)

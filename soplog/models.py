@@ -9,7 +9,7 @@ class User(models.Model):
     email = models.CharField(max_length=30)
     
     def __unicode__(self):
-        return self.name
+        return self.name + "-"+ str(self.id)
     
 # Create your models here.
 class Group(models.Model):
