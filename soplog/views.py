@@ -129,7 +129,7 @@ def upload(request):
         
         
         
-    return HttpResponse()
+    return HttpResponse("List Received")
 
 
 
