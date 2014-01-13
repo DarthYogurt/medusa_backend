@@ -46,8 +46,8 @@ def testGet(request):
     return HttpResponse(s)
 
 def latestPost(request):
-#    f = open( os.getcwd() + "/tempJson", "rb")
-    f = open( "E:\\coding_workspace\\medusa_backend\\tempJson", "rb")
+    f = open( os.getcwd() + "/tempJson", "rb")
+    #f = open( "E:\\coding_workspace\\medusa_backend\\tempJson", "rb")
     stringReturn = f.read()
     
     return HttpResponse(stringReturn)
