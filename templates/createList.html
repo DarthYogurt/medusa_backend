@@ -16,7 +16,7 @@
             <button type="button" class="btn btn-info" id="removeStep" >Remove</button>
         </div>
         
-        <div id="create-steps">
+        <div id="create-steps" class="form-inline">
         	
         </div>
            
@@ -26,7 +26,11 @@
     </form>
 </div>
 
+<script>
+	//Loading Step Type variables, to be used in checklist.js
+	var stepType = [{% for x in stepType %}'{{ x|escapejs }}',{% endfor %}]
 
+</script>
 
 {% endblock %}
 

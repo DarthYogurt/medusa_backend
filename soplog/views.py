@@ -56,7 +56,15 @@ def metaView(request):
 
 
 def createList(request):
-    return render(request, 'createList.html')
+    var = {}
+    
+    var['stepType'] = StepType.objects.all()
+    print var
+    
+    t = get_template('createList.html')
+    c = Context(var)
+    return HttpResponse(t.render(c))
+    
 
 @csrf_exempt
 def upload(request):
