@@ -160,7 +160,7 @@ def showLog(request):
         temp['modifyTime'] = item.modifyTime
         variables['stepLog'].append(temp)
   
-    variables['stepLog'] = sorted(variables['stepLog'], key=lambda k: k['checklistLogId'], reverse=True)[:20]
+    variables['stepLog'] = sorted(variables['stepLog'], key=lambda k: k['checklistLogId'], reverse=True)   
     
     
     t = get_template('showLog.html')
