@@ -26,15 +26,6 @@ def testPost(request):
         theFile = request.FILES['data'].read()
         a = json.loads(theFile)
         
-    return HttpResponse()
-        
-#     to_return['store_message']= store_message
-#     print 'to_return=',to_return
-#     to_return['store_message']= store_message
-#     serialized = simplejson.dumps(to_return)
-    
-    
-    print "--------------------"
     return HttpResponse("Post exchange complete" + str(request.FILES))
     
 
@@ -51,7 +42,6 @@ def latestPost(request):
     stringReturn = f.read()
     return HttpResponse(stringReturn)
     
-
 def metaView(request):
     values = request.META.items()
     values.sort()
@@ -61,17 +51,19 @@ def metaView(request):
     return HttpResponse('<table>%s</table>' % '\n'.join(html))
 
 
+''' Above this is Testing purposes  ------------------------------------------------'''
+
+
+
 def createList(request):
-    return render(request, 'search_form.html')
+    return render(request, 'create.html')
 
 @csrf_exempt
 def upload(request):
-    
     dataString = request.FILES.get('data', "empty")
     if dataString == "empty":
         return HttpResponse("Post Data Empty")
     data = json.load(dataString)
-    
     
     #FILE WRITER TEMP ############################3333
     f = open("tempJson", "w")
@@ -90,10 +82,7 @@ def upload(request):
                           modifyTime=datetime.datetime.today()
                           )
     newLog.save()
-    
     for row in steps:
-        
-        
         if row['stepType'] == "bool":
             value = False
             if row['value'] == "True":
@@ -106,18 +95,13 @@ def upload(request):
                               )
             newBool.save()
         elif row['stepType'] == "double":
-#             print "-------------"
-#             print row
-#             print "-------------"
             newDouble = LogDouble(
                                   checklistLog = LogChecklist.objects.get(id=newLog.id),
                                   step = ChecklistStep.objects.get(id=row['stepId']),
                                   value = row['value'],
                                   modifyTime=datetime.datetime.today()
                                   )
-            
             newDouble.save()
-#             print newDouble.id
         elif row['stepType'] == "text":
             newText = LogText(
                               checklistLog = LogChecklist.objects.get(id=newLog.id),
@@ -126,9 +110,6 @@ def upload(request):
                               modifyTime=datetime.datetime.today()
                               )
             newText.save()
-        
-        
-        
     return HttpResponse("List Received")
 
 
