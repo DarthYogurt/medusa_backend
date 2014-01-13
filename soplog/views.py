@@ -3,6 +3,7 @@ from decimal import Context
 import inspect
 from itertools import chain
 import json
+import os
 from xml.dom.minidom import Document
 
 from django.conf import settings
@@ -44,6 +45,14 @@ def testGet(request):
         True
     return HttpResponse(s)
 
+def latestPost(request):
+#    f = open( os.getcwd() + "/tempJson", "rb")
+    f = open( "E:\\coding_workspace\\medusa_backend\\tempJson", "rb")
+    stringReturn = f.read()
+    
+    return HttpResponse(stringReturn)
+    
+
 def metaView(request):
     values = request.META.items()
     values.sort()
@@ -54,18 +63,24 @@ def metaView(request):
 
 
 def createList(request):
-    
     return render(request, 'search_form.html')
 
 @csrf_exempt
 def upload(request):
     
-    #can put if request.FILES.has_key['data']
     dataString = request.FILES.get('data', "empty")
     if dataString == "empty":
         return HttpResponse("Post Data Empty")
     data = json.load(dataString)
     
+    
+    #FILE WRITER TEMP ############################3333
+    f = open("tempJson", "w")
+    
+    f.write(str(data))
+    f.close()
+    ################################################3
+
     userId = data['userId']
     groupId = data['groupId']
     checklistId = data['checklistId']
@@ -107,7 +122,7 @@ def upload(request):
                               modifyTime=datetime.datetime.today()
                               )
             newText.save()
-    return HttpResponse(userId)
+    return HttpResponse()
 
 
 

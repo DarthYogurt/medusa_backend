@@ -14,7 +14,9 @@ urlpatterns = patterns('',
                         url(r'^createList/$', createList),
                         url(r'^upload/$', upload), 
                         url(r'^showLog/$', showLog),
+                        
                         #url(r'^listComplete/$',listComplete),
+                        url(r'^latestPost/$', latestPost),
                         url(r'^testPost/$', testPost),     
                         url(r'^testGet/$', testGet),              
 )
