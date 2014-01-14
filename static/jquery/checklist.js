@@ -15,6 +15,7 @@ function showUserOptions(){
 		var name = s.substring(0,s.indexOf("-"))
 		var option = document.createElement("option");
 		option.name = "userToNotify" + id;
+		option.value = id;
 		option.text = id + " " + name;
 		userToNotifySelect.appendChild(option);
 		
@@ -40,7 +41,7 @@ function addCreateStep(idNum){
 	
 	var selectType = document.createElement("select");
 	selectType.className = "form-control";
-	selectType.name="stepTypeId"+idNum;
+	selectType.name="stepType"+idNum;
 	for (var i=0;i<stepType.length;i++)
 	{ 
 		var option = document.createElement("option");
@@ -56,6 +57,7 @@ function addCreateStep(idNum){
 	description.placeholder = "description";
 	description.className = "form-control";
 	description.id = "desc"+idNum
+	description.name = "desc"+idNum
 	var descriptionDiv = document.createElement("div");
 	descriptionDiv.className = "col-sm-5";
 	descriptionDiv.appendChild(description);

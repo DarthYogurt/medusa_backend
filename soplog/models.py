@@ -23,6 +23,7 @@ class Checklist(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
     group = models.ForeignKey('Group')
+    notify = models.ForeignKey('User')
 #     categoryId = models.ForeignKey('Category')
     
     def __unicode__(self):

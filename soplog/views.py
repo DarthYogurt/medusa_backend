@@ -53,11 +53,43 @@ def metaView(request):
 
 ''' Above this is Testing purposes  ------------------------------------------------'''
 
+
 @csrf_exempt
 def listConfirm(request):
     post = request.POST
-    True
-    return HttpResponse(request.POST)
+#     for item in post:
+#         print item, post[item]
+
+        
+    checklistName = request.POST['checklistName']
+    groupId = request.POST['groupId']
+    userIdToNotify = request.POST['userIdToNotify']
+    totalSteps = int(request.POST['totalSteps'])
+    
+    newChecklist = Checklist(
+                             name = checklistName,
+                             group = Group.objects.get(id = groupId),
+                             notify = User.objects.get(id = userIdToNotify)
+                             )
+    newChecklist.save()
+    
+    print "HERE", type(Checklist.objects.get(id = newChecklist.id))
+    for i in range(totalSteps):
+        print request.POST['stepName'+str(i)]
+        print request.POST['stepType'+str(i)]
+        print request.POST['desc'+str(i)]
+        print "New checklist Id" , newChecklist.id
+        newStep = ChecklistStep(
+                                name = request.POST['stepName'+str(i)],
+                                order = i,
+                                description = request.POST['desc'+str(i)],
+                                checklist = Checklist.objects.get(id=newChecklist.id),
+                            
+                                stepType = StepType.objects.get(name=request.POST['stepType'+str(i)])                       
+                                )
+        newStep.save()
+    return HttpResponse("complete")
+
 
 @csrf_exempt
 def createList(request):
