@@ -56,5 +56,7 @@
 	//var existingChecklists = [{% for x in existingChecklists %}'{{ x|escapejs }}',{% endfor %}]
 </script>
 
+{% load staticfiles %}
+<script src="{% static "jquery/checklist.js" %}"></script>
 {% endblock %}
 

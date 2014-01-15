@@ -91,6 +91,18 @@ def listConfirm(request):
     return HttpResponse("complete")
 
 
+
+def analytics(request):
+    
+    groupId = 1
+    var = {}
+    #var['checklists'] = Checklist.objects.get(group=Group.objects.get(id=groupId)) #Uncomment after getting group to work 
+    var['checklist'] = Checklist.objects.all()  #Testing only
+    
+    t = get_template('analytics.html')
+    c = Context(var)
+    return HttpResponse(t.render(c))
+
 @csrf_exempt
 def createList(request):
     var = {}
