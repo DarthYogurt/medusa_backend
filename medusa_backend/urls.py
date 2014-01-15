@@ -15,6 +15,7 @@ urlpatterns = patterns('',
                         url(r'^listConfirm/$',listConfirm),
                         url(r'^upload/$', upload), 
                         url(r'^showLog/$', showLog),
+                        url(r'^analytics/$')
                         
                         #url(r'^listComplete/$',listComplete),
                         url(r'^latestPost/$', latestPost),
