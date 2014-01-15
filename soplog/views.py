@@ -98,6 +98,9 @@ def analytics(request):
     var = {}
     #var['checklists'] = Checklist.objects.get(group=Group.objects.get(id=groupId)) #Uncomment after getting group to work 
     var['checklist'] = Checklist.objects.all()  #Testing only
+    var['steps'] = ChecklistStep.objects.all()
+    var['stepLog'] = LogChecklist.objects.all()
+    var['logBool'] = LogBool.objects.all()
     
     t = get_template('analytics.html')
     c = Context(var)
