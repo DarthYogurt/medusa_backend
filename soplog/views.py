@@ -282,7 +282,7 @@ def checklistSteps(request, checklistId):
         temp = {}
         temp['name'] = step.name
         temp['id'] = step.id
-        temp['order'] = step.order
+        temp['order'] = int(step.order) + 1
         temp['type'] = step.stepType.name
         j['steps'].append(temp)
     return HttpResponse(json.dumps(j), content_type="application/json")
