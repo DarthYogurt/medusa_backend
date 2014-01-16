@@ -114,6 +114,7 @@ d3.xhr("/getStepLog/3/","application/json" ,function(error, data) {
 			// Bug empty set then do what?
 			data = [];
 			for ( bl in jsonData['boolLog']){
+			
 				if (jsonData['boolLog'][bl].step == jsonData['templateStep'][s].id){
 					if (jsonData['boolLog'][bl] == "true"){
 						data.push(1);	
@@ -123,6 +124,7 @@ d3.xhr("/getStepLog/3/","application/json" ,function(error, data) {
 					}
 				}
 			}
+			console.log(data);
 			
 			var graphBlock = document.createElement("div");
 			graphBlock.className = "col-md-12 chart";
