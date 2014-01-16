@@ -172,7 +172,28 @@ def upload(request):
             newText.save()
     return HttpResponse("List Received")
 
-
+def getStepLog(request, checklistId):
+    boolLog = LogBool.objects.order_by('id').filter(checklistLog = LogChecklist.objects.filter(checklist=Checklist.objects.get(id=checklistId)))
+    j = {}    
+    j['checklistId'] = int(checklistId)
+    j['templateStep'] = []
+    for x in ChecklistStep.objects.order_by('order').filter(checklist=Checklist.objects.get(id=checklistId)):
+        temp = {}
+        temp['id'] = x.id
+        temp['name'] = x.name
+        temp['order'] = x.order
+        temp['stepType'] = x.stepType.name
+        j['templateStep'].append(temp)
+        
+    j['boolLog'] = []
+    
+    for x in boolLog:
+        temp = {}
+        temp['id'] = x.id
+        temp['step'] = x.step.id
+        temp['value'] = x.value
+        j['boolLog'].append(temp)
+    return HttpResponse(json.dumps(j), content_type="application/json")
 
 def showLog(request):
     variables = {}
@@ -286,3 +307,10 @@ def checklistSteps(request, checklistId):
         temp['type'] = step.stepType.name
         j['steps'].append(temp)
     return HttpResponse(json.dumps(j), content_type="application/json")
+
+
+def homepage(request):
+    
+    t = get_template('home.html')
+    c = Context()
+    return HttpResponse(t.render(c))

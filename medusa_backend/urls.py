@@ -7,6 +7,7 @@ from soplog.views import *
 admin.autodiscover()
 
 urlpatterns = patterns('',
+                        url(r'^$', homepage),
                         url(r'^admin/', include(admin.site.urls)),
                         url(r'^checklist/$', checkList),
                         url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroup),   
@@ -16,6 +17,7 @@ urlpatterns = patterns('',
                         url(r'^upload/$', upload), 
                         url(r'^showLog/$', showLog),
                         url(r'^analytics/$', analytics),
+                        url(r'^getStepLog/(\d*)/$', getStepLog),
                         
                         #url(r'^listComplete/$',listComplete),
                         url(r'^latestPost/$', latestPost),

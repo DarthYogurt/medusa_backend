@@ -32,7 +32,7 @@
 
 <div class="container">
 	<div class="row">
-    	<div class="col-lg-3" style="border:dotted">
+    	<div class="col-lg-3" style=>
         	<div class="row">
             	<h4> Please select a Checklist</h4>
             </div>
@@ -44,9 +44,10 @@
 			{% endfor %}        	
         </div><!-- first column -->
         
-        <div class="col-lg-9" style="border:dotted">
-        	<div class="row" id="graph">
-            
+        <div class="col-lg-9" >
+        	
+        	<div class="row" id="graphArea">
+           
             </div> <!-- row, graph -->
             
         </div>
@@ -58,7 +59,19 @@
 
 
 
+<style>
 
+.chart rect {
+  fill: steelblue;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+</style>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
 // Test script
@@ -66,9 +79,86 @@
 //	.append("body")
 //		.html("HERE");
 
+d3.xhr("/getStepLog/3/","application/json" ,function(error, data) {
+	
+	jsonData = JSON.parse(data.response);
+	console.log(jsonData);
+	
+	var width = 870;
+	var barHeight = 20;
+	var x = d3.scale.linear()
+		.domain([0, d3.max(data)])
+		.range([0, width]);
+		
+		
+	for (s in jsonData['templateStep']){
+		
+		
+		if (jsonData['templateStep'][s].stepType == "bool"){	
+			// Title Block
+			var stepBlock = document.createElement("div");
+			stepBlock.className = "col-md-12";
+			
+			var titleRow = document.createElement("div");
+			titleRow.className = "row";
+			
+			var stepTitle = document.createElement("h4");
+			stepTitle.innerHTML = jsonData['templateStep'][s].name;
+			
+			titleRow.appendChild(stepTitle);
+			stepBlock.appendChild(titleRow);
+			
+			
+			//Graph Block
+			// Trying to get data = [1,2,3,4,5,6,7,8,9,14]
+			// Bug empty set then do what?
+			data = [];
+			for ( bl in jsonData['boolLog']){
+				if (jsonData['boolLog'][bl].step == jsonData['templateStep'][s].id){
+					if (jsonData['boolLog'][bl] == "true"){
+						data.push(1);	
+					}
+					else{
+						data.push(0);
+					}
+				}
+			}
+			
+			var graphBlock = document.createElement("div");
+			graphBlock.className = "col-md-12 chart";
+			//Graph it
+			
+			
+			
+			
+			
+			
+			//Graph End
+			
+			document.getElementById("graphArea").appendChild(stepBlock);
+			document.getElementById("graphArea").appendChild(graphBlock);
+		
+		
+		}
+		
+	
+		
+		
+		
+	}
+	
+	
+	
+	
+});
+
+
+
+
 </script>
 <script>
 
+/*
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 875 - margin.left - margin.right,
     height = 200 - margin.top - margin.bottom;
@@ -96,6 +186,8 @@ var svg = d3.select("#graph").append("svg")
 
 {% load staticfiles %}
 d3.tsv("{% static 'data.txt' %}", type, function(error, data) {
+												 
+													 
   x.domain(data.map(function(d) { return d.letter; }));
   y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
 
@@ -129,6 +221,6 @@ function type(d) {
   d.frequency = +d.frequency;
   return d;
 }
-
+*/
 </script>
 {% endblock %}
