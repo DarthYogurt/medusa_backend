@@ -98,9 +98,9 @@ def analytics(request):
     var = {}
     #var['checklists'] = Checklist.objects.get(group=Group.objects.get(id=groupId)) #Uncomment after getting group to work 
     var['checklist'] = Checklist.objects.all()  #Testing only
-    var['steps'] = ChecklistStep.objects.all()
-    var['stepLog'] = LogChecklist.objects.all()
-    var['logBool'] = LogBool.objects.all()
+    #var['steps'] = ChecklistStep.objects.all()
+    #var['stepLog'] = LogChecklist.objects.all()
+    #var['logBool'] = LogBool.objects.all()
     
     t = get_template('analytics.html')
     c = Context(var)
@@ -217,6 +217,7 @@ def showLog(request):
         temp = {}
         temp['id'] = item.id
         temp['checklistLogId'] = item.checklistLog.id
+        temp['checklistTemplateName'] = item.checklistLog.checklist.name
         temp['stepId'] = item.step
         temp['value'] = item.value
         temp['modifyTime'] = item.modifyTime
