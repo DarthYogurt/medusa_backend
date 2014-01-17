@@ -81,11 +81,47 @@
 
 var checklistTempalteId = 3;
 
-d3.xhr("/getLogData/"+checklistTemplateId,"application/json" ,function(error, data) {
+d3.xhr("/getLogData/"+checklistTempalteId,"application/json" ,function(error, data) {
 	
 
 	jsonData = JSON.parse(data.response);
 	console.log(jsonData);
+	
+	for (i in jsonData['logData']){
+		var stepBlock = document.createElement("div");
+		stepBlock.className = "col-md-12";
+		
+		var titleRow = document.createElement("div");
+		titleRow.className = "row";
+		
+		var stepTitle = document.createElement("h4");
+		stepTitle.innerHTML = jsonData['logData'][i].name;
+		
+		titleRow.appendChild(stepTitle);
+		stepBlock.appendChild(titleRow);
+		
+		
+		//Graph Block
+		// Trying to get data = [1,2,3,4,5,6,7,8,9,14]
+		
+		var graphBlock = document.createElement("div");
+		graphBlock.className = "col-md-12 chart";
+		//Graph it
+		var data = jsonData['logData'][i]['value'];
+		console.log(data);
+		
+		
+		
+		
+		
+		//Graph End
+		
+		document.getElementById("graphArea").appendChild(stepBlock);
+		document.getElementById("graphArea").appendChild(graphBlock);
+	}
+	
+	
+	
 	/*	
 	var width = 870;
 	var barHeight = 20;
@@ -225,5 +261,6 @@ function type(d) {
   return d;
 }
 */
+
 </script>
 {% endblock %}
