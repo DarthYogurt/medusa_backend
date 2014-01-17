@@ -79,11 +79,14 @@
 //	.append("body")
 //		.html("HERE");
 
-d3.xhr("/getStepLog/3/","application/json" ,function(error, data) {
+var checklistTempalteId = 3;
+
+d3.xhr("/getLogData/"+checklistTemplateId,"application/json" ,function(error, data) {
 	
+
 	jsonData = JSON.parse(data.response);
 	console.log(jsonData);
-	
+	/*	
 	var width = 870;
 	var barHeight = 20;
 	var x = d3.scale.linear()
@@ -149,7 +152,7 @@ d3.xhr("/getStepLog/3/","application/json" ,function(error, data) {
 	
 	
 	
-	
+	*/	
 });
 
 

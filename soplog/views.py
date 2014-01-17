@@ -172,6 +172,40 @@ def upload(request):
             newText.save()
     return HttpResponse("List Received")
 
+def getLogData(request, checklistId):
+    j = {}
+    templateStep = []
+    for x in ChecklistStep.objects.order_by('order').filter(checklist=Checklist.objects.get(id=checklistId)):
+        temp = {}
+        temp['id'] = x.id
+        temp['name'] = x.name
+        temp['order'] = x.order
+        temp['stepType'] = x.stepType.name
+        templateStep.append(temp)
+        
+    j['logChecklist'] = []
+    for x in LogChecklist.objects.filter(checklist= Checklist.objects.get(id=checklistId)):
+        j['logChecklist'].append(x.id)
+    
+    j['logData'] =[]
+    for x in templateStep:
+        t = {}
+        t['templateStepId'] = x['id']
+        t['name'] = x['name']
+        t['order'] = x['order']
+        t['stepType'] = x['stepType']
+        t['value'] = []
+        if x['stepType'] == "bool":
+            for y in LogBool.objects.filter(checklistLog = LogChecklist.objects.filter(id__in = j['logChecklist']) , step = ChecklistStep.objects.get(id=x['id'])):
+                if y.value == True:
+                    t['value'].append(1)
+                else:
+                    t['value'].append(0)                
+        j['logData'].append(t)   
+    return HttpResponse(json.dumps(j), content_type="application/json")
+
+
+'''
 def getStepLog(request, checklistId):
     boolLog = LogBool.objects.order_by('id').filter(checklistLog = LogChecklist.objects.filter(checklist=Checklist.objects.get(id=checklistId)))
     j = {}    
@@ -194,6 +228,9 @@ def getStepLog(request, checklistId):
         temp['value'] = x.value
         j['boolLog'].append(temp)
     return HttpResponse(json.dumps(j), content_type="application/json")
+'''
+
+
 
 def showLog(request):
     variables = {}

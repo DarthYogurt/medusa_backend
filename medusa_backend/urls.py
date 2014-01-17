@@ -17,7 +17,7 @@ urlpatterns = patterns('',
                         url(r'^upload/$', upload), 
                         url(r'^showLog/$', showLog),
                         url(r'^analytics/$', analytics),
-                        url(r'^getStepLog/(\d*)/$', getStepLog),
+                        url(r'^getLogData/(\d*)/$', getLogData),
                         
                         #url(r'^listComplete/$',listComplete),
                         url(r'^latestPost/$', latestPost),
