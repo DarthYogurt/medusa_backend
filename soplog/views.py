@@ -231,7 +231,6 @@ def showLog(request):
     return HttpResponse(t.render(c))
 
 
-# Create your views here.
 def checkList(request):
     #get groups
     variables = {}
@@ -304,7 +303,7 @@ def checklistSteps(request, checklistId):
         temp = {}
         temp['name'] = step.name
         temp['id'] = step.id
-        temp['order'] = int(step.order) + 1
+        temp['order'] = int(step.order)
         temp['type'] = step.stepType.name
         j['steps'].append(temp)
     return HttpResponse(json.dumps(j), content_type="application/json")
