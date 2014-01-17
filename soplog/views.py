@@ -73,12 +73,12 @@ def listConfirm(request):
                              )
     newChecklist.save()
     
-    print "HERE", type(Checklist.objects.get(id = newChecklist.id))
+    #print "HERE", type(Checklist.objects.get(id = newChecklist.id))
     for i in range(totalSteps):
-        print request.POST['stepName'+str(i)]
-        print request.POST['stepType'+str(i)]
-        print request.POST['desc'+str(i)]
-        print "New checklist Id" , newChecklist.id
+    #    print request.POST['stepName'+str(i)]
+     #   print request.POST['stepType'+str(i)]
+      #  print request.POST['desc'+str(i)]
+     #   print "New checklist Id" , newChecklist.id
         newStep = ChecklistStep(
                                 name = request.POST['stepName'+str(i)],
                                 order = i+1,
