@@ -81,7 +81,7 @@ def listConfirm(request):
         print "New checklist Id" , newChecklist.id
         newStep = ChecklistStep(
                                 name = request.POST['stepName'+str(i)],
-                                order = i,
+                                order = i+1,
                                 description = request.POST['desc'+str(i)],
                                 checklist = Checklist.objects.get(id=newChecklist.id),
                             
