@@ -200,15 +200,18 @@ def getLogData(request, checklistId):
         t['stepType'] = x['stepType']
         t['chartData'] = []
         if x['stepType'] == "bool":
+            counter = 1;
             for y in LogBool.objects.filter(checklistLog = LogChecklist.objects.filter(id__in = j['logChecklist']) , step = ChecklistStep.objects.get(id=x['id'])):
                 temp= {}
                 temp['checkLogId']= y.checklistLog.id
-                temp['time'] = y.checklistLog.modifyTime.strftime("%m-%d")
+                temp['modifyTime'] = y.checklistLog.modifyTime.strftime("%m-%d")
+                temp['counter'] = counter 
                 if y.value == True:
                     temp['value'] = 1     
                 else:
                     temp['value'] = 0
                 t['chartData'].append(temp)
+                counter +=1
         j['logData'].append(t)   
     return HttpResponse(json.dumps(j), content_type="application/json")
 
