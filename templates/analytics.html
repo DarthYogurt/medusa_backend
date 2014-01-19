@@ -99,7 +99,7 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 
-var checklistTempalteId = 3;
+var checklistTempalteId = 3;			//Temporary Value
 jsonData = JSON.parse(httpGet("/getLogData/"+checklistTempalteId));
 
 function graphData(jsonData) {
@@ -158,13 +158,7 @@ function graphData(jsonData) {
 			.attr("height", height + margin.top + margin.bottom)
 		  .append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-			
-		//console.log(svg);
-		
-		
-		
-		//d3.tsv("data.tsv", type, function(error, data) {
-										  
+							  
 		x.domain(data.map(function(d) { return d.modifyTime; }));
 		y.domain([0, d3.max(data, function(d) { return d.value; })]);
 		
@@ -183,7 +177,6 @@ function graphData(jsonData) {
 		  .style("text-anchor", "end")
 		  .text("True");
 		
-
 		svg.selectAll(".bar")
 		  .data(data)
 		.enter().append("rect")
@@ -193,20 +186,10 @@ function graphData(jsonData) {
 		  .attr("y", function(d) { return y(d.value); })
 		  .attr("height", function(d) { return height - y(d.value); })
 
-		  
-		//});
-		
 		function type(d) {
 		  d.frequency = +d.frequency;
 		  return d;
 		}
-				
-		
-		
-		
-		
-		
-
 		
 		//Graph End
 		document.getElementById("graphArea").appendChild(stepBlock);
