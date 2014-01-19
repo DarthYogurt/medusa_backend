@@ -1,32 +1,7 @@
 {% extends "header.html" %}
 {% block content %}
 
-<style>
 
-.bar {
-  fill: steelblue;
-}
-
-.bar:hover {
-  fill: brown;
-}
-
-.axis {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
-</style>
 
 
 
@@ -54,10 +29,6 @@
 
     </div><!-- row -->
 </div><!--container -->
-
-
-
-
 
 <style>
 
@@ -104,7 +75,7 @@ jsonData = JSON.parse(httpGet("/getLogData/"+checklistTempalteId));
 
 function graphData(jsonData) {
 	
-	console.log(jsonData);
+	//console.log(jsonData);
 	
 	for (i in jsonData['logData']){
 		var stepBlock = document.createElement("div");
@@ -133,6 +104,7 @@ function graphData(jsonData) {
 			width = 600 - margin.left - margin.right,
 			height = 200 - margin.top - margin.bottom;
 		
+	
 		var x = d3.scale.ordinal()
 			.rangeRoundBands([0, width], .1);
 		
@@ -143,14 +115,14 @@ function graphData(jsonData) {
 			.scale(x)
 			.orient("bottom");
 			
-		
+	
 		var yAxis = d3.svg.axis()
 			.scale(y)
 			.orient("left")
 			.ticks(1);
 		
 		var a = "#"+graphBlock.id
-		//console.log(String(a));   //Yields = #step-id-8 
+		//console.log(a);   //Yields = #step-id-8 
 		
 		/* MAJOR PROBLEM ###################*/
 		var svg = d3.select("#step-id-8").append("svg")
@@ -160,7 +132,7 @@ function graphData(jsonData) {
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 							  
 		x.domain(data.map(function(d) { return d.modifyTime; }));
-		y.domain([0, d3.max(data, function(d) { return d.value; })]);
+		y.domain([0, d3.max(data, function(data) { return data.value; })]);
 		
 		svg.append("g")
 		  .attr("class", "x axis")
@@ -185,11 +157,16 @@ function graphData(jsonData) {
 		  .attr("width", 45)
 		  .attr("y", function(d) { return y(d.value); })
 		  .attr("height", function(d) { return height - y(d.value); })
+/*
+		svg.append("text")
+			.data(data)
+			.attr("class", "x label")
+			.attr("text-anchor", "end")
+			.attr("x", function(data){ return width; })
+			.attr("y", height - 6)
+			.text("income per capita, inflation-adjusted (dollars)");
 
-		function type(d) {
-		  d.frequency = +d.frequency;
-		  return d;
-		}
+*/
 		
 		//Graph End
 		document.getElementById("graphArea").appendChild(stepBlock);
