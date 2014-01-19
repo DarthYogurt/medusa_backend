@@ -22,7 +22,7 @@ urlpatterns = patterns('',
                         #url(r'^listComplete/$',listComplete),
                         url(r'^latestPost/$', latestPost),
                         url(r'^testPost/$', testPost),     
-                        url(r'^testGet/$', testGet),              
+                        url(r'^test/$', test),              
 )
 
 

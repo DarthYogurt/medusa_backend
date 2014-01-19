@@ -61,14 +61,36 @@
 
 <style>
 
-.chart rect {
-  fill: steelblue;
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
+  width: 960px;
 }
 
-.chart text {
-  fill: white;
+.axis text {
   font: 10px sans-serif;
-  text-anchor: end;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+  fill-opacity: .9;
+}
+
+.x.axis path {
+  display: none;
+}
+
+label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 </style>
@@ -86,6 +108,35 @@ d3.xhr("/getLogData/"+checklistTempalteId,"application/json" ,function(error, da
 
 	jsonData = JSON.parse(data.response);
 	console.log(jsonData);
+	
+	
+	var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+	var formatPercent = d3.format(".0%");
+	
+	var x = d3.scale.ordinal()
+		.rangeRoundBands([0, width], .1, 1);
+	
+	var y = d3.scale.linear()
+		.range([height, 0]);
+	
+	var xAxis = d3.svg.axis()
+		.scale(x)
+		.orient("bottom");
+	
+	var yAxis = d3.svg.axis()
+		.scale(y)
+		.orient("left")
+		.tickFormat(formatPercent);
+	
+	var svg = d3.select("body").append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+	  .append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 	
 	for (i in jsonData['logData']){
 		var stepBlock = document.createElement("div");
@@ -105,14 +156,21 @@ d3.xhr("/getLogData/"+checklistTempalteId,"application/json" ,function(error, da
 		// Trying to get data = [1,2,3,4,5,6,7,8,9,14]
 		
 		var graphBlock = document.createElement("div");
-		graphBlock.className = "col-md-12 chart";
+		graphBlock.className = "col-md-12";
+		graphBlock.id = "stepId-"+jsonData['logData'][i]['templateStepId'];
 		//Graph it
 		var data = jsonData['logData'][i]['value'];
 		console.log(data);
 		
-		
-		
-		
+/*		
+		d3.select("stepId-"+jsonData['logData'][i]['templateStepId'])
+		  .selectAll("div")
+			.data(data)
+		  .enter().append("div")
+			.style("width", function(d) { return d * 10 + "px"; })
+			.text(function(d) { return d; });
+
+*/	
 		
 		//Graph End
 		
