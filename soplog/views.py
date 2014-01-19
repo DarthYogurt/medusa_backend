@@ -32,7 +32,7 @@ def test(request):
     t = get_template('test.html')
     c = Context()
     return HttpResponse(t.render(c))
-
+ 
 def testGet(request):
     s = ""
     for item in request.GET:
@@ -202,12 +202,10 @@ def getLogData(request, checklistId):
         if x['stepType'] == "bool":
             for y in LogBool.objects.filter(checklistLog = LogChecklist.objects.filter(id__in = j['logChecklist']) , step = ChecklistStep.objects.get(id=x['id'])):
                 temp= {}
-                temp['id']= y.checklistLog.id
+                temp['checkLogId']= y.checklistLog.id
                 temp['time'] = y.checklistLog.modifyTime.strftime("%m-%d")
-                
                 if y.value == True:
                     temp['value'] = 1     
-                    
                 else:
                     temp['value'] = 0
                 t['chartData'].append(temp)

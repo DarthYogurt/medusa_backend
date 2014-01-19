@@ -61,13 +61,15 @@
 
 <style>
 
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  position: relative;
-  width: 960px;
+.bar {
+  fill: steelblue;
 }
 
-.axis text {
+.bar:hover {
+  fill: brown;
+}
+
+.axis {
   font: 10px sans-serif;
 }
 
@@ -78,65 +80,31 @@ body {
   shape-rendering: crispEdges;
 }
 
-.bar {
-  fill: steelblue;
-  fill-opacity: .9;
-}
-
 .x.axis path {
   display: none;
 }
 
-label {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
 </style>
+
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-// Test script
-//d3.selectAll("div")
-//	.append("body")
-//		.html("HERE");
+
+function httpGet(theUrl)
+{
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false );
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
 
 var checklistTempalteId = 3;
+jsonData = JSON.parse(httpGet("/getLogData/"+checklistTempalteId));
 
-d3.xhr("/getLogData/"+checklistTempalteId,"application/json" ,function(error, data) {
+function graphData(jsonData) {
 	
-
-	jsonData = JSON.parse(data.response);
 	console.log(jsonData);
-	
-	
-	var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-	var formatPercent = d3.format(".0%");
-	
-	var x = d3.scale.ordinal()
-		.rangeRoundBands([0, width], .1, 1);
-	
-	var y = d3.scale.linear()
-		.range([height, 0]);
-	
-	var xAxis = d3.svg.axis()
-		.scale(x)
-		.orient("bottom");
-	
-	var yAxis = d3.svg.axis()
-		.scale(y)
-		.orient("left")
-		.tickFormat(formatPercent);
-	
-	var svg = d3.select("body").append("svg")
-		.attr("width", width + margin.left + margin.right)
-		.attr("height", height + margin.top + margin.bottom)
-	  .append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 	
 	for (i in jsonData['logData']){
 		var stepBlock = document.createElement("div");
@@ -154,171 +122,90 @@ d3.xhr("/getLogData/"+checklistTempalteId,"application/json" ,function(error, da
 		
 		//Graph Block
 		// Trying to get data = [1,2,3,4,5,6,7,8,9,14]
-		
 		var graphBlock = document.createElement("div");
 		graphBlock.className = "col-md-12";
 		graphBlock.id = "stepId-"+jsonData['logData'][i]['templateStepId'];
+		
 		//Graph it
-		var data = jsonData['logData'][i]['value'];
+		var data = jsonData['logData'][i]['chartData'];
 		console.log(data);
 		
-/*		
-		d3.select("stepId-"+jsonData['logData'][i]['templateStepId'])
-		  .selectAll("div")
-			.data(data)
-		  .enter().append("div")
-			.style("width", function(d) { return d * 10 + "px"; })
-			.text(function(d) { return d; });
 
-*/	
+		var margin = {top: 20, right: 20, bottom: 30, left: 40},
+			width = 960 - margin.left - margin.right,
+			height = 500 - margin.top - margin.bottom;
+		
+		var x = d3.scale.ordinal()
+			.rangeRoundBands([0, width], .1);
+		
+		var y = d3.scale.linear()
+			.range([height, 0]);
+		
+		var xAxis = d3.svg.axis()
+			.scale(x)
+			.orient("bottom");
+		
+		var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient("left")
+			.ticks(10, "%");
+		
+		var svg = d3.select("body").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+		  .append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+		d3.tsv("data.tsv", type, function(error, data) {
+		  x.domain(data.map(function(d) { return d.letter; }));
+		  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+		
+		  svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis);
+		
+		  svg.append("g")
+			  .attr("class", "y axis")
+			  .call(yAxis)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", 6)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Frequency");
+		
+		  svg.selectAll(".bar")
+			  .data(data)
+			.enter().append("rect")
+			  .attr("class", "bar")
+			  .attr("x", function(d) { return x(d.letter); })
+			  .attr("width", x.rangeBand())
+			  .attr("y", function(d) { return y(d.frequency); })
+			  .attr("height", function(d) { return height - y(d.frequency); });
+		
+		});
+		
+		function type(d) {
+		  d.frequency = +d.frequency;
+		  return d;
+		}
+				
+		
+		
+		
+		
+		
+
 		
 		//Graph End
-		
 		document.getElementById("graphArea").appendChild(stepBlock);
 		document.getElementById("graphArea").appendChild(graphBlock);
 	}
-	
-	
-	
-	/*	
-	var width = 870;
-	var barHeight = 20;
-	var x = d3.scale.linear()
-		.domain([0, d3.max(data)])
-		.range([0, width]);
-		
-		
-	for (s in jsonData['templateStep']){
-		
-		
-		if (jsonData['templateStep'][s].stepType == "bool"){	
-			// Title Block
-			var stepBlock = document.createElement("div");
-			stepBlock.className = "col-md-12";
-			
-			var titleRow = document.createElement("div");
-			titleRow.className = "row";
-			
-			var stepTitle = document.createElement("h4");
-			stepTitle.innerHTML = jsonData['templateStep'][s].name;
-			
-			titleRow.appendChild(stepTitle);
-			stepBlock.appendChild(titleRow);
-			
-			
-			//Graph Block
-			// Trying to get data = [1,2,3,4,5,6,7,8,9,14]
-			// Bug empty set then do what?
-			data = [];
-			for ( bl in jsonData['boolLog']){
-			
-				if (jsonData['boolLog'][bl].step == jsonData['templateStep'][s].id){
-					if (jsonData['boolLog'][bl] == "true"){
-						data.push(1);	
-					}
-					else{
-						data.push(0);
-					}
-				}
-			}
-			console.log(data);
-			
-			var graphBlock = document.createElement("div");
-			graphBlock.className = "col-md-12 chart";
-			//Graph it
-			
-			
-			
-			
-			
-			
-			//Graph End
-			
-			document.getElementById("graphArea").appendChild(stepBlock);
-			document.getElementById("graphArea").appendChild(graphBlock);
-		}
-		
-	
-		
-		
-		
-	}
-	
-	
-	
-	*/	
-});
-
-
-
-
-</script>
-<script>
-
-/*
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 875 - margin.left - margin.right,
-    height = 200 - margin.top - margin.bottom;
-
-var x = d3.scale.ordinal()
-    .rangeRoundBands([0, width], .1);
-
-var y = d3.scale.linear()
-    .range([height, 0]);
-
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
-
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .ticks(10, "%");
-
-var svg = d3.select("#graph").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-{% load staticfiles %}
-d3.tsv("{% static 'data.txt' %}", type, function(error, data) {
-												 
-													 
-  x.domain(data.map(function(d) { return d.letter; }));
-  y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
-
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Frequency");
-
-  svg.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) { return x(d.letter); })
-      .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.frequency); })
-      .attr("height", function(d) { return height - y(d.frequency); });
-
-});
-
-function type(d) {
-  d.frequency = +d.frequency;
-  return d;
 }
-*/
 
+
+graphData(jsonData);
 </script>
+
 {% endblock %}
