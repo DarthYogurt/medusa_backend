@@ -70,7 +70,7 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 
-var checklistTempalteId = 3;			//Temporary Value
+var checklistTempalteId = 6;			//Temporary Value
 jsonData = JSON.parse(httpGet("/getLogData/"+checklistTempalteId));
 
 function graphData(jsonData) {
