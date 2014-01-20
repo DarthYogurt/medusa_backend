@@ -70,7 +70,7 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 
-var checklistTempalteId = 6;			//Temporary Value
+var checklistTempalteId = 3;			//Temporary Value
 jsonData = JSON.parse(httpGet("/getLogData/"+checklistTempalteId));
 
 function graphData(jsonData) {
@@ -99,7 +99,7 @@ function graphData(jsonData) {
 		
 		//Graph it
 		var data = jsonData['logData'][i]['chartData'];
-		
+		console.log(data);
 		var margin = {top: 20, right: 20, bottom: 30, left: 40},
 			width = 600 - margin.left - margin.right,
 			height = 200 - margin.top - margin.bottom;
@@ -157,16 +157,15 @@ function graphData(jsonData) {
 		  .attr("width", 45)
 		  .attr("y", function(d) { return y(d.value); })
 		  .attr("height", function(d) { return height - y(d.value); })
-/*
+
 		svg.append("text")
-			.data(data)
 			.attr("class", "x label")
-			.attr("text-anchor", "end")
+			.attr("text-anchor", "beginning")
 			.attr("x", function(data){ return width; })
 			.attr("y", height - 6)
-			.text("income per capita, inflation-adjusted (dollars)");
+			.text(data.checkLogId);
 
-*/
+
 		
 		//Graph End
 		document.getElementById("graphArea").appendChild(stepBlock);

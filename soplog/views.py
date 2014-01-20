@@ -125,6 +125,7 @@ def createList(request):
 @csrf_exempt
 def upload(request):
     dataString = request.FILES.get('data', "empty")
+    print request.FILES
     if dataString == "empty":
         return HttpResponse("Post Data Empty")
     data = json.load(dataString)
