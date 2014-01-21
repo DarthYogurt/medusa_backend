@@ -22,12 +22,8 @@ function showUserOptions(){
 	}
 }
 
-
-
-
 function addCreateStep(idNum){
-
-	
+	//STRAT FIRST ROW
 	var stepNum = document.createElement("label");
 	stepNum.innerHTML = idNum+1;
 	var stepNumDiv = document.createElement("div");
@@ -68,20 +64,64 @@ function addCreateStep(idNum){
 	
 	var divRow = document.createElement("div");
 	divRow.className = "row form-group";
-	divRow.id = "groupStepId"+idNum;
 	divRow.appendChild(stepNumDiv);
 	divRow.appendChild(stepNameDiv);
 	divRow.appendChild(selectTypeDiv);
 	divRow.appendChild(descriptionDiv);
+	//END FIRST ROW
 	
-	var createStepsDiv = document.getElementById("create-steps");
-	createStepsDiv.appendChild(divRow);
+	// Second level buttons, show hide external 
+	var extraNoteRow = document.createElement("div");
+	extraNoteRow.className = "row form-group";
+	
+	//hideCheckbox
+	var noteColEmpty = document.createElement("div");
+	noteColEmpty.className = "col-sm-1";
+	
+	var hideCol = document.createElement("div");
+	hideCol.className = "col-sm-2";
+	var hideDiv = document.createElement("div");
+	hideDiv.className="checkbox";
+	var hideLabel = document.createElement("label");
+	hideLabel.innerHTML = "Hide ";
+	var hideInput = document.createElement("input");
+	hideInput.type = "checkbox";
+	hideLabel.appendChild(hideInput);
+	hideDiv.appendChild(hideLabel);
+	hideCol.appendChild(hideDiv);
+	
+	//Required Checkbox
+	var reqCheckboxCol = document.createElement("div");
+	reqCheckboxCol.className = "col-sm-2";
+	var reqCheckboxDiv = document.createElement("div");
+	reqCheckboxDiv.className = "checkbox";
+	var reqLabel = document.createElement("label");
+	reqLabel.innerHTML = "Required";
+	var reqInput = document.createElement("input");
+	reqInput.type = "checkbox";
+	reqInput.onclick = function (currId){
+		test(currId);
+	}
+	
+	
+	reqLabel.appendChild(reqInput);
+	reqCheckboxDiv.appendChild(reqLabel);
+	reqCheckboxCol.appendChild(reqCheckboxDiv);
+
+	extraNoteRow.appendChild(noteColEmpty);
+	extraNoteRow.appendChild(hideCol);
+	extraNoteRow.appendChild(reqCheckboxCol);
+	
+	var divCreateCol = document.createElement("div");
+	divCreateCol.className = "col-sm-12";
+	divCreateCol.id = "groupStepId"+idNum;
+	
+	divCreateCol.appendChild(divRow);
+	divCreateCol.appendChild(extraNoteRow);
 	
 	document.getElementById("totalSteps").value=currId;
-	
-	
-	
-	
+	var createStepsDiv = document.getElementById("create-steps");
+	createStepsDiv.appendChild(divCreateCol);
 };
 
 function deleteStep(){
@@ -101,7 +141,6 @@ $("#removeStep").click(function() {
 	deleteStep();
 	currId --;
 	document.getElementById("totalSteps").value=currId+1;
-	
 });
 
 $("#addStep").click(function() {
@@ -110,6 +149,10 @@ $("#addStep").click(function() {
 	document.getElementById("totalSteps").value=currId+1;
 });
 
+
+function test(currId){
+	console.log("outside");	
+};
 
 document.addEventListener('keydown', function(e){
                 if( e.keyCode == '9' && e.srcElement.className.indexOf("tab-to-add") > 0 ){
