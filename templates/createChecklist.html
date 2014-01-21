@@ -1,9 +1,6 @@
 {% extends "header.html" %}
 {% block content %}
 
-
-
-
 <div class="container">
 	<div class="row">
     	<div class="col-lg-3">
@@ -57,5 +54,12 @@
 </script>
 
 
+{% load staticfiles %}
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!--- <script src="{% static "jquery/jquery.js" %}"></script> --->
+<script src="{% static "jquery/jquery-2.0.2.js" %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+<script src="{% static "jquery/createChecklist.js" %}"></script>
 {% endblock %}
 

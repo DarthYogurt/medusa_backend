@@ -23,7 +23,11 @@ function showUserOptions(){
 }
 
 
+
+
 function addCreateStep(idNum){
+
+	
 	var stepNum = document.createElement("label");
 	stepNum.innerHTML = idNum+1;
 	var stepNumDiv = document.createElement("div");
@@ -55,7 +59,7 @@ function addCreateStep(idNum){
 	
 	var description = document.createElement("input");
 	description.placeholder = "description";
-	description.className = "form-control";
+	description.className = "form-control tab-to-add";
 	description.id = "desc"+idNum
 	description.name = "desc"+idNum
 	var descriptionDiv = document.createElement("div");
@@ -74,6 +78,10 @@ function addCreateStep(idNum){
 	createStepsDiv.appendChild(divRow);
 	
 	document.getElementById("totalSteps").value=currId;
+	
+	
+	
+	
 };
 
 function deleteStep(){
@@ -103,4 +111,10 @@ $("#addStep").click(function() {
 });
 
 
-
+document.addEventListener('keydown', function(e){
+                if( e.keyCode == '9' && e.srcElement.className.indexOf("tab-to-add") > 0 ){
+                    currId ++;
+					addCreateStep(currId);
+					document.getElementById("totalSteps").value=currId+1;
+                }
+            }, false);

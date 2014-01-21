@@ -111,13 +111,13 @@ def analytics(request):
     return HttpResponse(t.render(c))
 
 @csrf_exempt
-def createList(request):
+def createChecklist(request):
     var = {}
     var['stepType'] = StepType.objects.all()
     var['users'] = User.objects.all()
     var['existingChecklists'] = Checklist.objects.all()
     
-    t = get_template('createList.html')
+    t = get_template('createChecklist.html')
     c = Context(var)
     return HttpResponse(t.render(c))
     
