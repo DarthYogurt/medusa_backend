@@ -99,10 +99,9 @@ function addCreateStep(idNum){
 	reqLabel.innerHTML = "Required";
 	var reqInput = document.createElement("input");
 	reqInput.type = "checkbox";
-	reqInput.onclick = function (currId){
-		test(currId);
+	reqInput.onclick = function (e){
+		addReqConstraints(e);
 	}
-	
 	
 	reqLabel.appendChild(reqInput);
 	reqCheckboxDiv.appendChild(reqLabel);
@@ -150,9 +149,59 @@ $("#addStep").click(function() {
 });
 
 
-function test(currId){
-	console.log("outside");	
+function addReqConstraints(e){
+	
+	var currType = e.srcElement.offsetParent.offsetParent.children[0].children[2].children[0].value;  //To get Bool, double or image - Step Type
+	var parentElement = e.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode; //add new section to this node
+	
+	if (currType == "bool"){
+		
+		var rowGroup = document.createElement("div");
+		rowGroup.className = "row form-group";
+		
+		var textCol = document.createElement("div");
+		textCol.className="col-sm-3";
+		textCol.id = 0;
+		textCol.innerHTML = "Required Text if:";
+		
+		var trueFalseCol = document.createElement("div");
+		trueFalseCol.className = "col-sm-4";
+		
+		
+		var trueText = document.createElement("div");
+		trueText.innerHTML = "True";
+		var checkTrue = document.createElement("input");
+		checkTrue.type = "checkbox";
+		checkTrue.name = "STEP NUM NAME + CHECKBOX";
+		trueText.appendChild(checkTrue);
+			
+		var falseText = document.createElement("div");
+		falseText.innerHTML = "False";
+		var checkFalse= document.createElement("input");
+		checkFalse.type = "checkbox";
+		//NAme /ID
+		falseText.appendChild(checkFalse);
+		
+		trueFalseCol.appendChild(trueText);
+		trueFalseCol.appendChild(falseText);
+		
+		
+		
+		var empty = document.createElement("div")
+		empty.className = "col-sm-1";
+		
+		rowGroup.appendChild(empty);
+		rowGroup.appendChild(textCol);
+		rowGroup.appendChild(trueFalseCol);
+		
+		parentElement.appendChild(rowGroup);
+	}
+	
+	
+	
 };
+
+
 
 document.addEventListener('keydown', function(e){
                 if( e.keyCode == '9' && e.srcElement.className.indexOf("tab-to-add") > 0 ){
