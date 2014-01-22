@@ -10,3 +10,6 @@ admin.site.register(List)
 admin.site.register(ListNotify)
 admin.site.register(ListStep)
 admin.site.register(StepType)
+
+
+admin.site.register(TestImage)

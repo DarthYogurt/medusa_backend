@@ -1,7 +1,8 @@
 from django.db import models
+from django.forms.models import ModelForm
+
 
 # Create your models here.
-
 class User(models.Model):
     ''' currently not connected to Group 
     '''
@@ -57,4 +58,15 @@ class StepType(models.Model):
     
     def __unicode__(self):
         return self.name
+    
+
+class TestImage(models.Model):
+    image = models.FileField()
+    
+class ImageForm(ModelForm):
+    class Meta:
+        model = TestImage
+        fields = ['image']
+    
+    
     

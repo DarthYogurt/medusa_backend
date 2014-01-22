@@ -112,7 +112,7 @@ STATICFILES_DIRS = (
 
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
-MEDIA_ROOT = PROJECT_PATH + '/static/media/'
+MEDIA_ROOT = PROJECT_PATH + '/media/'
 
 TEMPLATE_DIRS = {
                  #'/home/django/medusa/templates',
