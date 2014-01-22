@@ -5,7 +5,7 @@ class User(models.Model):
     ''' currently not connected to Group 
     '''
     name = models.CharField(max_length=30)
-    phone = models.IntegerField()
+    phone = models.CharField(max_length=15)
     email = models.CharField(max_length=30)
     
     def __unicode__(self):
@@ -14,37 +14,67 @@ class User(models.Model):
 # Create your models here.
 class Group(models.Model):
     name = models.CharField(max_length=30)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     
     def __unicode__(self):
         return self.name
 
-class Checklist(models.Model):
+#Tempalte Checklist
+class List(models.Model):
     name = models.CharField(max_length=50)
-    description = models.TextField()
-    group = models.ForeignKey('Group')
-    notify = models.ForeignKey('User')
+    description = models.TextField(blank=True)
+    group = models.ForeignKey('Group',blank=True, null=True)
+    
+    def __unicode__(self):
+        return str(self.id) + self.name
+
+class ListNotify(models.Model):
+    list = models.ForeignKey('List')
+    user = models.ForeignKey('User')
 #     categoryId = models.ForeignKey('Category')
     
-    def __unicode__(self):
-        return str(self.id) + "-" + self.name + " - " + str(self.group)
-    
-class ChecklistStep(models.Model):
+    #def __unicode__(self):
+    #    return str(self.id) + "-" + self.name + " - " + str(self.group)
+
+class ListStep(models.Model):
     name = models.CharField(max_length=50)
     order = models.IntegerField()
-    description = models.TextField()
-    checklist = models.ForeignKey('Checklist')
+    description = models.TextField(blank=True)
+    list = models.ForeignKey('List')
     stepType = models.ForeignKey('StepType')
+    notifyUser = models.ForeignKey("User")
+    requireText = models.BooleanField(blank=True)
+    requireImage = models.BooleanField(blank=True)
+    ifValueTrue = models.BooleanField(blank=True)
+    ifValueFalse = models.BooleanField(blank=True)
+    ifGreaterThan = models.FloatField(blank=True)
+    ifLessThan = models.FloatField(blank=True)
+    ifEqualTo = models.FloatField(blank=True)
     
+
     def __unicode__(self):
         return str(self.order) + " " + self.name+"-id:"+str(self.id)
+
+'''
+class ListStepNotify(models.Model):
+    listStep = models.ForeignKey("ListStep")
+    user = models.ForeignKey("User",blank=True)
+    ifValueTrue = models.BooleanField(blank=True)
+    ifValueFalse = models.BooleanField(blank=True)
+    ifGreaterThan = models.FloatField(blank=True)
+    ifLessThan = models.FloatField(blank=True)
+    ifEqualTo = models.FloatField(blank=True)
+'''
     
 class StepType(models.Model):
     name = models.CharField(max_length=10)
     
     def __unicode__(self):
         return self.name
- 
+    
+
+    
+'''
 class LogChecklist(models.Model):
     checklist = models.ForeignKey('Checklist')   # The referencing Checklist
     user = models.ForeignKey('User', null=True)
@@ -81,7 +111,7 @@ class LogFile(models.Model):
     step = models.ForeignKey('ChecklistStep')
     #value = models.CharField(max_length=40)
     modifyTime = models.DateTimeField(null=True)
-     
+'''   
 # class LogAudio(models.Model):
 #     checklistLog = models.ForeignKey('LogChecklist')
 #     value = models.CharField(max_length=40)
