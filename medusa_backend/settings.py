@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'soplog'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -107,3 +108,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+
+MEDIA_ROOT = PROJECT_PATH + '/static/media/'
+
+TEMPLATE_DIRS = (
+    PROJECT_PATH + '/static/templates/'
+)
+
