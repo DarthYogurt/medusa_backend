@@ -114,7 +114,9 @@ PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 MEDIA_ROOT = PROJECT_PATH + '/static/media/'
 
-TEMPLATE_DIRS = (
-    PROJECT_PATH + '/static/templates/'
-)
+TEMPLATE_DIRS = {
+                 #'/home/django/medusa/templates',
+                 #'E:/coding_workspace/medusa_backend/templates',
+                 os.path.join(os.path.dirname(__file__),'../static/templates'),
+}
 

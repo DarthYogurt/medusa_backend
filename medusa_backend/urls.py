@@ -13,11 +13,16 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', homepage)
-#     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', homepage),
+    url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroupId),
+    url(r'^checklist/checklistid/(\d*)/$', checklistSteps),
+    
+    
+    url(r'^testPost/$', testPost),   
+     
 #     url(r'^checklist/$', checkList),
-#     url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroup),   
-#     url(r'^checklist/checklistid/(\d*)/$', checklistSteps),
+
+#     
 #     url(r'^createChecklist/$', createChecklist),
 #     url(r'^listConfirm/$',listConfirm),
 #     url(r'^upload/$', upload), 

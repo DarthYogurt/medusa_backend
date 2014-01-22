@@ -32,7 +32,7 @@ class ListNotify(models.Model):
     user = models.ForeignKey('User')
     
     def __unicode__(self):
-        return str(str(self.id) + " - "+ self.list.name + "-" )
+        return str(str(self.id) + " - "+ self.list.name + "-" + self.user.name )
     
 
 class ListStep(models.Model):
