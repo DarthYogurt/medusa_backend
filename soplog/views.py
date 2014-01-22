@@ -48,7 +48,7 @@ def checklistSteps(request, checklistId):
         temp['requireText'] = step.requireText
         temp['requireImage'] = step.requireImage
         
-        if step.ifValueTrue != None:        
+        if step.requireOnBooleanValue != None:        
             temp['requireOnBooleanValue'] = step.requireOnBooleanValue
         
         
