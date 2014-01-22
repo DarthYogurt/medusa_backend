@@ -44,14 +44,14 @@ def checklistSteps(request, checklistId):
         temp['order'] = int(step.order)
         temp['type'] = step.stepType.name
         temp['notifyUserId'] = step.notifyUser.id
-        temp['require'] = {}
-        temp['require']['requireText'] = step.requireText
-        temp['require']['requireImage'] = step.requireImage
-        temp['require']['ifValueTrue'] = step.ifValueTrue
-        temp['require']['ifValueFalse'] = step.ifValueFalse
-        temp['require']['ifGreaterthan'] = step.ifGreaterThan
-        temp['require']['ifLessThan'] = step.ifLessThan
-        temp['require']['ifEqualTo'] = step.ifEqualTo
+       
+        temp['requireText'] = step.requireText
+        temp['requireImage'] = step.requireImage
+        temp['ifValueTrue'] = step.ifValueTrue
+        temp['ifValueFalse'] = step.ifValueFalse
+        temp['ifGreaterthan'] = step.ifGreaterThan
+        temp['ifLessThan'] = step.ifLessThan
+        temp['ifEqualTo'] = step.ifEqualTo
         j['steps'].append(temp)
     return HttpResponse(json.dumps(j), content_type="application/json")
 
