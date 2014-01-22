@@ -1,0 +1,64 @@
+{% extends "header.html" %}
+{% block content %}
+  
+{{ checklistStep}}
+{{ stepType}}
+<script>
+	
+	//var obs = ;
+	//console.log(obs);
+	console.log("Hi");
+	
+</script>
+ 
+
+<div class="container">
+	<div class="row">
+    	<div class="col-md-4">
+        	{% for cl in checklist %}
+            	<div> #{{ cl.id }}: {{ cl.name }}  </div>
+            {% endfor %}
+            
+        </div>
+        <div class="col-md-8">
+        	{% for s in checklistStep %}		
+            	<form class="form-inline" roll="form" >
+                	<div class="row form-row">
+                        <div class="col-xs-2">
+                            <input class="form-control" name="checklistId" value="{{ s.checklistId }}" />
+                        </div>
+                        <div class="col-xs-6">
+                            <input class="form-control" name="checklistName" value="{{ s.name }}" />
+                        </div> 
+                        <div class="form-group">
+                       		<select class="form-control" name="stepType" />
+                        	{% for st in stepType %}
+								<option value="{{ st.id }}" {% if st.id == s.stepTypeId %} selected="selected" {% endif %} > {{ st.name }} </option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                        	<div class="col-sm-offset-2 col-sm-10">
+                              <button type="submit" class="btn btn-default">Modify</button>
+                            </div>
+                        </div>    
+                	</div>
+				</form> <!--- Form --->
+        
+            {% endfor %}
+        </div>
+    </div>
+</div> <!-- /container -->
+
+
+{% load staticfiles %}
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!--- <script src="{% static "jquery/jquery.js" %}"></script> --->
+<script src="{% static "jquery/jquery-2.0.2.js" %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+
+
+
+
+{% endblock %}
