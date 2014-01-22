@@ -12,4 +12,4 @@ admin.site.register(ListStep)
 admin.site.register(StepType)
 
 
-admin.site.register(TestImage)
+#admin.site.register(TestImage)
