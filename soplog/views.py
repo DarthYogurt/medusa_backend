@@ -47,11 +47,19 @@ def checklistSteps(request, checklistId):
        
         temp['requireText'] = step.requireText
         temp['requireImage'] = step.requireImage
-        temp['ifValueTrue'] = step.ifValueTrue
-        temp['ifValueFalse'] = step.ifValueFalse
-        temp['ifGreaterthan'] = step.ifGreaterThan
-        temp['ifLessThan'] = step.ifLessThan
-        temp['ifEqualTo'] = step.ifEqualTo
+        
+        if step.ifValueTrue != None:
+            temp['ifValueTrue'] = step.ifValueTrue
+        if step.ifValueFalse != None:
+            temp['ifValueFalse'] = step.ifValueFalse
+        
+        
+        if step.ifGreaterThan != None:
+            temp['ifGreaterthan'] = step.ifGreaterThan
+        if step.ifLessThan != None:
+            temp['ifLessThan'] = step.ifLessThan
+        if step.ifEqualTo != None:
+            temp['ifEqualTo'] = step.ifEqualTo
         j['steps'].append(temp)
     return HttpResponse(json.dumps(j), content_type="application/json")
 
