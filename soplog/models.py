@@ -60,13 +60,13 @@ class StepType(models.Model):
         return self.name
     
 
-class TestImage(models.Model):
-    image = models.FileField()
-    
-class ImageForm(ModelForm):
-    class Meta:
-        model = TestImage
-        fields = ['image']
+# class TestFile(models.Model):
+#     image = models.FileField()
+#     
+# class FileForm(ModelForm):
+#     class Meta:
+#         model = TestFile
+#         fields = ['image']
     
     
     

@@ -57,18 +57,18 @@ def checklistSteps(request, checklistId):
 
 
 
-@csrf_exempt
-def testPost(request):    
-    theFile = None
-    if request.FILES.has_key('data'):
-        theFile = request.FILES['data'].read()
-        a = json.loads(theFile)
-        
-    image = request.FILES['image']
-    
-    if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            # file is saved
-            form.save()
-    return HttpResponse("Post exchange complete" + str(request.FILES))
+# @csrf_exempt
+# def testPost(request):    
+#     theFile = None
+#     if request.FILES.has_key('data'):
+#         theFile = request.FILES['data'].read()
+#         a = json.loads(theFile)
+#         
+#     image = request.FILES['image']
+#     
+#     if request.method == 'POST':
+#         form = ImageForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             # file is saved
+#             form.save()
+#     return HttpResponse("Post exchange complete" + str(request.FILES))

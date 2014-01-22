@@ -18,8 +18,8 @@ urlpatterns = patterns('',
     url(r'^checklist/checklistid/(\d*)/$', checklistSteps),
     
     
-    url(r'^testPost/$', testPost),   
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
+#     url(r'^testPost/$', testPost),   
+#     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
 
      
 #     url(r'^checklist/$', checkList),
