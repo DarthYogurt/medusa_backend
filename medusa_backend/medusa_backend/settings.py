@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '82%vm1eckbp-@8j7ji*=5u$u*ucte#(hsk^n%zdr8vuabv#!3t'
+SECRET_KEY = 'h@yql@jctakzbuqo1ebh#bffbi94a2xz)a%%-wpu%pp3^bysn6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,8 +39,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #Models go here
-    'soplog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -59,8 +57,8 @@ WSGI_APPLICATION = 'medusa_backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES ={}
 
+DATABASES = {}
 if socket.gethostname() != "dev.darthyogurt.com":
     DATABASES = {
                   
@@ -103,15 +101,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
-#STATIC_URL = '/static/'
+
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
-
-TEMPLATE_DIRS = {
-                 #'/home/django/medusa/templates',
-                 #'E:/coding_workspace/medusa_backend/templates',
-                 os.path.join(os.path.dirname(__file__),'../templates'),
-}
