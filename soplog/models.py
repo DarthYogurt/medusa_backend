@@ -1,3 +1,4 @@
+from django import forms
 from django.db import models
 from django.forms.models import ModelForm
 
@@ -96,13 +97,21 @@ class LogText(models.Model):
 #     modifyTime = models.DateTimeField(null=True)
 #      
 
-class TestFile(models.Model):
-    file = models.FileField(upload_to='../media/%Y/%m/%d')
-     
-class TestFileForm(ModelForm):
-    class Meta:
-        model = TestFile
-        fields = ['file']
+# class TestFile(models.Model):
+#     file = models.FileField(upload_to='../media/%Y/%m/%d')
+#      
+# class TestFileForm(ModelForm):
+#     class Meta:
+#         model = TestFile
+#         fields = ['file']
     
+class TestFile(models.Model):
+    docfile = models.FileField(upload_to='../media/%Y/%m/%d')
+    
+class TestFileForm(forms.Form):
+    docfile = forms.FileField(
+        label='Select a file',
+        help_text='max. 42 megabytes'
+    )
     
     
