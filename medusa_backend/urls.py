@@ -19,7 +19,9 @@ urlpatterns = patterns('',
     url(r'^upload/$', upload), 
     
     
-    url(r'^testPost/$', testPost),   
+#     url(r'^testPost/$', testPost),
+    url(r'^testFile/$', testFile),  
+    url(r'^latestPost/$', latestPost),
 #     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
 
      

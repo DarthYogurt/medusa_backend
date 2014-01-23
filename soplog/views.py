@@ -1,4 +1,5 @@
 import json
+import os
 
 from django.http.response import HttpResponse
 from django.template.context import Context
@@ -122,7 +123,22 @@ def upload(request):
     return HttpResponse(dataString)
     return HttpResponse("List Received")
 
-
+@csrf_exempt
+def testFile(request):
+    theFile = None
+    if request.FILES.has_key('data'):
+        theFile = request.FILES['data'].read()
+        a = json.loads(theFile)
+           
+    image = request.FILES['image']
+       
+    if request.method == 'POST':
+        form = TestFileForm(image)
+        if form.is_valid():
+            # file is saved
+            form.save()
+    return HttpResponse("Post exchange complete" + str(request.FILES))
+    
 
 # @csrf_exempt
 # def testPost(request):    
@@ -139,3 +155,11 @@ def upload(request):
 #             # file is saved
 #             form.save()
 #     return HttpResponse("Post exchange complete" + str(request.FILES))
+
+
+def latestPost(request):
+    f = open( os.getcwd() + "/tempJson", "rb")
+    #f = open( "E:\\coding_workspace\\medusa_backend\\tempJson", "rb")
+    stringReturn = f.read()
+    return HttpResponse(stringReturn)
+    

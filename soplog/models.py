@@ -96,13 +96,13 @@ class LogText(models.Model):
 #     modifyTime = models.DateTimeField(null=True)
 #      
 
-# class TestFile(models.Model):
-#     image = models.FileField()
-#     
-# class FileForm(ModelForm):
-#     class Meta:
-#         model = TestFile
-#         fields = ['image']
+class TestFile(models.Model):
+    file = models.FileField(upload_to='../media/%Y/%m/%d')
+     
+class TestFileForm(ModelForm):
+    class Meta:
+        model = TestFile
+        fields = ['file']
     
     
     
