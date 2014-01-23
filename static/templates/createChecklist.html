@@ -1,0 +1,65 @@
+{% extends "header.html" %}
+{% block content %}
+
+<div class="container">
+	<div class="row">
+    	<div class="col-lg-3">
+        	<label> Existing Checklists</label>
+            {% for row in existingChecklists %}
+            	<div class="row">
+                	<div class="col-md-12">
+                	{{ row }}
+                    </div>
+                </div> 
+        	{% endfor %}
+        </div>
+        <div class="col-lg-9">
+            <form  action="/listConfirm/" method="post" role="form" >
+                <div class="form-group">
+              		<div class="row">
+                    	<div class="col-lg-8">
+                            <label> Checklist Name </label>
+                            <input type="text" name="checklistName" class="form-control" placeholder="Name of New Checklist">
+                       </div>
+                       <div class="col-lg-4">
+                            <label> User to notify:  </label>
+                            <select id="userToNotify" name="userIdToNotify" class="form-control"> </select>
+                       </div>
+                    </div>
+                </div>
+                <label> Steps </label>
+                <div class="form-group">
+                    <button type="button" class="btn btn-info" id="addStep" >Add Step</button>
+                    <button type="button" class="btn btn-info" id="removeStep" >Remove</button>
+                </div>
+                
+                <div id="create-steps" class="row form-group">
+                </div>
+                
+                <input type="hidden" name="totalSteps" id="totalSteps" value=1 /> 
+                <input type="hidden" name="groupId" value=1 />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-info" >Submit</button>
+                </div>
+            </form>
+         </div>
+     </div> <!-- end row -->
+</div>
+
+<script>
+	//Loading Step Type variables, to be used in checklist.js
+	var stepType = [{% for x in stepType %}'{{ x|escapejs }}',{% endfor %}]
+	var users = [{% for x in users %}'{{ x|escapejs }}',{% endfor %}]
+	//var existingChecklists = [{% for x in existingChecklists %}'{{ x|escapejs }}',{% endfor %}]
+</script>
+
+
+{% load staticfiles %}
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!--- <script src="{% static "jquery/jquery.js" %}"></script> --->
+<script src="{% static "jquery/jquery-2.0.2.js" %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+<script src="{% static "jquery/createChecklist.js" %}"></script>
+{% endblock %}
+
