@@ -89,12 +89,12 @@ class LogText(models.Model):
     value = models.TextField()
     modifyTime = models.DateTimeField(null=True)
  
-class LogFile(models.Model):
-    logList = models.ForeignKey('LogList')
-    step = models.ForeignKey('ListStep')
-    file = models.FileField(upload_to='../media/%Y/%m/%d')
-    modifyTime = models.DateTimeField(null=True)
-     
+# class LogFile(models.Model):
+#     logList = models.ForeignKey('LogList')
+#     step = models.ForeignKey('ListStep')
+#     file = models.FileField(upload_to='../media/%Y/%m/%d')
+#     modifyTime = models.DateTimeField(null=True)
+#      
 
 # class TestFile(models.Model):
 #     image = models.FileField()
