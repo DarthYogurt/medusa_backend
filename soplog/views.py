@@ -1,8 +1,10 @@
 import json
 import os
 
-from django.http.response import HttpResponse
-from django.template.context import Context
+from django.core.urlresolvers import reverse
+from django.http.response import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.template.context import Context, RequestContext
 from django.template.loader import get_template
 from django.views.decorators.csrf import csrf_exempt
 
@@ -56,7 +58,7 @@ def checklistSteps(request, checklistId):
             temp['ifValueFalse'] = step.ifValueFalse
         
         if step.ifGreaterThan != None:
-            temp['ifGreaterthan'] = step.ifGreaterThan
+            temp['ifGreaterThan'] = step.ifGreaterThan
         if step.ifLessThan != None:
             temp['ifLessThan'] = step.ifLessThan
         if step.ifEqualTo != None:
@@ -82,16 +84,17 @@ def upload(request):
 
 
 
-#     userId = data['userId']
-#     groupId = data['groupId']
-#     checklistId = data['checklistId']
-#     steps = data['steps']
+    userId = data['userId']
+    groupId = data['groupId']
+    checklistId = data['checklistId']
+
+    steps = data['steps']
 #     
-#     newLog = LogChecklist(
-#                           checklist= Checklist.objects.get(id=checklistId),
-#                           modifyTime=datetime.datetime.today()
-#                           )
-#     newLog.save()
+    newLog = LogList(
+                          list = List.objects.get(id=checklistId),
+                          modifyTime=datetime.datetime.today()
+                          )
+    newLog.save()
 #     for row in steps:
 #         if row['stepType'] == "bool":
 #             value = False
@@ -123,22 +126,22 @@ def upload(request):
     return HttpResponse(dataString)
     return HttpResponse("List Received")
 
-@csrf_exempt
-def testFile(request):
-    theFile = None
-    if request.FILES.has_key('data'):
-        theFile = request.FILES['data'].read()
-        a = json.loads(theFile)
-           
-    image = request.FILES['image']
-       
-    if request.method == 'POST':
-        form = TestFileForm(image)
-        if form.is_valid():
-            # file is saved
-            form.save()
-    return HttpResponse("Post exchange complete" + str(request.FILES))
-    
+# @csrf_exempt
+# def testFile(request):
+#     theFile = None
+#     if request.FILES.has_key('data'):
+#         theFile = request.FILES['data'].read()
+#         a = json.loads(theFile)
+#            
+#     image = request.FILES['image']
+#        
+#     if request.method == 'POST':
+#         form = TestFileForm(image)
+#         if form.is_valid():
+#             # file is saved
+#             form.save()
+#     return HttpResponse("Post exchange complete" + str(request.FILES))
+#     
 
 # @csrf_exempt
 # def testPost(request):    
@@ -162,4 +165,27 @@ def latestPost(request):
     #f = open( "E:\\coding_workspace\\medusa_backend\\tempJson", "rb")
     stringReturn = f.read()
     return HttpResponse(stringReturn)
+
+
+
+@csrf_exempt
+def testFile(request):
+    # Handle file upload
+    if request.method == 'POST':
+        form = TestFileForm(request.POST, request.FILES)
+        print form
+        if form.is_valid():
+            newdoc = TestFile(image = request.FILES['image'])
+            newdoc.save()
+            
+            return HttpResponse("None")
+    else:
+        form = TestFileForm() # A empty, unbound form
+
+    # Load documents for the list page
+    documents = TestFile.objects.all()
+
+    
+    # Render list page with the documents and the form
+    return HttpResponse(documents)
     

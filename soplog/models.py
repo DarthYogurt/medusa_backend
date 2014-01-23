@@ -106,7 +106,7 @@ class LogText(models.Model):
 #         fields = ['file']
     
 class TestFile(models.Model):
-    docfile = models.FileField(upload_to='../media/%Y/%m/%d')
+    image = models.FileField(upload_to='../media/%Y/%m/%d')
     
 class TestFileForm(forms.Form):
     docfile = forms.FileField(
