@@ -51,7 +51,6 @@ def checklistSteps(request, checklistId):
         if step.requireOnBooleanValue != None:        
             temp['requireOnBooleanValue'] = step.requireOnBooleanValue
         
-        
         if step.ifGreaterThan != None:
             temp['ifGreaterthan'] = step.ifGreaterThan
         if step.ifLessThan != None:
@@ -60,6 +59,65 @@ def checklistSteps(request, checklistId):
             temp['ifEqualTo'] = step.ifEqualTo
         j['steps'].append(temp)
     return HttpResponse(json.dumps(j), content_type="application/json")
+
+
+@csrf_exempt
+def upload(request):
+    dataString = request.FILES.get('data', "empty")
+    print request.FILES
+    if dataString == "empty":
+        return HttpResponse("Post Data Empty")
+    data = json.load(dataString)
+    
+    #FILE WRITER TEMP ############################3333
+    f = open("tempJson", "w")
+    
+    f.write(str(data))
+    f.close()
+    ################################################3
+
+
+
+#     userId = data['userId']
+#     groupId = data['groupId']
+#     checklistId = data['checklistId']
+#     steps = data['steps']
+#     
+#     newLog = LogChecklist(
+#                           checklist= Checklist.objects.get(id=checklistId),
+#                           modifyTime=datetime.datetime.today()
+#                           )
+#     newLog.save()
+#     for row in steps:
+#         if row['stepType'] == "bool":
+#             value = False
+#             if row['value'].lower() == "true":
+#                 value = True
+#             newBool = LogBool( 
+#                               checklistLog = LogChecklist.objects.get(id=newLog.id),
+#                               step = ChecklistStep.objects.get(id=row['stepId']),
+#                               value = value,
+#                               modifyTime=datetime.datetime.today()
+#                               )
+#             newBool.save()
+#         elif row['stepType'] == "double":
+#             newDouble = LogDouble(
+#                                   checklistLog = LogChecklist.objects.get(id=newLog.id),
+#                                   step = ChecklistStep.objects.get(id=row['stepId']),
+#                                   value = row['value'],
+#                                   modifyTime=datetime.datetime.today()
+#                                   )
+#             newDouble.save()
+#         elif row['stepType'] == "text":
+#             newText = LogText(
+#                               checklistLog = LogChecklist.objects.get(id=newLog.id),
+#                               step = ChecklistStep.objects.get(id=row['stepId']),
+#                               value = row['value'],
+#                               modifyTime=datetime.datetime.today()
+#                               )
+#             newText.save()
+    return HttpResponse(dataString)
+    return HttpResponse("List Received")
 
 
 
