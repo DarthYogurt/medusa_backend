@@ -2,7 +2,7 @@
 {% extends "header.html" %}
 {% block content %}
   
-
+{{ imageLog }}
 
 <div class="container">
     <div class = "row">
@@ -57,5 +57,36 @@
     </div> <!-- row -->
 	{% endfor %}
 </div> <!-- End container -->
+
+
+<!--- IMAGES --->
+
+<div class="container">
+	<div class="row">
+    	<div class="col-md-8"> <h4> Log of Steps </h4></div>
+    </div>
+    <div class="row">
+    	<div class="col-md-1"> ChecklistLogId </div>
+        <div class="col-md-2"> Template Name </div>
+        <div class="col-md-1"> Log Id </div>
+        <div class="col-md-4"> StepID </div>
+        <div class="col-md-2"> Value</div>
+        <div class="col-md-2"> Modify Time </div>
+    </div>
+    {% for item in imageLog %}
+	<div class = "row">
+        <div class="col-md-1"> #{{ item.checklistLogId }} </div>
+        <div class="col-md-2"> {{ item.checklistTemplateName }}</div>
+    	<div class="col-md-1"> #{{ item.id }} </div>
+        <div class="col-md-4"> #{{ item.stepId }} </div>
+        <div class="col-md-2"> <img class="img-responsive" src="{{ item.value }}"/> </div>
+        <div class="col-md-2"> {{ item.modifyTime }} </div>
+    </div> <!-- row -->
+	{% endfor %}
+    
+    
+</div> <!-- Images -->
+
+
 
 {% endblock %}

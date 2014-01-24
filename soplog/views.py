@@ -160,8 +160,21 @@ def showLog(request):
     doubleStep = LogNumber.objects.order_by('id').reverse()[:50]
     textStep = LogText.objects.order_by('id').reverse()[:50]
     
-    for item in list(itertools.chain(boolStep, doubleStep, textStep)):
+    imageStep = LogImage.objects.order_by("id").reverse()[:50]
+    
+    variables['imageLog'] = []
+    for item in imageStep:
+        temp = {}
+        temp['id'] = item.id
+        temp['checklistLogId'] = item.logList.id
+        temp['checklistTemplateName'] = item.logList.list.name
+        temp['stepId'] = item.step
+        temp['value'] = str(item.file)
+        temp['modifyTime'] = item.modifyTime
+        variables['imageLog'].append(temp)
         
+    
+    for item in list(itertools.chain(boolStep, doubleStep, textStep)):
         temp = {}
         temp['id'] = item.id
         temp['checklistLogId'] = item.logList.id
@@ -171,6 +184,7 @@ def showLog(request):
         temp['modifyTime'] = item.modifyTime
         variables['stepLog'].append(temp)
   
+    
     variables['stepLog'] = sorted(variables['stepLog'], key=lambda k: k['checklistLogId'], reverse=True)[:50]   
     t = get_template('showLog.html')
     c = Context(variables)
