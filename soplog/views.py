@@ -83,11 +83,6 @@ def upload(request):
     f.close()
     ################################################3
 
-#     newImage = LogImage(
-#                   file =request.FILES['image']
-#                   )
-#     newImage.save()
-
     
     userId = data['userId']
     groupId = data['groupId']
@@ -189,6 +184,62 @@ def showLog(request):
     t = get_template('showLog.html')
     c = Context(variables)
     return HttpResponse(t.render(c))
+
+def analytics(request):
+    groupId = 1
+    var = {}
+    #var['checklists'] = Checklist.objects.get(group=Group.objects.get(id=groupId)) #Uncomment after getting group to work 
+    var['checklist'] = List.objects.all()  #Testing only
+    #var['steps'] = ChecklistStep.objects.all()
+    #var['stepLog'] = LogChecklist.objects.all()
+    #var['logBool'] = LogBool.objects.all()
+    
+    t = get_template('analytics.html')
+    c = Context(var)
+    return HttpResponse(t.render(c))
+
+def getLogData(request, checklistId):
+    
+    j = {}
+    templateStep = []
+    for x in ListStep.objects.order_by('order').filter(list=List.objects.get(id=checklistId)):
+        temp = {}
+        temp['id'] = x.id
+        temp['name'] = x.name
+        temp['order'] = x.order
+        temp['stepType'] = x.stepType.name
+        templateStep.append(temp)
+        
+    j['logChecklist'] = []
+    for x in LogList.objects.filter(list= List.objects.get(id=checklistId)):
+        j['logChecklist'].append(x.id)
+    
+    j['logData'] =[]
+    for x in templateStep:
+        t = {}
+        t['templateStepId'] = x['id']
+        t['name'] = x['name']
+        t['order'] = x['order']
+        t['stepType'] = x['stepType']
+        t['chartData'] = []
+        if x['stepType'] == "bool":
+            counter = 1;
+            for y in LogBool.objects.filter(logList = LogList.objects.filter(id__in = j['logChecklist']) , step = ListStep.objects.get(id=x['id'])):
+                temp= {}
+                temp['checkLogId']= y.checklistLog.id
+                temp['modifyTime'] = y.checklistLog.modifyTime.strftime("%m-%d")
+                temp['counter'] = counter 
+                if y.value == True:
+                    temp['value'] = 1     
+                else:
+                    temp['value'] = 0
+                t['chartData'].append(temp)
+                counter +=1
+        j['logData'].append(t)   
+    return HttpResponse(json.dumps(j), content_type="application/json")
+
+
+
 # @csrf_exempt
 # def testFile(request):
 #     theFile = None

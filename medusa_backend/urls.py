@@ -18,7 +18,8 @@ urlpatterns = patterns('',
     url(r'^checklist/checklistid/(\d*)/$', checklistSteps),
     url(r'^upload/$', upload), 
     url(r'^showLog/$', showLog),
-    
+    url(r'^analytics/$', analytics),
+    url(r'^getLogData/(\d*)/$', getLogData),
     
 #     url(r'^testPost/$', testPost),
     url(r'^testFile/$', testFile),  
@@ -36,7 +37,7 @@ urlpatterns = patterns('',
 #     
 
 #     url(r'^analytics/$', analytics),
-#     url(r'^getLogData/(\d*)/$', getLogData),
+#     
     
 
 #     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {

@@ -11,18 +11,25 @@
         	<div class="row">
             	<h4> Please select a Checklist</h4>
             </div>
-            
-            {% for cl in checklist %}
-            <div class="row" name="checklistId-{{cl.id}}" value={{cl.id}}>
-				{{ cl.name}}            
-            </div>
-			{% endfor %}        	
+			
+            <div class="row">
+				<table class="table table-condensed">
+               		{% for cl in checklist %}
+                    <tr>
+                        <td name="checklistId-{{cl.id}}" class="here" value={{cl.id}}>
+                        {{ cl.name}}            
+                        </td>
+                    </tr>
+                	{% endfor %} 
+            	</table>
+               
+			</div>       	
         </div><!-- first column -->
         
         <div class="col-lg-9" >
         	
         	<div class="row" id="graphArea">
-           
+           		
             </div> <!-- row, graph -->
             
         </div>
@@ -30,8 +37,28 @@
     </div><!-- row -->
 </div><!--container -->
 
-<style>
+{% load staticfiles %}
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="{% static "jquery/jquery-2.0.2.js" %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
 
+<script>
+$("td").click(function(){
+	var checklistId = $( this ).context.attributes.value;
+	
+	
+	
+	
+});
+
+
+</script>
+
+
+
+<style>
+/*
 .bar {
   fill: steelblue;
 }
@@ -54,12 +81,18 @@
 .x.axis path {
   display: none;
 }
-
+*/
 </style>
 
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+
+
+
+
+
 <script>
 
+/*
 function httpGet(theUrl)
 {
     var xmlHttp = null;
@@ -124,7 +157,7 @@ function graphData(jsonData) {
 		var a = "#"+graphBlock.id
 		//console.log(a);   //Yields = #step-id-8 
 		
-		/* MAJOR PROBLEM ###################*/
+		/* MAJOR PROBLEM ###################
 		var svg = d3.select("#step-id-8").append("svg")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
@@ -175,6 +208,7 @@ function graphData(jsonData) {
 
 
 graphData(jsonData);
+*/
 </script>
 
 {% endblock %}
