@@ -1,5 +1,7 @@
+import datetime
 import json
 import os
+import itertools
 
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseRedirect
@@ -83,49 +85,81 @@ def upload(request):
     ################################################3
 
 
-
     userId = data['userId']
     groupId = data['groupId']
     checklistId = data['checklistId']
 
     steps = data['steps']
-#     
+    
+    
     newLog = LogList(
                           list = List.objects.get(id=checklistId),
                           modifyTime=datetime.datetime.today()
                           )
     newLog.save()
-#     for row in steps:
-#         if row['stepType'] == "bool":
-#             value = False
-#             if row['value'].lower() == "true":
-#                 value = True
-#             newBool = LogBool( 
-#                               checklistLog = LogChecklist.objects.get(id=newLog.id),
-#                               step = ChecklistStep.objects.get(id=row['stepId']),
-#                               value = value,
-#                               modifyTime=datetime.datetime.today()
-#                               )
-#             newBool.save()
-#         elif row['stepType'] == "double":
-#             newDouble = LogDouble(
-#                                   checklistLog = LogChecklist.objects.get(id=newLog.id),
-#                                   step = ChecklistStep.objects.get(id=row['stepId']),
-#                                   value = row['value'],
-#                                   modifyTime=datetime.datetime.today()
-#                                   )
-#             newDouble.save()
-#         elif row['stepType'] == "text":
-#             newText = LogText(
-#                               checklistLog = LogChecklist.objects.get(id=newLog.id),
-#                               step = ChecklistStep.objects.get(id=row['stepId']),
-#                               value = row['value'],
-#                               modifyTime=datetime.datetime.today()
-#                               )
-#             newText.save()
-    return HttpResponse(dataString)
+    for row in steps:
+        if row['stepType'] == "bool":
+            value = False
+            if row['value'] == True:
+                value = True
+            newBool = LogBool( 
+                              logList = LogList.objects.get(id=newLog.id),
+                              step = ListStep.objects.get(id=row['stepId']),
+                              value = value,
+                              modifyTime=datetime.datetime.today()
+                              )
+            newBool.save()
+        elif row['stepType'] == "number":
+            newNumber = LogNumber(
+                                  logList = LogList.objects.get(id=newLog.id),
+                                  step = ListStep.objects.get(id=row['stepId']),
+                                  value = row['value'],
+                                  modifyTime=datetime.datetime.today()
+                                  )
+            newNumber.save()
+        elif row['stepType'] == "text":
+            newText = LogText(
+                              logList = LogList.objects.get(id=newLog.id),
+                              step = ListStep.objects.get(id=row['stepId']),
+                              value = row['value'],
+                              modifyTime=datetime.datetime.today()
+                              )
+            newText.save()
+    #return HttpResponse(dataString)
     return HttpResponse("List Received")
 
+def showLog(request):
+    variables = {}
+    variables['checklistLog'] = []
+    log = LogList.objects.order_by('modifyTime').reverse()[:10]
+    for item in log:
+        temp = {}
+        temp['id'] = item.id
+        temp['checklist'] = item.list
+        temp['user'] = item.user
+        temp['modifyTime'] = item.modifyTime
+        variables['checklistLog'].append(temp)
+    
+    variables['stepLog'] = []
+    boolStep = LogBool.objects.order_by('id').reverse()[:50]  
+    doubleStep = LogNumber.objects.order_by('id').reverse()[:50]
+    textStep = LogText.objects.order_by('id').reverse()[:50]
+    
+    for item in list(itertools.chain(boolStep, doubleStep, textStep)):
+        
+        temp = {}
+        temp['id'] = item.id
+        temp['checklistLogId'] = item.logList.id
+        temp['checklistTemplateName'] = item.logList.list.name
+        temp['stepId'] = item.step
+        temp['value'] = item.value
+        temp['modifyTime'] = item.modifyTime
+        variables['stepLog'].append(temp)
+  
+    variables['stepLog'] = sorted(variables['stepLog'], key=lambda k: k['checklistLogId'], reverse=True)[:50]   
+    t = get_template('showLog.html')
+    c = Context(variables)
+    return HttpResponse(t.render(c))
 # @csrf_exempt
 # def testFile(request):
 #     theFile = None

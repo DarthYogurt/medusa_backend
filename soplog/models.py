@@ -19,7 +19,7 @@ class Group(models.Model):
     description = models.TextField(blank=True)
     
     def __unicode__(self):
-        return self.name
+        return str(self.id) + "-" + self.name
 
 class List(models.Model):
     name = models.CharField(max_length=50)
@@ -67,7 +67,7 @@ class LogList(models.Model):
     endtime = models.DateTimeField(null=True)
      
     def __unicode__(self):
-        return str(self.checklist.name) +" - "+ str(self.id) + "-"+ str(self.modifyTime)
+        return str(self.list.name) +" - "+ str(self.id) + "-"+ str(self.modifyTime)
  
 class LogBool(models.Model):
     logList = models.ForeignKey('LogList')
@@ -76,19 +76,25 @@ class LogBool(models.Model):
     modifyTime = models.DateTimeField(null=True)
     
     def __unicode__(self):
-        return str(self.checklistLog.checklist.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
+        return str(self.logList.list.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
      
 class LogNumber(models.Model):    #Not really double, Django doesn't have double values
     logList = models.ForeignKey('LogList')
     step = models.ForeignKey('ListStep')
     value = models.FloatField()
     modifyTime = models.DateTimeField(null=True)
+    
+    def __unicode__(self):
+        return str(self.logList.list.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
      
 class LogText(models.Model):
     logList = models.ForeignKey('LogList')
     step = models.ForeignKey('ListStep')
     value = models.TextField()
     modifyTime = models.DateTimeField(null=True)
+    
+    def __unicode__(self):
+        return str(self.logList.list.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
  
 # class LogFile(models.Model):
 #     logList = models.ForeignKey('LogList')

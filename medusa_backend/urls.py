@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^checklist/groupid/(\d*)/$', checklistSearchByGroupId),
     url(r'^checklist/checklistid/(\d*)/$', checklistSteps),
     url(r'^upload/$', upload), 
+    url(r'^showLog/$', showLog),
     
     
 #     url(r'^testPost/$', testPost),
@@ -31,7 +32,7 @@ urlpatterns = patterns('',
 #     url(r'^createChecklist/$', createChecklist),
 #     url(r'^listConfirm/$',listConfirm),
 #     
-#     url(r'^showLog/$', showLog),
+
 #     url(r'^analytics/$', analytics),
 #     url(r'^getLogData/(\d*)/$', getLogData),
     

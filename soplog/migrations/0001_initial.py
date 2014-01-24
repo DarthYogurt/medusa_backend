@@ -14,10 +14,16 @@ class Migration(migrations.Migration):
             name = 'User',
         ),
         migrations.CreateModel(
-            fields = [(u'id', models.AutoField(verbose_name=u'ID', serialize=False, auto_created=True, primary_key=True),), ('docfile', models.FileField(upload_to='../media/%Y/%m/%d'),)],
+            fields = [(u'id', models.AutoField(verbose_name=u'ID', serialize=False, auto_created=True, primary_key=True),), ('image', models.FileField(upload_to='../media/%Y/%m/%d'),)],
             bases = (models.Model,),
             options = {},
             name = 'TestFile',
+        ),
+        migrations.CreateModel(
+            fields = [(u'id', models.AutoField(verbose_name=u'ID', serialize=False, auto_created=True, primary_key=True),)],
+            bases = (models.Model,),
+            options = {},
+            name = 'LogList',
         ),
         migrations.CreateModel(
             fields = [(u'id', models.AutoField(verbose_name=u'ID', serialize=False, auto_created=True, primary_key=True),), ('name', models.CharField(max_length=10),)],
@@ -48,12 +54,6 @@ class Migration(migrations.Migration):
             bases = (models.Model,),
             options = {},
             name = 'ListStep',
-        ),
-        migrations.CreateModel(
-            fields = [(u'id', models.AutoField(verbose_name=u'ID', serialize=False, auto_created=True, primary_key=True),), ('list', models.ForeignKey(to=u'soplog.List', to_field=u'id'),), ('user', models.ForeignKey(to=u'soplog.User', to_field=u'id', null=True),), ('startTime', models.DateTimeField(null=True),), ('modifyTime', models.DateTimeField(null=True),), ('endtime', models.DateTimeField(null=True),)],
-            bases = (models.Model,),
-            options = {},
-            name = 'LogList',
         ),
         migrations.CreateModel(
             fields = [(u'id', models.AutoField(verbose_name=u'ID', serialize=False, auto_created=True, primary_key=True),), ('logList', models.ForeignKey(to=u'soplog.LogList', to_field=u'id'),), ('step', models.ForeignKey(to=u'soplog.ListStep', to_field=u'id'),), ('value', models.BooleanField(),), ('modifyTime', models.DateTimeField(null=True),)],
