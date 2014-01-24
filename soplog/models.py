@@ -1,3 +1,5 @@
+import os
+
 from django import forms
 from django.db import models
 from django.forms.models import ModelForm
@@ -95,6 +97,24 @@ class LogText(models.Model):
     
     def __unicode__(self):
         return str(self.logList.list.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
+
+class LogImage(models.Model):
+    file = models.FileField(upload_to="/media/")
+    
+class ImageForm(forms.Form):
+    file = forms.FileField(
+        label='Select a file',
+        help_text='max. 42 megabytes'
+    )
+#     return os.path.join('images', str(instance.id), filename)
+# def get_image_path(instance, filename):
+
+#      
+#         return self.id
+#     def __unicode__(self):
+#     image = models.ImageField(upload_to="/media/", blank=True, null=True)
+# class LogImage(models.Model):
+    
  
 # class LogFile(models.Model):
 #     logList = models.ForeignKey('LogList')

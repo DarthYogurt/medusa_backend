@@ -60,6 +60,8 @@ WSGI_APPLICATION = 'medusa_backend.wsgi.application'
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {}
+PROJECT_PATH = None
+MEDIA_ROOT = None
 if socket.gethostname() != "dev.darthyogurt.com":
     DATABASES = {
                   
@@ -72,6 +74,11 @@ if socket.gethostname() != "dev.darthyogurt.com":
                 'PORT': '3306',
         }
     }
+    
+    #image files
+    PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+    MEDIA_ROOT = PROJECT_PATH + '/media/'
+    MEDIA_URL = "/media/"
 else:
     DATABASES = {
                   
@@ -84,6 +91,11 @@ else:
                 'PORT': '3306',
         }
     }
+    #image files
+    
+    PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+    MEDIA_ROOT = PROJECT_PATH + '/media/'
+    MEDIA_URL = "/media/"
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
@@ -110,9 +122,7 @@ STATICFILES_DIRS = (
 )
 
 
-PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
-MEDIA_ROOT = PROJECT_PATH + '/media/'
 
 TEMPLATE_DIRS = {
                  #'/home/django/medusa/templates',

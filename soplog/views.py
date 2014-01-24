@@ -84,7 +84,13 @@ def upload(request):
     f.close()
     ################################################3
 
-
+     
+    li = LogImage(
+                  file =request.FILES['image']
+                  )
+    li.save()
+    print li
+    
     userId = data['userId']
     groupId = data['groupId']
     checklistId = data['checklistId']
@@ -204,20 +210,23 @@ def latestPost(request):
 
 @csrf_exempt
 def testFile(request):
+    print "In Test File"
     # Handle file upload
     if request.method == 'POST':
-        form = TestFileForm(request.POST, request.FILES)
+        form = ImageForm(request.POST, request.FILES)
+        print
         print form
+        print request.FILES
         if form.is_valid():
-            newdoc = TestFile(image = request.FILES['image'])
+            newdoc = LogImage(file = request.FILES['image'])
             newdoc.save()
             
+            print newdoc
             return HttpResponse("None")
     else:
-        form = TestFileForm() # A empty, unbound form
-
+        form = ImageForm()
     # Load documents for the list page
-    documents = TestFile.objects.all()
+    documents = LogImage.objects.all()
 
     
     # Render list page with the documents and the form
