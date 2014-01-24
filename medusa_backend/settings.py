@@ -76,9 +76,8 @@ if socket.gethostname() != "dev.darthyogurt.com":
     }
     
     #image files
-    PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
-    MEDIA_ROOT = PROJECT_PATH + '/media/'
-    MEDIA_URL = "/media/"
+   
+#     MEDIA_URL = "/media/"
 else:
     DATABASES = {
                   
@@ -93,9 +92,9 @@ else:
     }
     #image files
     
-    PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
-    MEDIA_ROOT = PROJECT_PATH + '/media/'
-    MEDIA_URL = "/media/"
+#     PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+#     MEDIA_ROOT = PROJECT_PATH + '/media/'
+#     MEDIA_URL = "/media/"
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
@@ -130,3 +129,6 @@ TEMPLATE_DIRS = {
                  os.path.join(os.path.dirname(__file__),'../static/templates'),
 }
 
+#PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+MEDIA_ROOT = '/media/'
+MEDIA_URL= '/media/'

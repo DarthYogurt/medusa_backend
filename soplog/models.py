@@ -99,13 +99,18 @@ class LogText(models.Model):
         return str(self.logList.list.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
 
 class LogImage(models.Model):
+    logList = models.ForeignKey('LogList')
+    step = models.ForeignKey("ListStep")
     file = models.FileField(upload_to="/media/")
+    modifyTime = models.DateTimeField(null=True)
     
-class ImageForm(forms.Form):
-    file = forms.FileField(
-        label='Select a file',
-        help_text='max. 42 megabytes'
-    )
+    def __unicode__(self):
+        return str(self.step) +"-"+ str(file)
+# class ImageForm(forms.Form):
+#     file = forms.FileField(
+#         label='Select a file',
+#         help_text='max. 42 megabytes'
+#     )
 #     return os.path.join('images', str(instance.id), filename)
 # def get_image_path(instance, filename):
 
@@ -131,13 +136,13 @@ class ImageForm(forms.Form):
 #         model = TestFile
 #         fields = ['file']
     
-class TestFile(models.Model):
-    image = models.FileField(upload_to='../media/%Y/%m/%d')
-    
-class TestFileForm(forms.Form):
-    docfile = forms.FileField(
-        label='Select a file',
-        help_text='max. 42 megabytes'
-    )
-    
-    
+# class TestFile(models.Model):
+#     image = models.FileField(upload_to='../media/%Y/%m/%d')
+#     
+# class TestFileForm(forms.Form):
+#     docfile = forms.FileField(
+#         label='Select a file',
+#         help_text='max. 42 megabytes'
+#     )
+#     
+#     

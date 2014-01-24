@@ -72,7 +72,6 @@ def checklistSteps(request, checklistId):
 @csrf_exempt
 def upload(request):
     dataString = request.FILES.get('data', "empty")
-    print request.FILES
     if dataString == "empty":
         return HttpResponse("Post Data Empty")
     data = json.load(dataString)
@@ -84,12 +83,11 @@ def upload(request):
     f.close()
     ################################################3
 
-     
-    li = LogImage(
-                  file =request.FILES['image']
-                  )
-    li.save()
-    print li
+#     newImage = LogImage(
+#                   file =request.FILES['image']
+#                   )
+#     newImage.save()
+
     
     userId = data['userId']
     groupId = data['groupId']
@@ -131,6 +129,16 @@ def upload(request):
                               modifyTime=datetime.datetime.today()
                               )
             newText.save()
+        elif row['stepType'] == "image":
+            
+            newImage = LogImage(
+                                logList = LogList.objects.get(id=newLog.id),
+                                step = ListStep.objects.get(id=row['stepId']),
+                                file =request.FILES[row['value']],
+                                modifyTime = datetime.datetime.today()
+                          )
+            newImage.save()
+
     #return HttpResponse(dataString)
     return HttpResponse("List Received")
 
