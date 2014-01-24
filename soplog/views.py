@@ -131,6 +131,7 @@ def upload(request):
             newText.save()
         elif row['stepType'] == "image":
             
+            print row
             newImage = LogImage(
                                 logList = LogList.objects.get(id=newLog.id),
                                 step = ListStep.objects.get(id=row['stepId']),

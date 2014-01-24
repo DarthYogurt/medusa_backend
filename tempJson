@@ -1,1 +1,1 @@
-{u'checklistId': 1, u'userId': 1, u'groupId': 1, u'steps': [{u'stepId': 1, u'value': 301, u'stepType': u'number'}, {u'stepId': 2, u'value': True, u'stepType': u'bool'}, {u'stepId': 3, u'value': u'THIS IS A TEST FOR TEXT', u'stepType': u'text'}, {u'stepId': 5, u'value': u'image1', u'stepType': u'image'}]}
+{u'checklistId': 1, u'userId': 1, u'groupId': 1, u'steps': [{u'stepId': 5, u'value': u'image1', u'stepType': u'image'}]}
