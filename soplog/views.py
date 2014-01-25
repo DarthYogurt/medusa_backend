@@ -97,6 +97,7 @@ def upload(request):
                           )
     newLog.save()
     for row in steps:
+        print row
         if row['stepType'] == "bool":
             value = False
             if row['value'] == "True":
