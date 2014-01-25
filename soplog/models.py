@@ -101,7 +101,7 @@ class LogText(models.Model):
 class LogImage(models.Model):
     logList = models.ForeignKey('LogList')
     step = models.ForeignKey("ListStep")
-    file = models.FileField(upload_to="/media/")
+    file = models.FileField(upload_to="/media/%Y/%m/%d")
     modifyTime = models.DateTimeField(null=True)
     
     def __unicode__(self):

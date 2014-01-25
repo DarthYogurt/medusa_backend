@@ -99,7 +99,7 @@ def upload(request):
     for row in steps:
         if row['stepType'] == "bool":
             value = False
-            if row['value'] == True:
+            if row['value'] == "True":
                 value = True
             newBool = LogBool( 
                               logList = LogList.objects.get(id=newLog.id),
@@ -199,44 +199,67 @@ def analytics(request):
     return HttpResponse(t.render(c))
 
 def getLogData(request, checklistId):
+    j={}
+    j['checklistId'] = checklistId
+    j['periodStart'] = ""
+    j['periodEnd'] = ""
+    j['stepLog'] = []
     
-    j = {}
-    templateStep = []
-    for x in ListStep.objects.order_by('order').filter(list=List.objects.get(id=checklistId)):
-        temp = {}
-        temp['id'] = x.id
-        temp['name'] = x.name
-        temp['order'] = x.order
-        temp['stepType'] = x.stepType.name
-        templateStep.append(temp)
+    for step in ListStep.objects.order_by('order').filter(list=List.objects.get(id=checklistId)):
+        temp={}
+        temp['stepId'] = step.id
+        temp['stepName'] = step.name
+        temp['order'] = step.order
+        temp['stepType'] = step.stepType.name
         
-    j['logChecklist'] = []
-    for x in LogList.objects.filter(list= List.objects.get(id=checklistId)):
-        j['logChecklist'].append(x.id)
+        if step.stepType.name == "bool":
+            temp['yes'] = LogBool.objects.filter(value=True).count()
+            temp['no'] = LogBool.objects.filter(value=False).count()
+        elif step.stepType.name == "number":
+            True
+            # DO SOMETHING TO NUMBER AND LOG MEDIAN 
+        
     
-    j['logData'] =[]
-    for x in templateStep:
-        t = {}
-        t['templateStepId'] = x['id']
-        t['name'] = x['name']
-        t['order'] = x['order']
-        t['stepType'] = x['stepType']
-        t['chartData'] = []
-        if x['stepType'] == "bool":
-            counter = 1;
-            for y in LogBool.objects.filter(logList = LogList.objects.filter(id__in = j['logChecklist']) , step = ListStep.objects.get(id=x['id'])):
-                temp= {}
-                temp['checkLogId']= y.checklistLog.id
-                temp['modifyTime'] = y.checklistLog.modifyTime.strftime("%m-%d")
-                temp['counter'] = counter 
-                if y.value == True:
-                    temp['value'] = 1     
-                else:
-                    temp['value'] = 0
-                t['chartData'].append(temp)
-                counter +=1
-        j['logData'].append(t)   
+        j['stepLog'].append(temp)
+    
     return HttpResponse(json.dumps(j), content_type="application/json")
+#     j = {}
+#     templateStep = []
+#     for x in ListStep.objects.order_by('order').filter(list=List.objects.get(id=checklistId)):
+#         temp = {}
+#         temp['id'] = x.id
+#         temp['name'] = x.name
+#         temp['order'] = x.order
+#         temp['stepType'] = x.stepType.name
+#         templateStep.append(temp)
+#         
+#     j['logChecklist'] = []
+#     for x in LogList.objects.filter(list= List.objects.get(id=checklistId)):
+#         j['logChecklist'].append(x.id)
+#     
+#     j['logData'] =[]
+#     for x in templateStep:
+#         t = {}
+#         t['templateStepId'] = x['id']
+#         t['name'] = x['name']
+#         t['order'] = x['order']
+#         t['stepType'] = x['stepType']
+#         t['chartData'] = []
+#         if x['stepType'] == "bool":
+#             counter = 1;
+#             for y in LogBool.objects.filter(logList = LogList.objects.filter(id__in = j['logChecklist']) , step = ListStep.objects.get(id=x['id'])):
+#                 temp= {}
+#                 temp['checkLogId']= y.checklistLog.id
+#                 temp['modifyTime'] = y.checklistLog.modifyTime.strftime("%m-%d")
+#                 temp['counter'] = counter 
+#                 if y.value == True:
+#                     temp['value'] = 1     
+#                 else:
+#                     temp['value'] = 0
+#                 t['chartData'].append(temp)
+#                 counter +=1
+#         j['logData'].append(t)   
+#     return HttpResponse(json.dumps(j), content_type="application/json")
 
 
 
