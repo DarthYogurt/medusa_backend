@@ -100,7 +100,7 @@ def upload(request):
         print row
         if row['stepType'] == "bool":
             value = False
-            if row['value'] == "True":
+            if row['value'] == True:
                 value = True
             newBool = LogBool( 
                               logList = LogList.objects.get(id=newLog.id),
@@ -169,7 +169,6 @@ def showLog(request):
         temp['modifyTime'] = item.modifyTime
         variables['imageLog'].append(temp)
         
-    
     for item in list(itertools.chain(boolStep, doubleStep, textStep)):
         temp = {}
         temp['id'] = item.id
@@ -180,7 +179,6 @@ def showLog(request):
         temp['modifyTime'] = item.modifyTime
         variables['stepLog'].append(temp)
   
-    
     variables['stepLog'] = sorted(variables['stepLog'], key=lambda k: k['checklistLogId'], reverse=True)[:50]   
     t = get_template('showLog.html')
     c = Context(variables)
@@ -214,8 +212,8 @@ def getLogData(request, checklistId):
         temp['stepType'] = step.stepType.name
         
         if step.stepType.name == "bool":
-            temp['yes'] = LogBool.objects.filter(value=True).count()
-            temp['no'] = LogBool.objects.filter(value=False).count()
+            temp['yes'] = LogBool.objects.filter(step=step.id, value=True).count()
+            temp['no'] = LogBool.objects.filter(step=step.id, value=False).count()
         elif step.stepType.name == "number":
             True
             # DO SOMETHING TO NUMBER AND LOG MEDIAN 
