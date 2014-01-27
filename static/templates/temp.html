@@ -1,10 +1,81 @@
         
-        <html><body>
-        {{ name }}
+<html><body>
+
+</body></html>
+
+<style>
+
+	
+
+		
+
+</style>
+
+
+{% load staticfiles %}
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="{% static "jquery/jquery-2.0.2.js" %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+
+<script>
+var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+		11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+var w = 500,
+	h = 200,
+	barPadding = 5;
+
+var max = Math.max.apply( Math, dataset); 
+
+var svg = d3.select("body")
+			.append("svg")
+			.attr("width", w)
+			.attr("heigth", h);
+			
+
+svg.selectAll("rect")
+	.data(dataset)
+	.enter()
+		.append("rect")
+		.attr("x", function(x, i) { 
+							console.log(i);
+							return i * (w / dataset.length); } )
+		.attr("y", function(d) { return h - d/max*h; })
+		.attr("width", (w / dataset.length - barPadding) )
+		.attr("height", function(x){ return x/max * h; })
+		.style("fill", "green");
+
+svg.selectAll("text")
+	.data(dataset)
+	.enter()
+	.append("text")
+	.text( function(d) { return d;});
+
+
+
+		
+		
+		/*
+        var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+                11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+
+        d3.select("body").selectAll("div")
+            .data(dataset)
+            .enter()
+            .append("div")
+            .attr("class", "bar")
+			//.attr("style", "background-color: red")
+
+            .style("height", function(d) {
+                var barHeight = d * 5;
+                return barHeight + "px";
+            })
+			.style("background-color", "red")
+			.style("width", "40px")
+			.style("display", "inline-block")
+			.style("margin-right", "2px");
+
+*/
+
+</script>
         
-        {% if name %}
-            Now in Temp.html
-            <img src="http://sweetclipart.com/multisite/sweetclipart/files/imagecache/middle/dinosaur_t_rex_0.png" />
-        {% endif %}
-        
-        </body></html>

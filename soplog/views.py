@@ -324,7 +324,14 @@ def testFile(request):
     # Load documents for the list page
     documents = LogImage.objects.all()
 
-    
+
     # Render list page with the documents and the form
     return HttpResponse(documents)
+
+
+def temp(request):
+    
+    t = get_template('temp.html')
+    c = Context()
+    return HttpResponse(t.render(c))
     

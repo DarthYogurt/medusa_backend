@@ -128,7 +128,7 @@ function logDataToArray(layerNumber){
 	ob.push(obj1);
 	*/
 	
-	console.log(logData);
+	//console.log(logData);
 	for (i=0; i<logData.stepLog.length; i++){
 		//console.log(logData['stepLog'][i]);
 		if (logData['stepLog'][i].stepType == "bool"){
@@ -155,7 +155,7 @@ function logDataToArray(layerNumber){
 		}
 		
 	}
-	console.log(arr);
+	//console.log(arr);
 	
 	return arr;
 }
@@ -191,7 +191,7 @@ yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { 
 
 								   
 								   
-								   //return loadLogData(
+								
 
 var margin = {top: 40, right: 10, bottom: 20, left: 10},
     width = 850 - margin.left - margin.right,
@@ -234,7 +234,9 @@ var rect = layer.selectAll("rect")
     .attr("x", function(d) { return x(d.x); })
     .attr("y", height)
     .attr("width", x.rangeBand())
-    .attr("height", 0);
+    .attr("height", 0)
+	.text(function(layers) { return layers;} );
+
 
 rect.transition()
     .delay(function(d, i) { return i * 10; })
@@ -252,7 +254,7 @@ d3.selectAll("input").on("change", change);
 
 var timeout = setTimeout(function() {
   d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
-}, 2000);
+}, 500);
 
 
 function change() {
@@ -318,160 +320,5 @@ function bumpLayer(n, o) {
 
 </script>
 
-
-
-<style>
-/*
-.bar {
-  fill: steelblue;
-}
-
-.bar:hover {
-  fill: brown;
-}
-
-.axis {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-*/
-</style>
-
-
-
-
-
-
-
-<script>
-
-/*
-function httpGet(theUrl)
-{
-    var xmlHttp = null;
-
-    xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false );
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
-}
-
-var checklistTempalteId = 3;			//Temporary Value
-jsonData = JSON.parse(httpGet("/getLogData/"+checklistTempalteId));
-
-function graphData(jsonData) {
-	
-	//console.log(jsonData);
-	
-	for (i in jsonData['logData']){
-		var stepBlock = document.createElement("div");
-		stepBlock.className = "col-md-12";
-		
-		var titleRow = document.createElement("div");
-		titleRow.className = "row";
-		
-		var stepTitle = document.createElement("h4");
-		stepTitle.innerHTML = jsonData['logData'][i].name;
-		
-		titleRow.appendChild(stepTitle);
-		stepBlock.appendChild(titleRow);
-		
-		
-		//Graph Block
-		// Trying to get data = [1,2,3,4,5,6,7,8,9,14]
-		var graphBlock = document.createElement("div");
-		graphBlock.className = "col-md-12";
-		graphBlock.id = "step-id-"+jsonData['logData'][i]['templateStepId'];
-		
-		//Graph it
-		var data = jsonData['logData'][i]['chartData'];
-		console.log(data);
-		var margin = {top: 20, right: 20, bottom: 30, left: 40},
-			width = 600 - margin.left - margin.right,
-			height = 200 - margin.top - margin.bottom;
-		
-	
-		var x = d3.scale.ordinal()
-			.rangeRoundBands([0, width], .1);
-		
-		var y = d3.scale.linear()
-			.range([height, 0]);
-		
-		var xAxis = d3.svg.axis()
-			.scale(x)
-			.orient("bottom");
-			
-	
-		var yAxis = d3.svg.axis()
-			.scale(y)
-			.orient("left")
-			.ticks(1);
-		
-		var a = "#"+graphBlock.id
-		//console.log(a);   //Yields = #step-id-8 
-		
-		/* MAJOR PROBLEM ###################
-		var svg = d3.select("#step-id-8").append("svg")
-			.attr("width", width + margin.left + margin.right)
-			.attr("height", height + margin.top + margin.bottom)
-		  .append("g")
-			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-							  
-		x.domain(data.map(function(d) { return d.modifyTime; }));
-		y.domain([0, d3.max(data, function(data) { return data.value; })]);
-		
-		svg.append("g")
-		  .attr("class", "x axis")
-		  .attr("transform", "translate(0," + height + ")")
-		  .call(xAxis);
-		
-		svg.append("g")
-		  .attr("class", "y axis")
-		  .call(yAxis)
-		.append("text")
-		  .attr("transform", "rotate(-90)")
-		  .attr("y", 6)
-		  .attr("dy", ".71em")
-		  .style("text-anchor", "end")
-		  .text("True");
-		
-		svg.selectAll(".bar")
-		  .data(data)
-		.enter().append("rect")
-		  .attr("class", "bar")
-		  .attr("x", function(d) { return (d.counter*50); })
-		  .attr("width", 45)
-		  .attr("y", function(d) { return y(d.value); })
-		  .attr("height", function(d) { return height - y(d.value); })
-
-		svg.append("text")
-			.attr("class", "x label")
-			.attr("text-anchor", "beginning")
-			.attr("x", function(data){ return width; })
-			.attr("y", height - 6)
-			.text(data.checkLogId);
-
-
-		
-		//Graph End
-		document.getElementById("graphArea").appendChild(stepBlock);
-		document.getElementById("graphArea").appendChild(graphBlock);
-	}
-}
-
-
-graphData(jsonData);
-*/
-</script>
 
 {% endblock %}
