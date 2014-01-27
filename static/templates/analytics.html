@@ -2,9 +2,6 @@
 {% block content %}
 
 
-
-
-
 <div class="container">
 	<div class="row">
     	<div class="col-lg-3" style=>
@@ -189,10 +186,6 @@ var yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function(d
 yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
 
 
-								   
-								   
-								
-
 var margin = {top: 40, right: 10, bottom: 20, left: 10},
     width = 850 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -209,12 +202,16 @@ var color = d3.scale.linear()
     .domain([0, n - 1])
     .range(["#aad", "#556"]);
 
+var formatXAxis = function(d) {
+	return logData['stepLog'][d].stepName;	
+}
 
 var xAxis = d3.svg.axis()
     .scale(x)
     .tickSize(0)
     .tickPadding(6)
-    .orient("bottom");
+    .orient("bottom")
+	.tickFormat(formatXAxis);
 
 var svg = d3.select("#graphArea").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -237,11 +234,18 @@ var rect = layer.selectAll("rect")
     .attr("height", 0)
 	.text(function(layers) { return layers;} );
 
+console.log(layers);
+console.log(logData);
+svg.selectAll("text")
+	.data(layers)
+	.enter()
+		.append("text");
 
 rect.transition()
     .delay(function(d, i) { return i * 10; })
     .attr("y", function(d) { return y(d.y0 + d.y); })
     .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); });
+
 
 svg.append("g")
     .attr("class", "x axis")
