@@ -1,5 +1,10 @@
 {% extends "header.html" %}
 {% block content %}
+{% load staticfiles %}
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="{% static "jquery/jquery-2.0.2.js" %}"></script>
+
+
 
 
 <div class="container">
@@ -13,7 +18,7 @@
 				<table class="table table-condensed">
                		{% for cl in checklist %}
                     <tr>
-                        <td name="checklistId-{{cl.id}}" class="here" value={{cl.id}}>
+                        <td name="checklistId-{{cl.id}}" class="checklistTab" value={{cl.id}}>
                         {{ cl.name}}            
                         </td>
                     </tr>
@@ -24,15 +29,36 @@
         </div><!-- first column -->
         
         <div class="col-lg-9" >
-        	
-        	<div class="row" id="graphArea">
+        	<div class="row" id="graphMenu">
+            	<ul class="nav nav-tabs" id="graphTab">
+                  <li class="active"><a href="#barGraph">Population Graph</a></li>
+                  <li><a href="#pieGraph">Pie Chart</a></li>
+                  <li><a href="#timeline">Timeline</a></li>
+                </ul>
+            </div>
+        	<div class="row" id="barGraph">
     
             </div> <!-- row, graph -->
-            
+			<div class="row" id="pieGraph" >
+    			PieGraph
+            </div> <!-- row, graph -->
+            <div class="row" id="timeline">
+    			Timeline
+            </div> <!-- row, graph -->            
         </div>
 
     </div><!-- row -->
 </div><!--container -->
+
+
+<script>
+
+$("#pieGraph").hide();
+$("#timeline").hide();
+
+$("#
+</script>
+
 <style>
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -42,7 +68,7 @@ body {
 }
 
 text {
-  font: 10px sans-serif;
+  font: 12px sans-serif;
 }
 
 .axis path,
@@ -59,270 +85,30 @@ form {
 }
 </style>
 
-{% load staticfiles %}
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src="{% static "jquery/jquery-2.0.2.js" %}"></script>
+
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
 
 <script>
 
 var logData;
-$("td").click(function(){
+$(".checklistTab").click(function(){
 	var checklistId = $( this ).context.attributes.value;
+	$(".checklistTab").removeClass("active");
+	$(this).addClass("active");
 	$.get( "/getLogData/"+checklistId.value, function( data ) {												  
-		var graphArea = $("#graphArea").empty().append("<form>");
-		graphArea.append("<label>").append('<input type="radio" name="mode" value="grouped">').append("Grouped");
-		graphArea.append("<label>").append('<input type="radio" name="mode" value="stacked">').append("Stacked");	
-		
+		var barGraph = $("#barGraph").empty().append("<form>");
+		barGraph.append("<label>").append('<input type="radio" name="mode" value="grouped">').append("Grouped");
+		barGraph.append("<label>").append('<input type="radio" name="mode" value="stacked">').append("Stacked");	
 		logData = data;
-		//console.log(logData);
-		drawGraph();
+		drawBarGraph();
 	});
 });
 
-
-function drawGraph(){
-
-var n = 2; // number of layers
-var m = logData.stepLog.length;
-var stack = d3.layout.stack();
-
-/*
-var layers = stack(d3.range(n).map(  function(){
-								   var a = [ [8,6],[] ]
-								   return a;
-							   	}
-							   )
-						);
-	
-	
-*/
- // number of samples per layer
-
-
-var layers = stack(d3.range(n).map(function(n) { 
-											//console.log(n);
-											//console.log(bumpLayer(m, .1));
-											//return bumpLayer(m, .1); 
-											
-											return logDataToArray(n);
-											}
-											
-								)
-							);
-
-
-
-
-function logDataToArray(layerNumber){
-	// if layer number = 0, then its true, 1=False
-	var arr = new Array();
-	/*
-	var obj1 = new Object();
-	obj1.x = 0;
-	obj1.y = 3;
-	ob.push(obj1);
-	*/
-	
-	//console.log(logData);
-	for (i=0; i<logData.stepLog.length; i++){
-		//console.log(logData['stepLog'][i]);
-		if (logData['stepLog'][i].stepType == "bool"){
-			var obj = new Object();
-			obj.x = i;
-			if (layerNumber ==0){
-				obj.y = logData['stepLog'][i].yes;
-			}
-			else{
-				obj.y = logData['stepLog'][i].no;	
-			}
-			arr.push(obj);
-		}
-		else{
-			var obj = new Object();
-			obj.x = i;
-			if (layerNumber ==0){
-				obj.y = 0;
-			}
-			else{
-				obj.y = 0;	
-			}
-			arr.push(obj);
-		}
-		
-	}
-	//console.log(arr);
-	
-	return arr;
-}
-
-/*
-var layers = stack(d3.range(n).map( function(){
-											 
-											 
-											 
-											 }));
-
-console.log(layers);
-
-layers = new Array()
-layers[0] = new Array();
-var firstOne = new Object();
-firstOne.x = 0;
-firstOne.y = 5;
-firstOne.y0 = 0;
-layers[0].push(firstOne);
-var secondOne = new Object();
-secondOne.x = 1;
-secondOne.y = 10;
-secondOne.y0 = 0;
-layers[0].push(secondOne);
-
-
-console.log(layers);
-*/
-var yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y; }); }),
-yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
-
-
-var margin = {top: 40, right: 10, bottom: 20, left: 10},
-    width = 850 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-var x = d3.scale.ordinal()
-    .domain(d3.range(m))
-    .rangeRoundBands([0, width], .08);
-
-var y = d3.scale.linear()
-    .domain([0, yStackMax])
-    .range([height, 0]);
-
-var color = d3.scale.linear()
-    .domain([0, n - 1])
-    .range(["#aad", "#556"]);
-
-var formatXAxis = function(d) {
-	return logData['stepLog'][d].stepName;	
-}
-
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .tickSize(0)
-    .tickPadding(6)
-    .orient("bottom")
-	.tickFormat(formatXAxis);
-
-var svg = d3.select("#graphArea").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-var layer = svg.selectAll(".layer")
-    .data(layers)
-  .enter().append("g")
-    .attr("class", "layer")
-    .style("fill", function(d, i) { return color(i); });
-
-var rect = layer.selectAll("rect")
-    .data(function(d) { return d; })
-  .enter().append("rect")
-    .attr("x", function(d) { return x(d.x); })
-    .attr("y", height)
-    .attr("width", x.rangeBand())
-    .attr("height", 0)
-	.text(function(layers) { return layers;} );
-
-console.log(layers);
-console.log(logData);
-svg.selectAll("text")
-	.data(layers)
-	.enter()
-		.append("text");
-
-rect.transition()
-    .delay(function(d, i) { return i * 10; })
-    .attr("y", function(d) { return y(d.y0 + d.y); })
-    .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); });
-
-
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
-
-
-d3.selectAll("input").on("change", change);
-
-
-var timeout = setTimeout(function() {
-  d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
-}, 500);
-
-
-function change() {
-  clearTimeout(timeout);
-  if (this.value === "grouped") transitionGrouped();
-  else transitionStacked();
-}
-
-
-function transitionGrouped() {
-  y.domain([0, yGroupMax]);
-
-  rect.transition()
-      .duration(500)
-      .delay(function(d, i) { return i * 10; })
-      .attr("x", function(d, i, j) { return x(d.x) + x.rangeBand() / n * j; })
-      .attr("width", x.rangeBand() / n)
-    .transition()
-      .attr("y", function(d) { return y(d.y); })
-      .attr("height", function(d) { return height - y(d.y); });
-}
-
-function transitionStacked() {
-  y.domain([0, yStackMax]);
-
-  rect.transition()
-      .duration(500)
-      .delay(function(d, i) { return i * 10; })
-      .attr("y", function(d) { return y(d.y0 + d.y); })
-      .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
-    .transition()
-      .attr("x", function(d) { return x(d.x); })
-      .attr("width", x.rangeBand());
-}
-
-// Inspired by Lee Byron's test data generator.
-function bumpLayer(n, o) {
-
-
-  function bump(a) {
-    var x = 1 / (.1 + Math.random()),
-        y = 2 * Math.random() - .5,
-        z = 10 / (.1 + Math.random());
-    for (var i = 0; i < n; i++) {
-      var w = (i / n - y) * z;
-      a[i] += x * Math.exp(-w * w);
-    }
-  }
-
-  var a = [], i;
-  for (i = 0; i < n; ++i) a[i] = o + o * Math.random();
-  for (i = 0; i < 5; ++i) bump(a);
-
-
-  //a = [1,2,3,4,5,10,8];
-  //console.log(a);
-  return a.map(function(d, i) { return {x: i, y: Math.max(0, d)}; });
-}
-	
-	
-}
+$
 
 
 </script>
-
+<script src="{% static "jquery/drawBarGraph.js"%}"></script>
 
 {% endblock %}
