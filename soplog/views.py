@@ -94,10 +94,12 @@ def upload(request):
 
     steps = data['steps']
     
+    print data['timeStarted']
     
     newLog = LogList(
                           list = List.objects.get(id=checklistId),
                           modifyTime=datetime.datetime.today()
+                        
                           )
     newLog.save()
     for row in steps:
