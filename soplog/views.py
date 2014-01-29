@@ -23,13 +23,16 @@ def checklistSearchByGroupId(request, groupId):
     j = {}
     j['groupId'] = int(groupId)
     j['checklist'] = []
+    
     if len(checklists) == 0:
         j['error'] = "No Results"
         return HttpResponse(json.dumps(j), content_type="application/json")
     for item in checklists:
         temp = {}
         temp['name'] = item.name
+        temp['numOfSteps'] = ListStep.objects.filter(list=List.objects.get(id=item.id)).count()
         temp['id'] = item.id
+        
         j['checklist'].append(temp)
     return HttpResponse(json.dumps(j), content_type="application/json")
 
@@ -42,8 +45,6 @@ def checklistSteps(request, checklistId):
         j['checklistName'] = steps[0].list.name
     else:
         j['error'] = "No Results"
-    
-    j['numberOfSteps'] = 0
     
     for step in steps:
         temp = {}
@@ -69,7 +70,6 @@ def checklistSteps(request, checklistId):
         if step.ifEqualTo != None:
             temp['ifEqualTo'] = step.ifEqualTo
         j['steps'].append(temp)
-        j['numberOfSteps'] += 1
     return HttpResponse(json.dumps(j), content_type="application/json")
 
 
