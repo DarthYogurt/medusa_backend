@@ -24,12 +24,12 @@ class Group(models.Model):
         return str(self.id) + "-" + self.name
 
 class List(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     group = models.ForeignKey('Group',blank=True, null=True)
     
     def __unicode__(self):
-        return str(self.id) + self.name
+        return str(self.id) + "-" + self.name
 
 class ListNotify(models.Model):
     list = models.ForeignKey('List')
