@@ -39,7 +39,7 @@ class ListNotify(models.Model):
         return str(str(self.id) + " - "+ self.list.name + "-" + self.user.name )
     
 class ListStep(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=255)
     order = models.IntegerField()
     description = models.TextField(blank=True)
     list = models.ForeignKey('List')
@@ -53,7 +53,7 @@ class ListStep(models.Model):
     ifLessThan = models.FloatField(blank=True, null=True)
     ifEqualTo = models.FloatField(blank=True, null=True)
     def __unicode__(self):
-        return str(self.order) + " " + self.name+"-id:"+str(self.id)
+        return str(self.list.id) + " " + self.name+"-id:"+str(self.id)
     
 class StepType(models.Model):
     name = models.CharField(max_length=10)
