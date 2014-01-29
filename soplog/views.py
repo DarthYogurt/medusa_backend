@@ -42,6 +42,9 @@ def checklistSteps(request, checklistId):
         j['checklistName'] = steps[0].list.name
     else:
         j['error'] = "No Results"
+    
+    j['numberOfSteps'] = 0
+    
     for step in steps:
         temp = {}
         temp['name'] = step.name
@@ -66,6 +69,7 @@ def checklistSteps(request, checklistId):
         if step.ifEqualTo != None:
             temp['ifEqualTo'] = step.ifEqualTo
         j['steps'].append(temp)
+        j['numberOfSteps'] += 1
     return HttpResponse(json.dumps(j), content_type="application/json")
 
 
