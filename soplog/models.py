@@ -5,7 +5,6 @@ from django.db import models
 from django.forms.models import ModelForm
 
 
-# Create your models here.
 class User(models.Model):
     ''' currently not connected to Group 
     '''
@@ -79,8 +78,8 @@ class LogBool(models.Model):
     modifyTime = models.DateTimeField(null=True)
     endTime = models.DateTimeField(null=True)
     
-    def __unicode__(self):
-        return str(self.logList.list.name) + "-" + str(self.step) 
+#     def __unicode__(self):
+#         return str(self.logList.list.name) + "-" + str(self.step) 
      
 class LogNumber(models.Model):    #Not really double, Django doesn't have double values
     logList = models.ForeignKey('LogList')
@@ -90,8 +89,8 @@ class LogNumber(models.Model):    #Not really double, Django doesn't have double
     modifyTime = models.DateTimeField(null=True)
     endTime = models.DateTimeField(null=True)
     
-    def __unicode__(self):
-        return str(self.logList.list.name) + "-" + str(self.step) 
+#     def __unicode__(self):
+#         return str(self.logList.list.name) + "-" + str(self.step) 
      
 class LogText(models.Model):
     logList = models.ForeignKey('LogList')
@@ -101,8 +100,8 @@ class LogText(models.Model):
     modifyTime = models.DateTimeField(null=True)
     endTime = models.DateTimeField(null=True)
     
-    def __unicode__(self):
-        return str(self.logList.list.name) + "-" + str(self.step) 
+#     def __unicode__(self):
+#         return str(self.logList.list.name) + "-" + str(self.step) 
 
 class LogImage(models.Model):
     logList = models.ForeignKey('LogList')
@@ -112,8 +111,8 @@ class LogImage(models.Model):
     modifyTime = models.DateTimeField(null=True)
     endTime = models.DateTimeField(null=True)
     
-    def __unicode__(self):
-        return str(self.step) +"-"+ str(file)
+#     def __unicode__(self):
+#         return str(self.step) +"-"+ str(file)
 # class ImageForm(forms.Form):
 #     file = forms.FileField(
 #         label='Select a file',
