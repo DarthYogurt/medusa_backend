@@ -77,7 +77,8 @@ class LogBool(models.Model):
     startTime = models.DateTimeField(null=True)
     modifyTime = models.DateTimeField(null=True)
     endTime = models.DateTimeField(null=True)
-    
+    addText = models.TextField(null=True, blank=True)
+    addImage = models.FileField(null=True,upload_to="/media/%Y/%m/%d")
 #     def __unicode__(self):
 #         return str(self.logList.list.name) + "-" + str(self.step) 
      
@@ -88,7 +89,8 @@ class LogNumber(models.Model):    #Not really double, Django doesn't have double
     startTime = models.DateTimeField(null=True)
     modifyTime = models.DateTimeField(null=True)
     endTime = models.DateTimeField(null=True)
-    
+    addText = models.TextField(null=True, blank=True)
+    addImage = models.FileField(null=True,upload_to="/media/%Y/%m/%d")
 #     def __unicode__(self):
 #         return str(self.logList.list.name) + "-" + str(self.step) 
      
@@ -99,7 +101,8 @@ class LogText(models.Model):
     startTime = models.DateTimeField(null=True)
     modifyTime = models.DateTimeField(null=True)
     endTime = models.DateTimeField(null=True)
-    
+    addText = models.TextField(null=True, blank=True)
+    addImage = models.FileField(null=True,upload_to="/media/%Y/%m/%d")
 #     def __unicode__(self):
 #         return str(self.logList.list.name) + "-" + str(self.step) 
 
@@ -110,7 +113,9 @@ class LogImage(models.Model):
     startTime = models.DateTimeField(null=True)
     modifyTime = models.DateTimeField(null=True)
     endTime = models.DateTimeField(null=True)
-    
+    addText = models.TextField(null=True, blank=True)
+    addImage = models.FileField(null=True,upload_to="/media/%Y/%m/%d")
+
 #     def __unicode__(self):
 #         return str(self.step) +"-"+ str(file)
 # class ImageForm(forms.Form):
