@@ -94,17 +94,17 @@ def upload(request):
 
     steps = data['steps']
     
-    print data['timeStarted']
+    #print data['timeStarted']
     
     newLog = LogList(
-                          list = List.objects.get(id=checklistId),
-                          modifyTime=datetime.datetime.today(),
-                          startTime= datetime.datetime.strptime(data['timeStarted'], '%m-%d-%y %H:%M:%S' ),
-                          endTime = datetime.datetime.strptime(data['timeFinished'], '%m-%d-%y %H:%M:%S')
-                          )
+                      list = List.objects.get(id=checklistId),
+                      modifyTime=datetime.datetime.today(),
+                      startTime= datetime.datetime.strptime(data['timeStarted'], '%m-%d-%y %H:%M:%S' ),
+                      endTime = datetime.datetime.strptime(data['timeFinished'], '%m-%d-%y %H:%M:%S')
+                      )
     newLog.save()
     for row in steps:
-        print row
+        #print row
         if row['stepType'] == "bool":
             value = False
             if row['value'] == True:
@@ -113,7 +113,9 @@ def upload(request):
                               logList = LogList.objects.get(id=newLog.id),
                               step = ListStep.objects.get(id=row['stepId']),
                               value = value,
-                              modifyTime=datetime.datetime.today()
+                              modifyTime=datetime.datetime.today(),
+                              startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
+                              endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' )
                               )
             newBool.save()
         elif row['stepType'] == "number":
@@ -121,7 +123,9 @@ def upload(request):
                                   logList = LogList.objects.get(id=newLog.id),
                                   step = ListStep.objects.get(id=row['stepId']),
                                   value = row['value'],
-                                  modifyTime=datetime.datetime.today()
+                                  modifyTime=datetime.datetime.today(),
+                                  startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
+                                  endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' )
                                   )
             newNumber.save()
         elif row['stepType'] == "text":
@@ -129,21 +133,21 @@ def upload(request):
                               logList = LogList.objects.get(id=newLog.id),
                               step = ListStep.objects.get(id=row['stepId']),
                               value = row['value'],
-                              modifyTime=datetime.datetime.today()
+                              modifyTime=datetime.datetime.today(),
+                              startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
+                              endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' )
                               )
             newText.save()
         elif row['stepType'] == "image":
-            
-            print row
             newImage = LogImage(
                                 logList = LogList.objects.get(id=newLog.id),
                                 step = ListStep.objects.get(id=row['stepId']),
                                 file =request.FILES[row['value']],
-                                modifyTime = datetime.datetime.today()
+                                modifyTime = datetime.datetime.today(),
+                                startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
+                                endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' )
                           )
             newImage.save()
-
-    #return HttpResponse(dataString)
     return HttpResponse("List Received")
 
 def showLog(request):
