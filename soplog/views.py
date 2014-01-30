@@ -148,6 +148,11 @@ def upload(request):
                                 endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' )
                           )
             newImage.save()
+            
+        if row.get("notifyUserId", False):
+            # update notify user can call method here to dump into db
+            True
+            
     return HttpResponse("List Received")
 
 def showLog(request):
