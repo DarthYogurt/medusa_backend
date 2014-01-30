@@ -69,7 +69,7 @@ class LogList(models.Model):
     endTime = models.DateTimeField(null=True)
      
     def __unicode__(self):
-        return str(self.list.name) +" - "+ str(self.id) + "-"+ str(self.modifyTime)
+        return str(self.list.name) +" - "+ str(self.id) 
  
 class LogBool(models.Model):
     logList = models.ForeignKey('LogList')
@@ -80,7 +80,7 @@ class LogBool(models.Model):
     endTime = models.DateTimeField(null=True)
     
     def __unicode__(self):
-        return str(self.logList.list.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
+        return str(self.logList.list.name) + "-" + str(self.step.name) 
      
 class LogNumber(models.Model):    #Not really double, Django doesn't have double values
     logList = models.ForeignKey('LogList')
@@ -91,7 +91,7 @@ class LogNumber(models.Model):    #Not really double, Django doesn't have double
     endTime = models.DateTimeField(null=True)
     
     def __unicode__(self):
-        return str(self.logList.list.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
+        return str(self.logList.list.name) + "-" + str(self.step.name) 
      
 class LogText(models.Model):
     logList = models.ForeignKey('LogList')
@@ -102,7 +102,7 @@ class LogText(models.Model):
     endTime = models.DateTimeField(null=True)
     
     def __unicode__(self):
-        return str(self.logList.list.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
+        return str(self.logList.list.name) + "-" + str(self.step.name) 
 
 class LogImage(models.Model):
     logList = models.ForeignKey('LogList')
