@@ -66,7 +66,7 @@ class LogList(models.Model):
     user = models.ForeignKey('User', null=True)
     startTime = models.DateTimeField(null=True)
     modifyTime = models.DateTimeField(null=True)
-    endtime = models.DateTimeField(null=True)
+    endTime = models.DateTimeField(null=True)
      
     def __unicode__(self):
         return str(self.list.name) +" - "+ str(self.id) + "-"+ str(self.modifyTime)
@@ -75,7 +75,9 @@ class LogBool(models.Model):
     logList = models.ForeignKey('LogList')
     step = models.ForeignKey('ListStep')
     value = models.BooleanField()
+    startTime = models.DateTimeField(null=True)
     modifyTime = models.DateTimeField(null=True)
+    endTime = models.DateTimeField(null=True)
     
     def __unicode__(self):
         return str(self.logList.list.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
@@ -84,7 +86,9 @@ class LogNumber(models.Model):    #Not really double, Django doesn't have double
     logList = models.ForeignKey('LogList')
     step = models.ForeignKey('ListStep')
     value = models.FloatField()
+    startTime = models.DateTimeField(null=True)
     modifyTime = models.DateTimeField(null=True)
+    endTime = models.DateTimeField(null=True)
     
     def __unicode__(self):
         return str(self.logList.list.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
@@ -93,7 +97,9 @@ class LogText(models.Model):
     logList = models.ForeignKey('LogList')
     step = models.ForeignKey('ListStep')
     value = models.TextField()
+    startTime = models.DateTimeField(null=True)
     modifyTime = models.DateTimeField(null=True)
+    endTime = models.DateTimeField(null=True)
     
     def __unicode__(self):
         return str(self.logList.list.name) + "-" + str(self.step.name) + "-" + str(self.modifyTime)
@@ -102,7 +108,9 @@ class LogImage(models.Model):
     logList = models.ForeignKey('LogList')
     step = models.ForeignKey("ListStep")
     file = models.FileField(upload_to="/media/%Y/%m/%d")
+    startTime = models.DateTimeField(null=True)
     modifyTime = models.DateTimeField(null=True)
+    endTime = models.DateTimeField(null=True)
     
     def __unicode__(self):
         return str(self.step) +"-"+ str(file)
