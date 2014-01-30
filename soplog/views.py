@@ -98,8 +98,9 @@ def upload(request):
     
     newLog = LogList(
                           list = List.objects.get(id=checklistId),
-                          modifyTime=datetime.datetime.today()
-                        
+                          modifyTime=datetime.datetime.today(),
+                          startTime= datetime.datetime.strptime(data['timeStarted'], '%m-%d-%y %H:%M:%S' ),
+                          endTime = datetime.datetime.strptime(data['timeFinished'], '%m-%d-%y %H:%M:%S')
                           )
     newLog.save()
     for row in steps:
@@ -334,6 +335,9 @@ def testFile(request):
     # Render list page with the documents and the form
     return HttpResponse(documents)
 
+
+
+    
 
 def temp(request):
     
