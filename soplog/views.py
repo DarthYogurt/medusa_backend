@@ -115,7 +115,9 @@ def upload(request):
                               value = value,
                               modifyTime=datetime.datetime.today(),
                               startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
-                              endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' )
+                              endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' ),
+                              addText = row.get('addText',""),
+                              addImage = row.get('addImage',"")
                               )
             newBool.save()
         elif row['stepType'] == "number":

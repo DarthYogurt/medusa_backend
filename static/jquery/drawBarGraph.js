@@ -59,7 +59,9 @@ function drawBarGraph(){
 		.range(["#aad", "#556"]);
 	
 	var formatXAxis = function(d) {
-		return logData['stepLog'][d].stepName;	
+		//return logData['stepLog'][d].stepName;
+		return logData['stepLog'][d].order;	
+
 	}
 	
 	var xAxis = d3.svg.axis()
@@ -88,7 +90,7 @@ function drawBarGraph(){
 		.attr("y", height)
 		.attr("width", x.rangeBand())
 		.attr("height", 0);
-	//	.text(function(layers) { return layers;} );
+
 
 	//X coordinate Texts
 	var trueText = svg.selectAll("text")
