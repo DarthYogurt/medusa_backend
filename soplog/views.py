@@ -119,6 +119,15 @@ def upload(request):
 #                              addImage = row.get('extraImage',"")
                               )
             newBool.save()
+            
+            # Adding to notifyUserId pool
+            if row['notifyUserId']:
+                newLogBoolFollowUp = LogBoolFollowUp(
+                                                     logBool = LogBool.objects.get(id=newBool.id),
+                                                     user = User.objects.get(id=userId),
+                                                     completeBy = datetime.datetime.today(),
+                                                     ) 
+                newLogBoolFollowUp.save()
         elif row['stepType'] == "number":
             newNumber = LogNumber(
                                   logList = LogList.objects.get(id=newLog.id),
@@ -240,7 +249,42 @@ def getLogData(request, checklistId):
         
     
         j['stepLog'].append(temp)
+    return HttpResponse(json.dumps(j), content_type="application/json")
+
+
+def slate(request):
     
+    var = {}
+    var['slate'] = LogBoolFollowUp.objects.all()
+    
+    t = get_template('slate.html')
+    c = Context(var)
+    return HttpResponse(t.render(c))
+
+
+def getSlate(request):
+    j = {}
+    j['slate'] = []
+    
+    for slate in LogBoolFollowUp.objects.all():
+        t = {}
+        t['slateId'] = slate.id
+        t['checklist'] = slate.logBool.step.list.name
+        t['logBoolId'] =slate.logBool.id
+        #t['userId'] = slate.user.id
+        t['userName'] = slate.user.name
+        #t['notifyId'] = slate.logBool.step.notifyUser.id
+        t['notifyName'] = slate.logBool.step.notifyUser.name
+        t['stepName'] = slate.logBool.step.name
+        t['addNote'] = slate.logBool.addText
+         
+        j['slate'].append(t)
+        
+        
+        
+        
+        
+
     return HttpResponse(json.dumps(j), content_type="application/json")
 #     j = {}
 #     templateStep = []

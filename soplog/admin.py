@@ -17,6 +17,7 @@ admin.site.register(LogNumber)
 admin.site.register(LogText)
 
 admin.site.register(LogImage)
+admin.site.register(LogBoolFollowUp)
 # admin.site.register(TestFile)
 
 #admin.site.register(LogFile)

@@ -1,0 +1,39 @@
+
+{% extends "header.html" %}
+{% block content %}
+
+<div class="container">
+    <div class = "row">
+        <div class="col-md-8"> <h4> Log of Checklists </h4></div>
+    </div>
+    
+    <div class="table-responsive">
+	    <table class="table">
+        	<tr>
+                <th> StepId/NotifyId </th>
+                <th> name</th>
+                <th> User</th>
+                <th> Additional Notes </th>
+                <th> Image </th>
+                <th> Completed</th>
+			</tr>            
+            {% for notify in slate %}
+            <tr>
+            	<td> {{notify.logBool.id}}/{{notify.id}} </td>
+                <td> {{notify.logBool.step.name}}</td>
+                <td> {{user.name}}</td>
+                <td> {{notify.logBool.addText}} </td>
+                <td> {{notify.logBool.addImage}} </td>
+                <td> <button type="button" class="btn btn-default">Complete</button></td>
+            </tr>
+            {% endfor %}
+        
+        
+    	</table>  
+    </div> <!-- table responsive -->
+    {{ slate }}
+    
+    
+</div> <!--- container -->
+
+{% endblock %}

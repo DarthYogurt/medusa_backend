@@ -116,6 +116,14 @@ class LogImage(models.Model):
     addText = models.TextField(null=True, blank=True)
     addImage = models.FileField(null=True, blank=True, upload_to="/media/%Y/%m/%d")
 
+class LogBoolFollowUp(models.Model):
+    logBool = models.ForeignKey('LogBool')
+    user = models.ForeignKey('User')
+    complete = models.BooleanField(default = False)
+    completeBy = models.DateTimeField(null=True, blank=True)
+    completedTime = models.DateTimeField(null=True, blank=True)
+    
+    
 #     def __unicode__(self):
 #         return str(self.step) +"-"+ str(file)
 # class ImageForm(forms.Form):
