@@ -104,7 +104,6 @@ def upload(request):
                       )
     newLog.save()
     for row in steps:
-        #print row
         if row['stepType'] == "bool":
             value = False
             if row['value'] == True:
@@ -116,8 +115,8 @@ def upload(request):
                               modifyTime=datetime.datetime.today(),
                               startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
                               endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' ),
-                              addText = row.get('addText',""),
-                              addImage = row.get('addImage',"")
+                              addText = row.get('extraNote',""),
+#                              addImage = row.get('extraImage',"")
                               )
             newBool.save()
         elif row['stepType'] == "number":
@@ -127,7 +126,8 @@ def upload(request):
                                   value = row['value'],
                                   modifyTime=datetime.datetime.today(),
                                   startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
-                                  endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' )
+                                  endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' ),
+                                  addText = row.get('extraNote',""),
                                   )
             newNumber.save()
         elif row['stepType'] == "text":
@@ -137,7 +137,8 @@ def upload(request):
                               value = row['value'],
                               modifyTime=datetime.datetime.today(),
                               startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
-                              endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' )
+                              endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' ),
+                              addText = row.get('extraNote',""),
                               )
             newText.save()
         elif row['stepType'] == "image":
@@ -147,7 +148,8 @@ def upload(request):
                                 file =request.FILES[row['value']],
                                 modifyTime = datetime.datetime.today(),
                                 startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
-                                endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' )
+                                endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' ),
+                                addText = row.get('extraNote',""),
                           )
             newImage.save()
             
