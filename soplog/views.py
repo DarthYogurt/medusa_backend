@@ -1,7 +1,9 @@
 import datetime
+from email.mime.text import MIMEText
+import itertools
 import json
 import os
-import itertools
+import smtplib
 
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseRedirect
@@ -122,12 +124,12 @@ def upload(request):
             
             # Adding to notifyUserId pool
             if row.get('notifyUserId',False):
-                newLogBoolFollowUp = LogBoolFollowUp(
+                newLogBoolNotify = LogBoolNotify(
                                                      logBool = LogBool.objects.get(id=newBool.id),
                                                      user = User.objects.get(id=userId),
                                                      completeBy = datetime.datetime.today(),
                                                      ) 
-                newLogBoolFollowUp.save()
+                newLogBoolNotify.save()
         elif row['stepType'] == "number":
             newNumber = LogNumber(
                                   logList = LogList.objects.get(id=newLog.id),
@@ -256,7 +258,7 @@ def getLogData(request, checklistId):
 def slate(request):
     
     var = {}
-    var['slate'] = LogBoolFollowUp.objects.all()
+    var['slate'] = LogBoolNotify.objects.all()
     
     t = get_template('slate.html')
     c = Context(var)
@@ -267,7 +269,7 @@ def getSlate(request):
     j = {}
     j['slate'] = []
     
-    for slate in LogBoolFollowUp.objects.all():
+    for slate in LogBoolNotify.objects.all():
         t = {}
         t['slateId'] = slate.id
         t['checklist'] = slate.logBool.step.list.name
@@ -280,13 +282,36 @@ def getSlate(request):
         t['addNote'] = slate.logBool.addText
          
         j['slate'].append(t)
-        
-        
-        
-        
-        
-
     return HttpResponse(json.dumps(j), content_type="application/json")
+
+
+
+def emailUser(user, logBoolNotify):
+    # Open a plain text file for reading.  For this example, assume that
+    # the text file contains only ASCII characters.
+    
+    server = 'admin@darthyogurt.com'
+    #fp = open(textfile, 'rb')
+    # Create a text/plain message
+    msg = MIMEText(logBoolNotify.logBool.addText)
+    #fp.close()
+    
+    # me == the sender's email address
+    # you == the recipient's email address
+    msg['Subject'] = 'Notification for: ' + logBoolNotify.logBool.step.name
+    msg['From'] = server
+    msg['To'] = user.email
+    
+    # Send the message via our own SMTP server, but don't include the
+    # envelope header.
+    s = smtplib.SMTP('localhost')
+    s.sendmail(server, [user.email], msg.as_string())
+    s.quit()
+    
+    return "email complete"
+
+
+
 #     j = {}
 #     templateStep = []
 #     for x in ListStep.objects.order_by('order').filter(list=List.objects.get(id=checklistId)):
