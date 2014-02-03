@@ -6,7 +6,7 @@ Created on Feb 2, 2014
 from email.mime.text import MIMEText
 import smtplib
 
-from soplog.models import *
+#from soplog.models import *
 
 def emailUser(logBoolNotify):
     # Open a plain text file for reading.  For this example, assume that
@@ -33,6 +33,31 @@ def emailUser(logBoolNotify):
     
     return "email complete"
 
+def testEmail():
+    # Open a plain text file for reading.  For this example, assume that
+    # the text file contains only ASCII characters.
+    
+    to = 'raytochina@gmail.com'
+    server = 'admin@darthyogurt.com'
+    #fp = open(textfile, 'rb')
+    # Create a text/plain message
+    msg = MIMEText("Testing text")
+    #fp.close()
+    
+    # me == the sender's email address
+    # you == the recipient's email address
+    msg['Subject'] = 'Notification for: ' 
+    msg['From'] = server
+    msg['To'] = to
+    
+    # Send the message via our own SMTP server, but don't include the
+    # envelope header.
+    s = smtplib.SMTP('localhost')
+    s.sendmail(server, [to], msg.as_string())
+    s.quit()
+    
+    return "email complete"
 
-a = LogBoolNotify.objects.get(id=1)
-print emailUser(a)
+
+#a = LogBoolNotify.objects.get(id=1)
+print testEmail()
