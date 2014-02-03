@@ -118,7 +118,7 @@ def upload(request):
                               startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
                               endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' ),
                               addText = row.get('extraNote',""),
-#                              addImage = row.get('extraImage',"")
+#                             addImage = row.get('extraImage',"")
                               )
             newBool.save()
             
@@ -139,7 +139,7 @@ def upload(request):
                                   startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
                                   endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' ),
                                   addText = row.get('extraNote',""),
-                                  addImage = row.get(request.FILES[row['extraImage']],"")
+                                  #addImage = row.get(request.FILES[row['extraImage']],"")
                                   )
             newNumber.save()
         elif row['stepType'] == "text":
