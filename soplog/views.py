@@ -118,7 +118,7 @@ def upload(request):
                               startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
                               endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' ),
                               addText = row.get('extraNote',""),
-#                             addImage = row.get('extraImage',"")
+                              addImage = row.get('extraImage',"")
                               )
             newBool.save()
             
@@ -280,6 +280,7 @@ def getSlate(request):
         t['notifyName'] = slate.logBool.step.notifyUser.name
         t['stepName'] = slate.logBool.step.name
         t['addNote'] = slate.logBool.addText
+        t['addImage'] = str(slate.logBool.addImage.file)
          
         j['slate'].append(t)
     return HttpResponse(json.dumps(j), content_type="application/json")
