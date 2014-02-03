@@ -110,17 +110,32 @@ def upload(request):
             value = False
             if row['value'] == True:
                 value = True
-            newBool = LogBool( 
-                              logList = LogList.objects.get(id=newLog.id),
-                              step = ListStep.objects.get(id=row['stepId']),
-                              value = value,
-                              modifyTime=datetime.datetime.today(),
-                              startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
-                              endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' ),
-                              addText = row.get('extraNote',""),
-                              addImage = row.get('extraImage',"")
-                              )
-            newBool.save()
+                
+            #set extra image
+            image = None
+            if row.get('extraImage',False):
+                newBool = LogBool( 
+                                  logList = LogList.objects.get(id=newLog.id),
+                                  step = ListStep.objects.get(id=row['stepId']),
+                                  value = value,
+                                  modifyTime=datetime.datetime.today(),
+                                  startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
+                                  endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' ),
+                                  addText = row.get('extraNote',""),
+                                  addImage = request.FILES[row.get('extraImage','')]
+                                  )
+                newBool.save()
+            else:  # wasted space. extra else is for addImage if empty clause Fix later
+                newBool = LogBool( 
+                                  logList = LogList.objects.get(id=newLog.id),
+                                  step = ListStep.objects.get(id=row['stepId']),
+                                  value = value,
+                                  modifyTime=datetime.datetime.today(),
+                                  startTime = datetime.datetime.strptime(row['timeStarted'], '%m-%d-%y %H:%M:%S' ),
+                                  endTime = datetime.datetime.strptime(row['timeFinished'], '%m-%d-%y %H:%M:%S' ),
+                                  addText = row.get('extraNote',"")
+                                  )
+                newBool.save()                
             
             # Adding to notifyUserId pool
             if row.get('notifyUserId',False):
