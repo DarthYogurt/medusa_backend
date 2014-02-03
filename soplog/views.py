@@ -121,7 +121,7 @@ def upload(request):
             newBool.save()
             
             # Adding to notifyUserId pool
-            if row['notifyUserId']:
+            if row.get('notifyUserId',False):
                 newLogBoolFollowUp = LogBoolFollowUp(
                                                      logBool = LogBool.objects.get(id=newBool.id),
                                                      user = User.objects.get(id=userId),
