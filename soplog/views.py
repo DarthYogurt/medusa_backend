@@ -145,6 +145,8 @@ def upload(request):
                                                      completeBy = datetime.datetime.today(),
                                                      ) 
                 newLogBoolNotify.save()
+                emailUser(newLogBoolNotify)
+                
         elif row['stepType'] == "number":
             newNumber = LogNumber(
                                   logList = LogList.objects.get(id=newLog.id),
@@ -180,9 +182,9 @@ def upload(request):
                           )
             newImage.save()
             
-        if row.get("notifyUserId", False):
-            # update notify user can call method here to dump into db
-            True
+#         if row.get("notifyUserId", False):
+#             # update notify user can call method here to dump into db
+#             True
             
     return HttpResponse("List Received")
 
@@ -265,7 +267,6 @@ def getLogData(request, checklistId):
             True
             # DO SOMETHING TO NUMBER AND LOG MEDIAN 
         
-    
         j['stepLog'].append(temp)
     return HttpResponse(json.dumps(j), content_type="application/json")
 
@@ -302,29 +303,45 @@ def getSlate(request):
 
 
 
-def emailUser(user, logBoolNotify):
-    # Open a plain text file for reading.  For this example, assume that
-    # the text file contains only ASCII characters.
+def emailUser(logBoolNotify):
+    fromaddr = 'soplogmedusa@gmail.com'
+    toaddrs = logBoolNotify.user.email
     
-    server = 'admin@darthyogurt.com'
-    #fp = open(textfile, 'rb')
-    # Create a text/plain message
-    msg = MIMEText(logBoolNotify.logBool.addText)
-    #fp.close()
+    msg = logBoolNotify.logBool.addText
     
-    # me == the sender's email address
-    # you == the recipient's email address
-    msg['Subject'] = 'Notification for: ' + logBoolNotify.logBool.step.name
-    msg['From'] = server
-    msg['To'] = user.email
+    username = 'soplogmedusa'
+    password = 'supermanfly821'
     
-    # Send the message via our own SMTP server, but don't include the
-    # envelope header.
-    s = smtplib.SMTP('localhost')
-    s.sendmail(server, [user.email], msg.as_string())
-    s.quit()
+    server = smtplib.SMTP('smtp.gmail.com:587')
+
     
-    return "email complete"
+    server.starttls()
+    server.login(username,password)
+    server.sendmail(fromaddr, toaddrs, msg)
+    server.quit()
+
+    print "email sent to " + toaddrs
+#     
+#     
+#     server = 'admin@darthyogurt.com'
+#     #fp = open(textfile, 'rb')
+#     # Create a text/plain message
+#     msg = MIMEText(logBoolNotify.logBool.addText)
+#     #fp.close()
+#     
+#     # me == the sender's email address
+#     # you == the recipient's email address
+#     msg['Subject'] = 'Notification for: ' + logBoolNotify.logBool.step.name
+#     msg['From'] = server
+#     msg['To'] = user.email
+#     
+#     # Send the message via our own SMTP server, but don't include the
+#     # envelope header.
+#     s = smtplib.SMTP('localhost')
+#     s.sendmail(server, [user.email], msg.as_string())
+#     s.quit()
+#     
+#     return "email complete"
 
 
 
