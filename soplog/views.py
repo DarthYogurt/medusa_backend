@@ -272,7 +272,6 @@ def getLogData(request, checklistId):
 
 
 def slate(request):
-    
     var = {}
     var['slate'] = LogBoolNotify.objects.all()
     
@@ -296,7 +295,7 @@ def getSlate(request):
         t['notifyName'] = slate.logBool.step.notifyUser.name
         t['stepName'] = slate.logBool.step.name
         t['addNote'] = slate.logBool.addText
-        t['addImage'] = str(slate.logBool.addImage.file)
+        t['addImage'] = str(slate.logBool.addImage)
          
         j['slate'].append(t)
     return HttpResponse(json.dumps(j), content_type="application/json")

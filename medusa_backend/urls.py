@@ -33,7 +33,7 @@ urlpatterns = patterns('',
 #     url(r'^checklist/$', checkList),
 
 #     
-#     url(r'^createChecklist/$', createChecklist),
+    #url(r'^createChecklist/$', createChecklist),
 #     url(r'^listConfirm/$',listConfirm),
 #     
 
