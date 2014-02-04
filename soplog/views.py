@@ -307,7 +307,7 @@ def emailUser(logBoolNotify):
     fromaddr = 'soplogmedusa@gmail.com'
     toaddrs = logBoolNotify.user.email
     
-    msg = logBoolNotify.logBool.addText
+    msg = logBoolNotify.logBool.step.name + " on: " + logBoolNotify.completeBy + " : regarding - " +logBoolNotify.logBool.addText
     
     username = 'soplogmedusa'
     password = 'supermanfly821'

@@ -2,6 +2,12 @@
 {% extends "header.html" %}
 {% block content %}
 
+{% load staticfiles %}
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="{% static "jquery/jquery-2.0.2.js" %}"></script>
+
+
+
 <div class="container">
     <div class = "row">
         <div class="col-md-8"> <h4> Log of Checklists </h4></div>
@@ -15,6 +21,7 @@
                 <th> User</th>
                 <th> Additional Notes </th>
                 <th> Image </th>
+                <th> Complete By </th>
                 <th> Completed</th>
 			</tr>            
             {% for notify in slate %}
@@ -23,8 +30,16 @@
                 <td> {{notify.logBool.step.name}}</td>
                 <td> {{user.name}}</td>
                 <td> {{notify.logBool.addText}} </td>
-                <td> <img src='{{notify.logBool.addImage}}' /> </td>
+                <td> <img class="addNoteImage" HEIGHT=50 WIDTH=50 src='{{notify.logBool.addImage}}' /> </td>
+                <td> {{notify.completeBy}} </td>
+                
+                {% if notify.completed %}
+                <td> <button type="button" class="btn btn-default" >Done</button></td>
+                {% else %}
                 <td> <button type="button" class="btn btn-default">Complete</button></td>
+                {% endif %}
+                
+                
             </tr>
             {% endfor %}
         
@@ -36,4 +51,12 @@
     
 </div> <!--- container -->
 
+<style>
+
+</style>
+
+<script>
+
+
+</script>
 {% endblock %}
