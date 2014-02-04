@@ -305,117 +305,29 @@ def getSlate(request):
 def emailUser(logBoolNotify):
     fromaddr = 'soplogmedusa@gmail.com'
     toaddrs = logBoolNotify.user.email
-    
     msg = logBoolNotify.logBool.step.name + " on: " + logBoolNotify.completeBy + " : regarding - " +logBoolNotify.logBool.addText
-    
     username = 'soplogmedusa'
     password = 'supermanfly821'
-    
     server = smtplib.SMTP('smtp.gmail.com:587')
-
-    
     server.starttls()
     server.login(username,password)
     server.sendmail(fromaddr, toaddrs, msg)
     server.quit()
+    #print "email sent to " + toaddrs
 
-    print "email sent to " + toaddrs
-#     
-#     
-#     server = 'admin@darthyogurt.com'
-#     #fp = open(textfile, 'rb')
-#     # Create a text/plain message
-#     msg = MIMEText(logBoolNotify.logBool.addText)
-#     #fp.close()
-#     
-#     # me == the sender's email address
-#     # you == the recipient's email address
-#     msg['Subject'] = 'Notification for: ' + logBoolNotify.logBool.step.name
-#     msg['From'] = server
-#     msg['To'] = user.email
-#     
-#     # Send the message via our own SMTP server, but don't include the
-#     # envelope header.
-#     s = smtplib.SMTP('localhost')
-#     s.sendmail(server, [user.email], msg.as_string())
-#     s.quit()
-#     
-#     return "email complete"
+@csrf_exempt
+def createChecklist(request):
+    var = {}
+    var['stepType'] = StepType.objects.all()
+    var['users'] = User.objects.all()
+    var['existingChecklists'] = List.objects.all()
+    
+    t = get_template('createChecklist.html')
+    c = Context(var)
+    return HttpResponse(t.render(c))
 
 
 
-#     j = {}
-#     templateStep = []
-#     for x in ListStep.objects.order_by('order').filter(list=List.objects.get(id=checklistId)):
-#         temp = {}
-#         temp['id'] = x.id
-#         temp['name'] = x.name
-#         temp['order'] = x.order
-#         temp['stepType'] = x.stepType.name
-#         templateStep.append(temp)
-#         
-#     j['logChecklist'] = []
-#     for x in LogList.objects.filter(list= List.objects.get(id=checklistId)):
-#         j['logChecklist'].append(x.id)
-#     
-#     j['logData'] =[]
-#     for x in templateStep:
-#         t = {}
-#         t['templateStepId'] = x['id']
-#         t['name'] = x['name']
-#         t['order'] = x['order']
-#         t['stepType'] = x['stepType']
-#         t['chartData'] = []
-#         if x['stepType'] == "bool":
-#             counter = 1;
-#             for y in LogBool.objects.filter(logList = LogList.objects.filter(id__in = j['logChecklist']) , step = ListStep.objects.get(id=x['id'])):
-#                 temp= {}
-#                 temp['checkLogId']= y.checklistLog.id
-#                 temp['modifyTime'] = y.checklistLog.modifyTime.strftime("%m-%d")
-#                 temp['counter'] = counter 
-#                 if y.value == True:
-#                     temp['value'] = 1     
-#                 else:
-#                     temp['value'] = 0
-#                 t['chartData'].append(temp)
-#                 counter +=1
-#         j['logData'].append(t)   
-#     return HttpResponse(json.dumps(j), content_type="application/json")
-
-
-
-# @csrf_exempt
-# def testFile(request):
-#     theFile = None
-#     if request.FILES.has_key('data'):
-#         theFile = request.FILES['data'].read()
-#         a = json.loads(theFile)
-#            
-#     image = request.FILES['image']
-#        
-#     if request.method == 'POST':
-#         form = TestFileForm(image)
-#         if form.is_valid():
-#             # file is saved
-#             form.save()
-#     return HttpResponse("Post exchange complete" + str(request.FILES))
-#     
-
-# @csrf_exempt
-# def testPost(request):    
-#     theFile = None
-#     if request.FILES.has_key('data'):
-#         theFile = request.FILES['data'].read()
-#         a = json.loads(theFile)
-#           
-#     image = request.FILES['image']
-#       
-#     if request.method == 'POST':
-#         form = LogFile(image)
-#         if form.is_valid():
-#             # file is saved
-#             form.save()
-#     return HttpResponse("Post exchange complete" + str(request.FILES))
 
 
 def latestPost(request):

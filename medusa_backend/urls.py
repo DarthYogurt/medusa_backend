@@ -28,12 +28,14 @@ urlpatterns = patterns('',
     
 #     (r'^', include('soplog.urls')),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
-
+    url(r'^createChecklist/$', createChecklist),
+    
+    
     url(r'temp/$',temp),
 #     url(r'^checklist/$', checkList),
 
 #     
-    #url(r'^createChecklist/$', createChecklist),
+
 #     url(r'^listConfirm/$',listConfirm),
 #     
 
