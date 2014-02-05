@@ -295,7 +295,7 @@ def getSlate(request):
         t['notifyName'] = slate.logBool.step.notifyUser.name
         t['stepName'] = slate.logBool.step.name
         t['addNote'] = slate.logBool.addText
-        t['addImage'] = str(slate.logBool.addImage)
+        t['addImage'] = request.get_host()+str(slate.logBool.addImage)
          
         j['slate'].append(t)
     return HttpResponse(json.dumps(j), content_type="application/json")
@@ -325,6 +325,46 @@ def createChecklist(request):
     t = get_template('createChecklist.html')
     c = Context(var)
     return HttpResponse(t.render(c))
+
+@csrf_exempt
+def listConfirm(request):
+    post = request.POST
+    for item in post:
+        print item, post[item]
+
+        
+    checklistName = request.POST['checklistName']
+    groupId = request.POST['groupId']
+    userIdToNotify = request.POST['userIdToNotify']
+    totalSteps = int(request.POST['totalSteps'])
+    
+    '''
+    newChecklist = List(
+                             name = checklistName,
+                             group = Group.objects.get(id = groupId),
+                             notify = User.objects.get(id = userIdToNotify)
+                             )
+    newChecklist.save()
+    
+    #print "HERE", type(Checklist.objects.get(id = newChecklist.id))
+    for i in range(totalSteps):
+    #    print request.POST['stepName'+str(i)]
+     #   print request.POST['stepType'+str(i)]
+      #  print request.POST['desc'+str(i)]
+     #   print "New checklist Id" , newChecklist.id
+        newStep = ListStep(
+                                name = request.POST['stepName'+str(i)],
+                                order = i+1,
+                                description = request.POST['desc'+str(i)],
+                                checklist = List.objects.get(id=newChecklist.id),
+                            
+                                stepType = StepType.objects.get(name=request.POST['stepType'+str(i)])                       
+                                )
+        newStep.save()
+        '''
+    return HttpResponse("complete")
+
+
 
 @csrf_exempt
 def showPost(request):

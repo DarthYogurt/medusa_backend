@@ -39,7 +39,7 @@ urlpatterns = patterns('',
 
 #     
 
-#     url(r'^listConfirm/$',listConfirm),
+    url(r'^listConfirm/$',listConfirm),
 #     
 
 #     url(r'^analytics/$', analytics),
