@@ -304,9 +304,11 @@ $(".form-control").change(function() {
 */
 
 document.addEventListener('keydown', function(e){
-											  
+				//console.log(e.srcElement.parentNode.parentNode.parentNode);		  
                 if( e.keyCode == '9' && e.srcElement.className.indexOf("tab-to-add") > 0 && e.srcElement.id.substring(4)==currId) {
-                    currId ++;
+                //if( e.keyCode == '9' && e.srcElement.className.indexOf("step-notify-user") > 0 && e.srcElement.id.substring(11)==currId) {
+                		
+					currId ++;
 					addCreateStep(currId);
 					document.getElementById("totalSteps").value=currId+1;
                 }
