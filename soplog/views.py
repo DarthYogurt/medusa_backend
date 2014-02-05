@@ -395,6 +395,7 @@ def uploadError(request):
     
     f.write(request.FILES.get('error', "empty"))
     f.close()
+    return HttpResponse("")
 
 def latestError(request):
     f = open( os.getcwd() + "/error.html", "rb")
