@@ -76,7 +76,7 @@ class LogList(models.Model):
 class LogBool(models.Model):
     logList = models.ForeignKey('LogList')
     step = models.ForeignKey('ListStep')
-    value = models.BooleanField()
+    value = models.BooleanField(default=False)
     startTime = models.DateTimeField(null=True)
     modifyTime = models.DateTimeField(null=True)
     endTime = models.DateTimeField(null=True)
