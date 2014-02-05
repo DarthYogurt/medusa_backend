@@ -388,7 +388,19 @@ def latestPost(request):
     stringReturn = f.read()
     return HttpResponse(stringReturn)
 
+def uploadError(request):
+    #f = open(os.getcwd() + "/error.html", "rb")
+    
+    f = open("error.html", "w")
+    
+    f.write(request.FILES.get('error', "empty"))
+    f.close()
 
+def latestError(request):
+    f = open( os.getcwd() + "/error.html", "rb")
+    #f = open( "E:\\coding_workspace\\medusa_backend\\tempJson", "rb")
+    stringReturn = f.read()
+    return HttpResponse(stringReturn)
 
 @csrf_exempt
 def testFile(request):

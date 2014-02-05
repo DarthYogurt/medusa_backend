@@ -28,10 +28,12 @@ urlpatterns = patterns('',
     #url(r'^testFile/$', testFile),  
     
     url(r'^latestPost/$', latestPost),
+    url(r'^uploadError/$', uploadError),
+    url(r'^latestError/$', latestError),
     
 #     (r'^', include('soplog.urls')),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
-
+    
     
     
     url(r'temp/$',temp),
