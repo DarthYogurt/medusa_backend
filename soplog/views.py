@@ -362,8 +362,8 @@ def listConfirm(request):
                                 notifyUser = User.objects.get(id=request.POST['stepUser'+str(i)]),
                                 requireText = request.POST.get('reqText'+str(i), False), #request.POST.get('reqText', False),
                                 requireImage = request.POST.get('reqImage'+str(i), False),
-                                ifValueTrue = request.POST.get('reqImage'+str(i), False),
-                                ifValueFalse = request.POST.get('reqImage'+str(i), False),                       
+                                ifValueTrue = request.POST.get('reqifTrue'+str(i), False),
+                                ifValueFalse = request.POST.get('reqifFalse'+str(i), False),                       
                                 )
         newStep.save()
         
