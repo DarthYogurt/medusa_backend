@@ -305,7 +305,7 @@ def getSlate(request):
 def emailUser(logBoolNotify):
     fromaddr = 'soplogmedusa@gmail.com'
     toaddrs = logBoolNotify.user.email
-    msg = logBoolNotify.logBool.step.name + " on: " + logBoolNotify.completeBy + " : regarding - " +logBoolNotify.logBool.addText
+    msg = logBoolNotify.logBool.step.name + " on: " + str(logBoolNotify.completeBy) + " : regarding - " +logBoolNotify.logBool.addText
     username = 'soplogmedusa'
     password = 'supermanfly821'
     server = smtplib.SMTP('smtp.gmail.com:587')
@@ -388,14 +388,15 @@ def latestPost(request):
     stringReturn = f.read()
     return HttpResponse(stringReturn)
 
+@csrf_exempt
 def uploadError(request):
-    #f = open(os.getcwd() + "/error.html", "rb")
-    
     f = open("error.html", "w")
-    
-    f.write(request.FILES.get('error', "empty"))
+    f.write(request.FILES['error'].read())
     f.close()
     return HttpResponse("")
+
+
+
 
 def latestError(request):
     f = open( os.getcwd() + "/error.html", "rb")
