@@ -100,6 +100,23 @@ function showUserOptions(){
 	}
 }
 
+function addCheckBox(id, name){
+	var reqCheckBox = document.createElement("div");
+	reqCheckBox.className = "col-sm-2";
+	var reqCheckboxDiv = document.createElement("div");
+	reqCheckboxDiv.className = "checkbox";
+	var reqLabel = document.createElement("label");
+	reqLabel.innerHTML = name;
+	var reqInput = document.createElement("input");
+	reqInput.name = "req"+name+id;
+	reqInput.value = "Yes";
+	reqInput.type = "checkbox";
+	reqLabel.appendChild(reqInput);
+	reqCheckboxDiv.appendChild(reqLabel);
+	reqCheckBox.appendChild(reqCheckboxDiv);
+	return reqCheckBox
+};
+
 
 function addCreateStep(idNum){
 	//STRAT FIRST ROW
@@ -153,42 +170,37 @@ function addCreateStep(idNum){
 	var extraNoteRow = document.createElement("div");
 	extraNoteRow.className = "row form-group";
 	
-	//hideCheckbox
+	//Note Col Empty
 	var noteColEmpty = document.createElement("div");
 	noteColEmpty.className = "col-sm-1";
 	
-	var hideCol = document.createElement("div");
-	hideCol.className = "col-sm-2";
-	var hideDiv = document.createElement("div");
-	hideDiv.className="checkbox";
-	var hideLabel = document.createElement("label");
-	hideLabel.innerHTML = "Hide ";
-	var hideInput = document.createElement("input");
-	hideInput.type = "checkbox";
-	hideLabel.appendChild(hideInput);
-	hideDiv.appendChild(hideLabel);
-	hideCol.appendChild(hideDiv);
 	
-	//Required Checkbox
-	var reqCheckboxCol = document.createElement("div");
-	reqCheckboxCol.className = "col-sm-2";
-	var reqCheckboxDiv = document.createElement("div");
-	reqCheckboxDiv.className = "checkbox";
-	var reqLabel = document.createElement("label");
-	reqLabel.innerHTML = "Required";
-	var reqInput = document.createElement("input");
-	reqInput.type = "checkbox";
-	reqInput.onclick = function (e){
-		addReqConstraints(e);
+	
+	//Step Notify
+	var stepNotify = document.createElement("div");
+	stepNotify.className = "col-sm-3";
+	var selectStepNotUser = document.createElement("select");
+	selectStepNotUser.name = "stepUser"+currId;
+	selectStepNotUser.className = "form-control step-notify-user";
+	for (var i=0; i<users.length;i++){
+		var s = users[i];
+		var id = s.substring( s.indexOf("-")+1, s.length);
+		var name = s.substring(0,s.indexOf("-"))
+		var option = document.createElement("option");
+		option.name = "stepUser"+currId;
+		option.value = id;
+		option.text = id + " " + name;
+		selectStepNotUser.appendChild(option);
 	}
 	
-	reqLabel.appendChild(reqInput);
-	reqCheckboxDiv.appendChild(reqLabel);
-	reqCheckboxCol.appendChild(reqCheckboxDiv);
+	stepNotify.appendChild(selectStepNotUser);
 
 	extraNoteRow.appendChild(noteColEmpty);
-	extraNoteRow.appendChild(hideCol);
-	extraNoteRow.appendChild(reqCheckboxCol);
+	extraNoteRow.appendChild(addCheckBox(currId, "Image"));
+	extraNoteRow.appendChild(addCheckBox(currId, "Text"));
+	extraNoteRow.appendChild(addCheckBox(currId, "ifTrue"));
+	extraNoteRow.appendChild(addCheckBox(currId, "ifFalse"));
+	extraNoteRow.appendChild(stepNotify);
 	
 	var divCreateCol = document.createElement("div");
 	divCreateCol.className = "col-sm-12";
@@ -209,8 +221,6 @@ function deleteStep(){
 }
 
 
-
-
 showUserOptions();
 addCreateStep(currId);
 document.getElementById("totalSteps").value=currId+1;
@@ -228,6 +238,7 @@ $("#addStep").click(function() {
 });
 
 
+/*
 function addReqConstraints(e){
 	
 	var currType = e.srcElement.offsetParent.offsetParent.children[0].children[2].children[0].value;  //To get Bool, double or image - Step Type
@@ -279,10 +290,21 @@ function addReqConstraints(e){
 	
 	
 };
+*/
 
-
+/*
+$(".form-control").change(function() {
+    var str = "";
+    $( "select option:selected" ).each(function() {
+      str += $( this ).text() + " ";
+    });
+    
+  })
+  .trigger( "change" );
+*/
 
 document.addEventListener('keydown', function(e){
+											  
                 if( e.keyCode == '9' && e.srcElement.className.indexOf("tab-to-add") > 0 && e.srcElement.id.substring(4)==currId) {
                     currId ++;
 					addCreateStep(currId);

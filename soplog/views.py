@@ -332,13 +332,13 @@ def listConfirm(request):
     for item in post:
         print item, post[item]
 
-        
-    checklistName = request.POST['checklistName']
-    groupId = request.POST['groupId']
-    userIdToNotify = request.POST['userIdToNotify']
+    
+    checklistName = request.POST.get('checklistName',"")
+    groupId = request.POST.get('groupId',1)
+    userIdToNotify = request.POST.get('userIdToNotify')
     totalSteps = int(request.POST['totalSteps'])
     
-    '''
+   
     newChecklist = List(
                              name = checklistName,
                              group = Group.objects.get(id = groupId),
@@ -356,12 +356,17 @@ def listConfirm(request):
                                 name = request.POST['stepName'+str(i)],
                                 order = i+1,
                                 description = request.POST['desc'+str(i)],
-                                checklist = List.objects.get(id=newChecklist.id),
+                                list = List.objects.get(id=newChecklist.id),
                             
-                                stepType = StepType.objects.get(name=request.POST['stepType'+str(i)])                       
+                                stepType = StepType.objects.get(name=request.POST['stepType'+str(i)]),
+                                notifyUser = User.objects.get(id=request.POST['stepUser'+str(i)]),
+                                requireText = request.POST.get('reqText'+str(i), False), #request.POST.get('reqText', False),
+                                requireImage = request.POST.get('reqImage'+str(i), False),
+                                ifValueTrue = request.POST.get('reqImage'+str(i), False),
+                                ifValueFalse = request.POST.get('reqImage'+str(i), False),                       
                                 )
         newStep.save()
-        '''
+        
     return HttpResponse("complete")
 
 

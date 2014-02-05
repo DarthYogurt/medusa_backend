@@ -26,17 +26,20 @@ class List(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     group = models.ForeignKey('Group',blank=True, null=True)
+    notify = models.ForeignKey('User')
     
     def __unicode__(self):
         return str(self.id) + "-" + self.name
 
+'''
 class ListNotify(models.Model):
     list = models.ForeignKey('List')
     user = models.ForeignKey('User')
     
     def __unicode__(self):
         return str(str(self.id) + " - "+ self.list.name + "-" + self.user.name )
-    
+'''
+     
 class ListStep(models.Model):
     name = models.CharField(max_length=255)
     order = models.IntegerField()
@@ -44,10 +47,10 @@ class ListStep(models.Model):
     list = models.ForeignKey('List')
     stepType = models.ForeignKey('StepType')
     notifyUser = models.ForeignKey("User")
-    requireText = models.BooleanField(blank=True)
-    requireImage = models.BooleanField(blank=True)
-    ifValueTrue = models.BooleanField(blank=True)
-    ifValueFalse = models.BooleanField(blank=True)
+    requireText = models.NullBooleanField(blank=True, null=True)
+    requireImage = models.NullBooleanField(blank=True, null=True)
+    ifValueTrue = models.NullBooleanField(blank=True, null=True)
+    ifValueFalse = models.NullBooleanField(blank=True, null=True)
     ifGreaterThan = models.FloatField(blank=True, null=True)
     ifLessThan = models.FloatField(blank=True, null=True)
     ifEqualTo = models.FloatField(blank=True, null=True)
