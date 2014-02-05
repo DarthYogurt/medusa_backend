@@ -326,7 +326,14 @@ def createChecklist(request):
     c = Context(var)
     return HttpResponse(t.render(c))
 
-
+@csrf_exempt
+def showPost(request):
+    var =  request.POST
+    
+    print var
+    t = get_template('showPost.html')
+    c = Context(var)
+    return HttpResponse(t.render(c))
 
 
 

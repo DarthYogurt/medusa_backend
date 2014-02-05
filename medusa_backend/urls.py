@@ -22,13 +22,16 @@ urlpatterns = patterns('',
     url(r'^getLogData/(\d*)/$', getLogData),
     url(r'^slate/$', slate),
     url(r'^getSlate/$', getSlate),
-#     url(r'^testPost/$', testPost),
-    url(r'^testFile/$', testFile),  
+    url(r'^createChecklist/$', createChecklist),
+#   
+    url(r'^showPost/$', showPost),
+    #url(r'^testFile/$', testFile),  
+    
     url(r'^latestPost/$', latestPost),
     
 #     (r'^', include('soplog.urls')),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
-    url(r'^createChecklist/$', createChecklist),
+
     
     
     url(r'temp/$',temp),
