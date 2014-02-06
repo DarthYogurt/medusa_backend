@@ -16,10 +16,10 @@
     <div class="table-responsive">
 	    <table class="table">
         	<tr>
-                <th> StepId/NotifyId </th>
-                <th> name</th>
+                <th width="5%"> StepId/NotifyId </th>
+                <th width="25%"> name</th>
                 <th> User</th>
-                <th> Additional Notes </th>
+                <th width="25%"> Additional Notes </th>
                 <th> Image </th>
                 <th> Complete By </th>
                 <th> Completed</th>
@@ -28,7 +28,7 @@
             {% for notify in slate %}
             <tr>
             	<td> {{notify.logBool.id}}/{{notify.id}} </td>
-                <td> {{notify.logBool.step.name}}</td>
+                <td > {{notify.logBool.step.name}}</td>
                 <td> {{notify.user.name}}</td>
                 <td> {{notify.logBool.addText}} </td>
                 <td> <img class="addNoteImage" HEIGHT=50 WIDTH=50 src='{{notify.logBool.addImage}}' /> </td>
