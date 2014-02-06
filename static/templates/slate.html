@@ -23,22 +23,24 @@
                 <th> Image </th>
                 <th> Complete By </th>
                 <th> Completed</th>
+                <th> Modified Time</th>
 			</tr>            
             {% for notify in slate %}
             <tr>
             	<td> {{notify.logBool.id}}/{{notify.id}} </td>
                 <td> {{notify.logBool.step.name}}</td>
-                <td> {{user.name}}</td>
+                <td> {{notify.user.name}}</td>
                 <td> {{notify.logBool.addText}} </td>
                 <td> <img class="addNoteImage" HEIGHT=50 WIDTH=50 src='{{notify.logBool.addImage}}' /> </td>
-                <td> {{notify.completeBy}} </td>
+                <td> {{ notify.completeBy }} </td>
                 
-                {% if notify.completed %}
-                <td> <button type="button" class="btn btn-default" >Done</button></td>
+                {% if notify.complete %}
+                <td> <button type="button" class="slate-notify btn btn-success" value="{{notify.id}}">Complete</button></td>
                 {% else %}
-                <td> <button type="button" class="btn btn-default">Complete</button></td>
+                <td> <button type="button" class="slate-notify btn btn-danger" value="{{notify.id}}">Complete</button></td>
                 {% endif %}
                 
+                <td> {{notify.completedTime}}</td>
                 
             </tr>
             {% endfor %}
@@ -57,6 +59,27 @@
 
 <script>
 
+
+$(".slate-notify").click(function(){
+									$(this).toggleClass('btn-danger btn-success');
+									
+									
+									$.get( "/checkOffSlate/"+ $(this).context.value, function(data) {
+																					
+																					//console.log($(this));
+																					return data;
+																				   });
+									// Needs to be fixed, modify times not updating 
+									
+									//console.log(modifyTime);
+									
+									//$(this).context.parentElement.nextElementSibling.innerHTML = "HERERE";
+									
+									
+									
+									
+									
+									});
 
 </script>
 {% endblock %}

@@ -30,7 +30,7 @@ urlpatterns = patterns('',
     url(r'^latestPost/$', latestPost),
     url(r'^uploadError/$', uploadError),
     url(r'^latestError/$', latestError),
-    #url(r'^checkOffSlate/$', checkOffSlate),
+    url(r'^checkOffSlate/(\d*)/$', checkOffSlate),
     
 #     (r'^', include('soplog.urls')),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),

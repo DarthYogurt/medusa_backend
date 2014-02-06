@@ -369,6 +369,17 @@ def listConfirm(request):
         
     return HttpResponse("complete")
 
+def checkOffSlate(request, logBoolNotifyId):
+    logBoolNotify = LogBoolNotify.objects.get(id=logBoolNotifyId)
+    if logBoolNotify.complete == True:
+        logBoolNotify.complete = False
+    elif logBoolNotify.complete == False:
+        logBoolNotify.complete = True
+        logBoolNotify.completedTime = datetime.datetime.today()
+    logBoolNotify.save()
+    
+    #print logBoolNotify.strftime("%Y-%M-%D %H:%M")
+    return HttpResponse(logBoolNotify.completedTime)
 
 
 @csrf_exempt

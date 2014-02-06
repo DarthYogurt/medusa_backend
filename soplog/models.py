@@ -126,6 +126,8 @@ class LogBoolNotify(models.Model):
     completeBy = models.DateTimeField(null=True, blank=True)
     completedTime = models.DateTimeField(null=True, blank=True)
 
+    def __unicode__(self):
+        return str(self.id)
     
 #     def __unicode__(self):
 #         return str(self.step) +"-"+ str(file)
