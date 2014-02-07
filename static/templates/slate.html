@@ -31,7 +31,7 @@
                 <td > {{notify.logBool.step.name}}</td>
                 <td> {{notify.user.name}}</td>
                 <td> {{notify.logBool.addText}} </td>
-                <td> <img class="addNoteImage" HEIGHT=50 WIDTH=50 src='{{notify.logBool.addImage}}' /> </td>
+                <td> <a href='{{notify.logBool.addImage}}' class="preview" target="_blank"><img class="addNoteImage"  HEIGHT=50 WIDTH=50 src='{{notify.logBool.addImage}}' /> </a></td>
                 <td> {{ notify.completeBy }} </td>
                 
                 {% if notify.complete %}
@@ -53,9 +53,6 @@
     
 </div> <!--- container -->
 
-<style>
-
-</style>
 
 <script>
 
