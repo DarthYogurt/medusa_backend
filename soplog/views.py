@@ -48,13 +48,23 @@ def checklistSteps(request, checklistId):
     else:
         j['error'] = "No Results"
     
+    users = User.objects.all()
+    
+    j['users'] = []
+    
+    for user in users:
+        temp = {}
+        temp['userId'] = user.id
+        temp['name'] = user.name
+        j['users'].append(temp)
+    
     for step in steps:
         temp = {}
         temp['name'] = step.name
         temp['id'] = step.id
         temp['order'] = int(step.order)
         temp['type'] = step.stepType.name
-        temp['notifyUserId'] = step.notifyUser.id
+       # temp['notifyUserId'] = step.notifyUser.id
        
         temp['requireText'] = step.requireText
         temp['requireImage'] = step.requireImage
@@ -284,7 +294,7 @@ def getSlate(request):
     j = {}
     j['slate'] = []
     
-    for slate in LogBoolNotify.objects.all():
+    for slate in LogBoolNotify.objects.all().order_by('logBool.value'):
         t = {}
         t['slateId'] = slate.id
         t['checklist'] = slate.logBool.step.list.name
