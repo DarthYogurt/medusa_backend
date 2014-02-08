@@ -283,8 +283,12 @@ def getLogData(request, checklistId):
 
 def slate(request):
     var = {}
-    var['slate'] = LogBoolNotify.objects.all()
+    var['slate'] = LogBoolNotify.objects.all().order_by('complete')
+
+    #var['slate'] = sorted(allNotify, key=lambda value: value.logBool.value)
     
+#     for a in var['slate']:
+#         print a.logBool.value
     t = get_template('slate.html')
     c = Context(var)
     return HttpResponse(t.render(c))
@@ -294,7 +298,7 @@ def getSlate(request):
     j = {}
     j['slate'] = []
     
-    for slate in LogBoolNotify.objects.all().order_by('logBool.value'):
+    for slate in LogBoolNotify.objects.all():
         t = {}
         t['slateId'] = slate.id
         t['checklist'] = slate.logBool.step.list.name
