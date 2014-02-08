@@ -192,10 +192,6 @@ def upload(request):
                           )
             newImage.save()
             
-#         if row.get("notifyUserId", False):
-#             # update notify user can call method here to dump into db
-#             True
-            
     return HttpResponse("List Received")
 
 def showLog(request):
@@ -285,10 +281,6 @@ def slate(request):
     var = {}
     var['slate'] = LogBoolNotify.objects.all().order_by('complete')
 
-    #var['slate'] = sorted(allNotify, key=lambda value: value.logBool.value)
-    
-#     for a in var['slate']:
-#         print a.logBool.value
     t = get_template('slate.html')
     c = Context(var)
     return HttpResponse(t.render(c))
@@ -298,7 +290,7 @@ def getSlate(request):
     j = {}
     j['slate'] = []
     
-    for slate in LogBoolNotify.objects.all():
+    for slate in LogBoolNotify.objects.all().order_by('complete'):
         t = {}
         t['slateId'] = slate.id
         t['checklist'] = slate.logBool.step.list.name
@@ -313,8 +305,6 @@ def getSlate(request):
          
         j['slate'].append(t)
     return HttpResponse(json.dumps(j), content_type="application/json")
-
-
 
 def emailUser(logBoolNotify):
     fromaddr = 'soplogmedusa@gmail.com'
@@ -352,7 +342,6 @@ def listConfirm(request):
     userIdToNotify = request.POST.get('userIdToNotify')
     totalSteps = int(request.POST['totalSteps'])
     
-   
     newChecklist = List(
                              name = checklistName,
                              group = Group.objects.get(id = groupId),
@@ -362,10 +351,6 @@ def listConfirm(request):
     
     #print "HERE", type(Checklist.objects.get(id = newChecklist.id))
     for i in range(totalSteps):
-    #    print request.POST['stepName'+str(i)]
-     #   print request.POST['stepType'+str(i)]
-      #  print request.POST['desc'+str(i)]
-     #   print "New checklist Id" , newChecklist.id
         newStep = ListStep(
                                 name = request.POST['stepName'+str(i)],
                                 order = i+1,
@@ -383,13 +368,15 @@ def listConfirm(request):
         
     return HttpResponse("complete")
 
-def checkOffSlate(request, logBoolNotifyId):
+@csrf_exempt
+def checkOffSlate(request, logBoolNotifyId, completedTime):
     logBoolNotify = LogBoolNotify.objects.get(id=logBoolNotifyId)
     if logBoolNotify.complete == True:
         logBoolNotify.complete = False
     elif logBoolNotify.complete == False:
         logBoolNotify.complete = True
-        logBoolNotify.completedTime = datetime.datetime.today()
+        #logBoolNotify.completedTime = datetime.datetime.today()
+        datetime.datetime.strptime(completedTime, '%m-%d-%y %H:%M:%S')
     logBoolNotify.save()
     
     #print logBoolNotify.strftime("%Y-%M-%D %H:%M")
@@ -400,7 +387,6 @@ def checkOffSlate(request, logBoolNotifyId):
 def showPost(request):
     var =  request.POST
     
-    print var
     t = get_template('showPost.html')
     c = Context(var)
     return HttpResponse(t.render(c))
@@ -429,29 +415,28 @@ def latestError(request):
     stringReturn = f.read()
     return HttpResponse(stringReturn)
 
-@csrf_exempt
-def testFile(request):
-    print "In Test File"
-    # Handle file upload
-    if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
-        print
-        print form
-        print request.FILES
-        if form.is_valid():
-            newdoc = LogImage(file = request.FILES['image'])
-            newdoc.save()
-            
-            print newdoc
-            return HttpResponse("None")
-    else:
-        form = ImageForm()
-    # Load documents for the list page
-    documents = LogImage.objects.all()
-
-
-    # Render list page with the documents and the form
-    return HttpResponse(documents)
+# @csrf_exempt
+# def testFile(request):
+#     print "In Test File"
+#     # Handle file upload
+#     if request.method == 'POST':
+#         form = ImageForm(request.POST, request.FILES)
+#         print
+#         print form
+#         print request.FILES
+#         if form.is_valid():
+#             newdoc = LogImage(file = request.FILES['image'])
+#             newdoc.save()
+#             
+#             print newdoc
+#             return HttpResponse("None")
+#     else:
+#         form = ImageForm()
+#     # Load documents for the list page
+#     documents = LogImage.objects.all()
+# 
+#     # Render list page with the documents and the form
+#     return HttpResponse(documents)
 
 
 
