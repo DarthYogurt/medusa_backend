@@ -1,4 +1,5 @@
 import datetime
+from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import itertools
 import json
@@ -309,6 +310,12 @@ def getSlate(request):
 def emailUser(logBoolNotify):
     fromaddr = 'soplogmedusa@gmail.com'
     toaddrs = logBoolNotify.user.email
+    msg = MIMEMultipart()
+    msg['Subject'] = logBoolNotify.logBool.step.name
+    msg['From'] = fromaddr
+    msg['To'] = logBoolNotify.user.email
+    
+    
     msg = logBoolNotify.logBool.step.name + " on: " + str(logBoolNotify.completeBy) + " : regarding - " +logBoolNotify.logBool.addText
     username = 'soplogmedusa'
     password = 'supermanfly821'
@@ -317,7 +324,9 @@ def emailUser(logBoolNotify):
     server.login(username,password)
     server.sendmail(fromaddr, toaddrs, msg)
     server.quit()
-    #print "email sent to " + toaddrs
+    
+    
+    print msg
 
 @csrf_exempt
 def createChecklist(request):
@@ -443,8 +452,9 @@ def latestError(request):
     
 
 def temp(request):
-    
-    t = get_template('temp.html')
-    c = Context()
-    return HttpResponse(t.render(c))
+    a = LogBoolNotify.objects.get(id=32)
+    emailUser(a)
+#     t = get_template('temp.html')
+#     c = Context()
+    return HttpResponse()
     

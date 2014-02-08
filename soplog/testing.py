@@ -50,6 +50,7 @@ def testEmail():
     msg['From'] = server
     msg['To'] = to
     
+    
     # Send the message via our own SMTP server, but don't include the
     # envelope header.
     s = smtplib.SMTP('localhost')
@@ -60,4 +61,12 @@ def testEmail():
 
 
 #a = LogBoolNotify.objects.get(id=1)
-print testEmail()
+#print testEmail()
+# 
+# import views
+# from models import *
+# 
+# LogBoolNotify.objects.all()
+
+
+#views.emailUser()

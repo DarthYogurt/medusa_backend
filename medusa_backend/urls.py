@@ -37,7 +37,7 @@ urlpatterns = patterns('',
     
     
     
-#     url(r'temp/$',temp),
+    url(r'temp/$',temp),
 #     url(r'^checklist/$', checkList),
 
 #     
