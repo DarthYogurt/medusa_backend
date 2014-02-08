@@ -308,25 +308,21 @@ def getSlate(request):
     return HttpResponse(json.dumps(j), content_type="application/json")
 
 def emailUser(logBoolNotify):
-    fromaddr = 'soplogmedusa@gmail.com'
-    toaddrs = logBoolNotify.user.email
-    msg = MIMEMultipart()
-    msg['Subject'] = logBoolNotify.logBool.step.name
-    msg['From'] = fromaddr
-    msg['To'] = logBoolNotify.user.email
+    to = logBoolNotify.user.email
+    gmail_user = 'soplogmedusa@gmail.com'
+    gmail_pwd = 'supermanfly821'
+    smtpserver = smtplib.SMTP("smtp.gmail.com",587)
+    smtpserver.ehlo()
+    smtpserver.starttls()
+    smtpserver.ehlo
+    smtpserver.login(gmail_user, gmail_pwd)
+    header = 'To:' + to + '\n' + 'From: ' + gmail_user + '\n' + 'Subject: ' + logBoolNotify.logBool.step.name +" id:"+ str(logBoolNotify.id) +'\n'
     
+    msg = header + "\n\n" + logBoolNotify.logBool.step.name + " on: " + str(logBoolNotify.completeBy) + " : regarding - " +logBoolNotify.logBool.addText
+    smtpserver.sendmail(gmail_user, to, msg)
+
+    smtpserver.close()
     
-    msg = logBoolNotify.logBool.step.name + " on: " + str(logBoolNotify.completeBy) + " : regarding - " +logBoolNotify.logBool.addText
-    username = 'soplogmedusa'
-    password = 'supermanfly821'
-    server = smtplib.SMTP('smtp.gmail.com:587')
-    server.starttls()
-    server.login(username,password)
-    server.sendmail(fromaddr, toaddrs, msg)
-    server.quit()
-    
-    
-    print msg
 
 @csrf_exempt
 def createChecklist(request):
