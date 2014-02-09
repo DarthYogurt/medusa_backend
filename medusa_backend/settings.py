@@ -131,4 +131,4 @@ TEMPLATE_DIRS = {
 
 #PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 MEDIA_ROOT = '/media/'
-MEDIA_URL= '/media/'
+MEDIA_URL = '/media/'

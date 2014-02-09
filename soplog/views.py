@@ -412,8 +412,6 @@ def uploadError(request):
     return HttpResponse("")
 
 
-
-
 def latestError(request):
     f = open( os.getcwd() + "/error.html", "rb")
     #f = open( "E:\\coding_workspace\\medusa_backend\\tempJson", "rb")
