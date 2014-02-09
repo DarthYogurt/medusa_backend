@@ -46,6 +46,7 @@ def checklistSteps(request, checklistId):
     j['steps'] = []
     if len(steps) > 0:
         j['checklistName'] = steps[0].list.name
+        j['notifyUser'] = steps[0].list.notify.id
     else:
         j['error'] = "No Results"
     
@@ -64,8 +65,9 @@ def checklistSteps(request, checklistId):
         temp['name'] = step.name
         temp['id'] = step.id
         temp['order'] = int(step.order)
+        temp['description'] = step.description
         temp['type'] = step.stepType.name
-       # temp['notifyUserId'] = step.notifyUser.id
+        temp['notifyUserId'] = step.notifyUser.id
        
         temp['requireText'] = step.requireText
         temp['requireImage'] = step.requireImage

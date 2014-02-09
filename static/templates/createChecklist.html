@@ -17,7 +17,7 @@
         	<label> Existing Checklists</label>
             {% for row in existingChecklists %}
             	<div class="row">
-                	<div class="col-md-12">
+                	<div class="col-md-12 existing-checklist" value={{ row.id }}>
                 	{{ row }}
                     </div>
                 </div> 
@@ -29,7 +29,7 @@
               		<div class="row">
                     	<div class="col-lg-8">
                             <label> Checklist Name </label>
-                            <input type="text" name="checklistName" class="form-control" placeholder="Name of New Checklist">
+                            <input type="text" id="checklistName" name="checklistName" class="form-control" placeholder="Name of New Checklist">
                        </div>
                        <div class="col-lg-4">
                             <label> User to notify:  </label>
@@ -159,7 +159,7 @@ function addCreateStep(idNum){
 	descriptionDiv.appendChild(description);
 	
 	var divRow = document.createElement("div");
-	divRow.className = "row form-group";
+	divRow.className = "row form-group step-row";
 	divRow.appendChild(stepNumDiv);
 	divRow.appendChild(stepNameDiv);
 	divRow.appendChild(selectTypeDiv);
@@ -203,7 +203,7 @@ function addCreateStep(idNum){
 	extraNoteRow.appendChild(stepNotify);
 	
 	var divCreateCol = document.createElement("div");
-	divCreateCol.className = "col-sm-12";
+	divCreateCol.className = "col-sm-12 step-row";
 	divCreateCol.id = "groupStepId"+idNum;
 	
 	divCreateCol.appendChild(divRow);
@@ -238,70 +238,46 @@ $("#addStep").click(function() {
 });
 
 
-/*
-function addReqConstraints(e){
-	
-	var currType = e.srcElement.offsetParent.offsetParent.children[0].children[2].children[0].value;  //To get Bool, double or image - Step Type
-	var parentElement = e.srcElement.parentNode.parentNode.parentNode.parentNode.parentNode; //add new section to this node
-	
-	if (currType == "bool"){
-		
-		var rowGroup = document.createElement("div");
-		rowGroup.className = "row form-group";
-		
-		var textCol = document.createElement("div");
-		textCol.className="col-sm-3";
-		textCol.id = 0;
-		textCol.innerHTML = "Required Text if:";
-		
-		var trueFalseCol = document.createElement("div");
-		trueFalseCol.className = "col-sm-4";
-		
-		
-		var trueText = document.createElement("div");
-		trueText.innerHTML = "True";
-		var checkTrue = document.createElement("input");
-		checkTrue.type = "checkbox";
-		checkTrue.name = "STEP NUM NAME + CHECKBOX";
-		trueText.appendChild(checkTrue);
-			
-		var falseText = document.createElement("div");
-		falseText.innerHTML = "False";
-		var checkFalse= document.createElement("input");
-		checkFalse.type = "checkbox";
-		//NAme /ID
-		falseText.appendChild(checkFalse);
-		
-		trueFalseCol.appendChild(trueText);
-		trueFalseCol.appendChild(falseText);
-		
-		
-		
-		var empty = document.createElement("div")
-		empty.className = "col-sm-1";
-		
-		rowGroup.appendChild(empty);
-		rowGroup.appendChild(textCol);
-		rowGroup.appendChild(trueFalseCol);
-		
-		parentElement.appendChild(rowGroup);
-	}
-	
-	
-	
-};
-*/
 
-/*
-$(".form-control").change(function() {
-    var str = "";
-    $( "select option:selected" ).each(function() {
-      str += $( this ).text() + " ";
-    });
-    
-  })
-  .trigger( "change" );
-*/
+$(".existing-checklist").click( function(e){
+										   
+										   $(".step-row").remove();
+										   currId = 0;
+										   
+										   addCreateStep(currId);
+										   document.getElementById("totalSteps").value=currId+1;
+										   
+										   var listId = $(this)[0].attributes.value.value;
+										   $.get( "/checklist/checklistid/"+listId, function( data ) {												  
+												$("#checklistName").val(data.checklistName);
+												
+												$("#userToNotify").val( data.notifyUser);
+												console.log(data);
+												
+												for (var i=0; i< data.steps.length; i++)
+												{
+													if (i>0){
+														currId ++;
+														addCreateStep(currId);
+														document.getElementById("totalSteps").value=currId+1;
+													}
+													$("input[name=stepName"+i+"]").val(data.steps[i].name);
+													$("select[name=stepType"+i+"]").val(data.steps[i].type);
+													$("input[name=desc"+i+"]").val(data.steps[i].description);
+													
+													
+													$("input[name=reqImage"+i+"]").prop('checked', data.steps[i].requireImage);
+													$("input[name=reqText"+i+"]").prop('checked', data.steps[i].requireText);
+													$("input[name=reqifTrue"+i+"]").prop('checked', data.steps[i].ifValueTrue);
+													$("input[name=reqifFalse"+i+"]").prop('checked', data.steps[i].ifValueFalse);
+													
+													$("select[name=stepUser" + i + "]").val(data.steps[i].notifyUserId);
+												}
+												
+												});
+										   //$("#checklistName").val("testing");
+										   
+										   });
 
 document.addEventListener('keydown', function(e){
 				//console.log(e.srcElement.parentNode.parentNode.parentNode);		  
