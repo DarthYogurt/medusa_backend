@@ -319,8 +319,9 @@ def emailUser(logBoolNotify):
     smtpserver.ehlo
     smtpserver.login(gmail_user, gmail_pwd)
     header = 'To:' + to + '\n' + 'From: ' + gmail_user + '\n' + 'Subject: ' + logBoolNotify.logBool.step.name +" id:"+ str(logBoolNotify.id) +'\n'
-    
+    header = header.encode("ascii", 'ignore')
     msg = header + "\n\n" + logBoolNotify.logBool.step.name + " on: " + str(logBoolNotify.completeBy) + " : regarding - " +logBoolNotify.logBool.addText
+    msg = msg.encode("ascii", "ignore")
     smtpserver.sendmail(gmail_user, to, msg)
 
     smtpserver.close()
