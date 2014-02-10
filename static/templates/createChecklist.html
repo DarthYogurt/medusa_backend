@@ -14,7 +14,7 @@
 
 	<div class="row">
     	<div class="col-lg-3">
-        	<label> Existing Checklists</label>
+        	<label> Existing Checklists (click to copy)</label>
             {% for row in existingChecklists %}
             	<div class="row">
                 	<div class="col-md-12 existing-checklist" value={{ row.id }}>
@@ -57,7 +57,12 @@
          </div>
      </div> <!-- end row -->
 </div>
+<style>
+.existing-checklist{
+	cursor:pointer;	
+}
 
+</style>
 <script>
 	//Loading Step Type variables, to be used in checklist.js
 	var stepType = [{% for x in stepType %}'{{ x|escapejs }}',{% endfor %}]
