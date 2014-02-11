@@ -303,6 +303,7 @@ def getSlate(request):
         #t['notifyId'] = slate.logBool.step.notifyUser.id
         t['notifyName'] = slate.logBool.step.notifyUser.name
         t['stepName'] = slate.logBool.step.name
+        t['complete'] = slate.complete
         t['addNote'] = slate.logBool.addText
         t['addImage'] = request.get_host()+str(slate.logBool.addImage)
          
