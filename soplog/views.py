@@ -377,14 +377,14 @@ def listConfirm(request):
     return HttpResponse("complete")
 
 @csrf_exempt
-def checkOffSlate(request, logBoolNotifyId, completedTime):
+def checkOffSlate(request, logBoolNotifyId): #, completedTime):
     logBoolNotify = LogBoolNotify.objects.get(id=logBoolNotifyId)
     if logBoolNotify.complete == True:
         logBoolNotify.complete = False
     elif logBoolNotify.complete == False:
         logBoolNotify.complete = True
-        #logBoolNotify.completedTime = datetime.datetime.today()
-        datetime.datetime.strptime(completedTime, '%m-%d-%y %H:%M:%S')
+        logBoolNotify.completedTime = datetime.datetime.today()
+        #datetime.datetime.strptime(completedTime, '%m-%d-%y %H:%M:%S')
     logBoolNotify.save()
     
     #print logBoolNotify.strftime("%Y-%M-%D %H:%M")
