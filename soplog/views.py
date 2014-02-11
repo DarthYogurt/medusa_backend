@@ -282,7 +282,7 @@ def getLogData(request, checklistId):
 
 def slate(request):
     var = {}
-    var['slate'] = LogBoolNotify.objects.all().order_by('complete')
+    var['slate'] = LogBoolNotify.objects.all().order_by('complete','-completedTime')
 
     t = get_template('slate.html')
     c = Context(var)
@@ -293,7 +293,7 @@ def getSlate(request):
     j = {}
     j['slate'] = []
     
-    for slate in LogBoolNotify.objects.all().order_by('complete'):
+    for slate in LogBoolNotify.objects.order_by('complete', '-completedTime'):
         t = {}
         t['slateId'] = slate.id
         t['checklist'] = slate.logBool.step.list.name
@@ -308,6 +308,8 @@ def getSlate(request):
         t['addImage'] = request.get_host()+str(slate.logBool.addImage)
          
         j['slate'].append(t)
+        print slate
+        
     return HttpResponse(json.dumps(j), content_type="application/json")
 
 def emailUser(logBoolNotify):
