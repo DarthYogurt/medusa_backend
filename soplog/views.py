@@ -308,7 +308,7 @@ def getSlate(request):
         t['addImage'] = request.get_host()+str(slate.logBool.addImage)
          
         j['slate'].append(t)
-        print slate
+        #print slate
         
     return HttpResponse(json.dumps(j), content_type="application/json")
 
@@ -344,8 +344,8 @@ def createChecklist(request):
 @csrf_exempt
 def listConfirm(request):
     post = request.POST
-    for item in post:
-        print item, post[item]
+    #for item in post:
+    #    print item, post[item]
 
     
     checklistName = request.POST.get('checklistName',"")
